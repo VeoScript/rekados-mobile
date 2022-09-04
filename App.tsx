@@ -1,4 +1,6 @@
 import React from 'react'
+import SignInScreen from './src/pages/MainScreen/Auth/SignInScreen'
+import SignUpScreen from './src/pages/MainScreen/Auth/SignUpScreen'
 import HomeScreen from './src/pages/MainScreen/HomeScreen'
 import CreateDishScreen from './src/pages/MainScreen/CreateDishScreen'
 import SaveDishScreen from './src/pages/MainScreen/SaveDishScreen'
@@ -24,6 +26,22 @@ const App = () => {
             barStyle="dark-content"
           />
           <Stack.Navigator>
+            <Stack.Screen
+              name="SignInScreen"
+              component={SignInScreen}
+              options={{
+                headerShown: false,
+                animation: 'none'
+              }}
+            />
+            <Stack.Screen
+              name="SignUpScreen"
+              component={SignUpScreen}
+              options={{
+                headerShown: false,
+                animation: 'none'
+              }}
+            />
             <Stack.Screen
               name="HomeScreen"
               component={HomeScreen}
