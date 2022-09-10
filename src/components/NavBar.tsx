@@ -55,7 +55,8 @@ const NavBar: React.FC<TypedProps> = ({ navigation }) => {
       <Menu
         modalData={[]}
         modalVisible={modalVisible}
-        setModalVisible={setModalVisible} 
+        setModalVisible={setModalVisible}
+        navigation={navigation}
       />
     </React.Fragment>
   )
