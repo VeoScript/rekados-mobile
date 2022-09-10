@@ -6,11 +6,7 @@ import { ScrollView, View, Text, TextInput } from 'react-native'
 
 import { dishes } from '../../mock/dishes'
 
-interface TypedProps {
-  navigation: any
-}
-
-const FeedLayout: React.FC<TypedProps> = ({ navigation }) => {
+const FeedLayout = () => {
   return (
     <React.Fragment>
       <ScrollView style={tw`flex flex-col w-full px-3`}>
@@ -27,7 +23,6 @@ const FeedLayout: React.FC<TypedProps> = ({ navigation }) => {
         {dishes.map((dish: any, i: number) => (
           <DishCard
             key={i}
-            navigation={navigation}
             dish={dish}
           />
         ))}

@@ -2,16 +2,11 @@ import React from 'react'
 import AuthLayout from '../../../layouts/AuthLayout'
 import tw from 'twrnc'
 import { fonts } from '../../../styles/global'
-import { APP_NAME, API_URL } from '@env'
-import { ScrollView, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 
-interface TypedProps {
-  navigation: any
-}
-
-const SignUpScreen: React.FC<TypedProps> = ({ navigation }) => {
+const SignUpScreen = () => {
   return (
-    <AuthLayout navigation={navigation}>
+    <AuthLayout>
       <View style={tw`flex flex-col my-1 w-full`}>
         <View style={tw`flex flex-row items-center mx-2 mb-1`}>
           <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Name</Text>

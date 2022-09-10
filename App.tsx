@@ -10,6 +10,7 @@ import { StatusBar } from 'react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { navigationRef } from './src/utils/RootNavigation'
 
 const queryClient = new QueryClient()
 
@@ -19,7 +20,7 @@ const App = () => {
   return (
     <React.Fragment>
       <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <StatusBar
             animated={false}
             backgroundColor="#FFFFFF"

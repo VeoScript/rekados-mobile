@@ -3,13 +3,13 @@ import tw from 'twrnc'
 import { fonts } from '../styles/global'
 import { ScrollView, SafeAreaView, View, Text, TouchableOpacity, Image } from 'react-native'
 import { useRoute } from '@react-navigation/native'
+import { useNavigate } from '../utils/RootNavigation'
 
 interface TypedProps {
   children: any
-  navigation: any
 }
 
-const AuthLayout: React.FC<TypedProps> = ({ children, navigation }) => {
+const AuthLayout: React.FC<TypedProps> = ({ children }) => {
 
   const route = useRoute()
 
@@ -39,9 +39,9 @@ const AuthLayout: React.FC<TypedProps> = ({ children, navigation }) => {
               activeOpacity={0.7}
               onPress={() => {
                 if (route.name === 'SignInScreen') {
-                  navigation.navigate('SignUpScreen')
+                  useNavigate('SignUpScreen')
                 } else {
-                  navigation.navigate('SignInScreen')
+                  useNavigate('SignInScreen')
                 }
               }}
             >

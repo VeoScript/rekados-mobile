@@ -3,18 +3,18 @@ import tw from 'twrnc'
 import { fonts } from '../../styles/global'
 import { MaterialIcon } from '../../utils/Icons'
 import { View, Text, Modal, Pressable, TouchableOpacity } from 'react-native'
+import { useNavigate } from '../../utils/RootNavigation'
 
 interface TypedProps {
   modalData: any
   modalVisible: any
   setModalVisible: any
-  navigation: any
 }
 
-const Menu: React.FC<TypedProps> = ({ modalData, modalVisible, setModalVisible, navigation }) => {
+const Menu: React.FC<TypedProps> = ({ modalData, modalVisible, setModalVisible }) => {
 
   const onLogout = async () => {
-    navigation.push('SignInScreen')
+    useNavigate('SignInScreen')
   }
 
   return (

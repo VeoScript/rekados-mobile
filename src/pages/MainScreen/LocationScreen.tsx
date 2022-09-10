@@ -2,16 +2,13 @@ import React from 'react'
 import MainLayout from '../../layouts/MainLayout'
 import { View, Text, BackHandler } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
+import { useNavigate } from '../../utils/RootNavigation'
 
-interface TypedProps {
-  navigation: any
-}
-
-const LocationScreen: React.FC<TypedProps> = ({ navigation }) => {
+const LocationScreen = () => {
 
   // Nig click sa users ug back button muback ra jd sija padong sa HomeScreen
   const handleBackToHomeScreen = () => {
-    navigation.navigate('HomeScreen')
+    useNavigate('HomeScreen')
   }
 
   useFocusEffect(
@@ -30,9 +27,7 @@ const LocationScreen: React.FC<TypedProps> = ({ navigation }) => {
   )
 
   return (
-    <MainLayout
-      navigation={navigation}
-    >
+    <MainLayout>
       <View>
         <Text>This is Location Screen</Text>
       </View>

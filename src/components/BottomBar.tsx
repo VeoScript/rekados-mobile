@@ -3,12 +3,9 @@ import tw from 'twrnc'
 import { MaterialIcon } from '../utils/Icons'
 import { View, TouchableOpacity } from 'react-native'
 import { useRoute } from '@react-navigation/native'
+import { useNavigate } from '../utils/RootNavigation'
 
-interface TypedProps {
-  navigation: any
-}
-
-const BottomBar: React.FC<TypedProps> = ({ navigation }) => {
+const BottomBar = () => {
 
   const route = useRoute()
 
@@ -17,7 +14,7 @@ const BottomBar: React.FC<TypedProps> = ({ navigation }) => {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => {
-          navigation.navigate('HomeScreen')
+          useNavigate('HomeScreen')
         }}
       >
         <MaterialIcon
@@ -29,7 +26,7 @@ const BottomBar: React.FC<TypedProps> = ({ navigation }) => {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => {
-          navigation.navigate('CreateDishScreen')
+          useNavigate('CreateDishScreen')
         }}
       >
         <MaterialIcon
@@ -41,7 +38,7 @@ const BottomBar: React.FC<TypedProps> = ({ navigation }) => {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => {
-          navigation.navigate('SaveDishScreen')
+          useNavigate('SaveDishScreen')
         }}
       >
         <MaterialIcon
@@ -53,7 +50,7 @@ const BottomBar: React.FC<TypedProps> = ({ navigation }) => {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => {
-          navigation.navigate('LocationScreen')
+          useNavigate('LocationScreen')
         }}
       >
         <MaterialIcon

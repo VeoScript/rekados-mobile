@@ -5,12 +5,9 @@ import { fonts } from '../../../styles/global'
 import { APP_NAME, API_URL } from '@env'
 import { View, Text, TextInput, TouchableOpacity, BackHandler, Image } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
+import { useNavigate } from '../../../utils/RootNavigation'
 
-interface TypedProps {
-  navigation: any
-}
-
-const SignInScreen: React.FC<TypedProps> = ({ navigation }) => {
+const SignInScreen = () => {
 
   // Nig click sa users ug back button muback ra jd sija padong sa HomeScreen
   const handleBackToHomeScreen = () => {
@@ -33,7 +30,7 @@ const SignInScreen: React.FC<TypedProps> = ({ navigation }) => {
   )
 
   return (
-    <AuthLayout navigation={navigation}>
+    <AuthLayout>
       <View style={tw`flex flex-row justify-center w-full my-3 overflow-hidden rounded-xl`}>
         <Text style={[tw`text-xl text-[#414143]`, fonts.fontPoppinsBold]}>Sign in</Text>
       </View>
@@ -59,7 +56,7 @@ const SignInScreen: React.FC<TypedProps> = ({ navigation }) => {
           style={tw`flex flex-row items-center justify-center w-full p-3 text-sm rounded-xl bg-[#f2b900]`}
           activeOpacity={0.7}
           onPress={() => {
-            navigation.push('HomeScreen')
+            useNavigate('HomeScreen')
           }}
         >
           <Text style={[tw`text-base text-white`, fonts.fontPoppins]}>Sign In</Text>

@@ -8,11 +8,7 @@ import { fonts } from '../../styles/global'
 import { MaterialIcon } from '../../utils/Icons'
 import { Toast } from '../../utils/Toast'
 
-interface TypedProps {
-  navigation: any
-}
-
-const DisplayDishScreen: React.FC<TypedProps> = ({ navigation }) => {
+const DisplayDishScreen = () => {
 
   const route: any = useRoute()
 
@@ -36,9 +32,7 @@ const DisplayDishScreen: React.FC<TypedProps> = ({ navigation }) => {
   }, [])
 
   return (
-    <MainLayout
-      navigation={navigation}
-    >
+    <MainLayout>
       <ScrollView style={tw`w-full`}>
         <View style={tw`flex flex-col items-start justify-start w-full px-5 py-5`}>
           <View style={tw`flex flex-col items-center w-full`}>
