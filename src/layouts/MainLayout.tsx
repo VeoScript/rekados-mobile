@@ -7,23 +7,18 @@ import { useRoute } from '@react-navigation/native'
 
 interface TypedProps {
   children: any
-  navigation: any
 }
 
-const MainLayout: React.FC<TypedProps> = ({ children, navigation }) => {
+const MainLayout: React.FC<TypedProps> = ({ children }) => {
 
   const route = useRoute()
 
   return (
     <SafeAreaView style={tw`flex flex-col items-center justify-between w-full h-full bg-white`}>
-      <NavBar
-        navigation={navigation}
-      />
+      <NavBar />
       { children }
       {route.name !== 'DisplayDishScreen' && (
-        <BottomBar
-          navigation={navigation}
-        />
+        <BottomBar />
       )}
     </SafeAreaView>
   )

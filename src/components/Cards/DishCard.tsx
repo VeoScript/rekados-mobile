@@ -3,9 +3,9 @@ import tw from 'twrnc'
 import { MaterialIcon } from '../../utils/Icons'
 import { View, Text, Image, TouchableOpacity, Alert } from 'react-native'
 import { fonts } from '../../styles/global'
+import { useNavigate } from '../../utils/RootNavigation'
 
 interface TypedProps {
-  navigation?: any
   dish: {
     id: string
     title: string
@@ -20,37 +20,13 @@ interface TypedProps {
   }
 }
 
-const DishCard: React.FC<TypedProps> = ({ navigation, dish }) => {
-
-  // let categoryColor: any
-
-  // switch (dish.category) {
-  //   case 'Meat and Poultry':
-  //     categoryColor = 'bg-orange-500'
-  //     break;
-  //   case 'Dairy Foods':
-  //     categoryColor = 'bg-purple-500'
-  //     break;
-  //   case 'Fish and Seafood':
-  //     categoryColor = 'bg-blue-500'
-  //     break;
-  //   case 'Grains, Beans and Nuts':
-  //     categoryColor = 'bg-orange-900'
-  //     break;
-  //   case 'Fruits':
-  //     categoryColor = 'bg-red-600'
-  //     break;
-  //   case 'Vegetables':
-  //     categoryColor = 'bg-green-500'
-  //     break;
-  // }
-
+const DishCard: React.FC<TypedProps> = ({ dish }) => {
   return (
     <TouchableOpacity
       style={tw`flex flex-col items-start w-full p-3 mb-2 bg-neutral-50 rounded-xl`}
       activeOpacity={0.6}
       onPress={() => {
-        navigation.navigate('DisplayDishScreen', {
+        useNavigate('DisplayDishScreen', {
           id: dish.id,
           title: dish.title,
           image: dish.image,

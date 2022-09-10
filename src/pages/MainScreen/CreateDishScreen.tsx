@@ -1,18 +1,15 @@
 import React from 'react'
 import MainLayout from '../../layouts/MainLayout'
 import CreateDishLayout from '../../layouts/Panels/CreateDishLayout'
-import { View, Text, BackHandler } from 'react-native'
+import { BackHandler } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
+import { useNavigate } from '../../utils/RootNavigation'
 
-interface TypedProps {
-  navigation: any
-}
-
-const CreateDishScreen: React.FC<TypedProps> = ({ navigation }) => {
+const CreateDishScreen = () => {
 
   // Nig click sa users ug back button muback ra jd sija padong sa HomeScreen
   const handleBackToHomeScreen = () => {
-    navigation.navigate('HomeScreen')
+    useNavigate('HomeScreen')
   }
 
   useFocusEffect(
@@ -31,9 +28,7 @@ const CreateDishScreen: React.FC<TypedProps> = ({ navigation }) => {
   )
 
   return (
-    <MainLayout
-      navigation={navigation}
-    >
+    <MainLayout>
       <CreateDishLayout />
     </MainLayout>
   )

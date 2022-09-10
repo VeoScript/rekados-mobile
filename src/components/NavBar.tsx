@@ -5,12 +5,9 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { MaterialIcon } from '../utils/Icons'
 import Menu from './Modals/Menu'
 import { useRoute } from '@react-navigation/native'
+import { useNavigate } from '../utils/RootNavigation'
 
-interface TypedProps {
-  navigation: any
-}
-
-const NavBar: React.FC<TypedProps> = ({ navigation }) => {
+const NavBar = () => {
 
   const route = useRoute()
 
@@ -23,7 +20,7 @@ const NavBar: React.FC<TypedProps> = ({ navigation }) => {
           {route.name === 'DisplayDishScreen'
             ? <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('HomeScreen')
+                  useNavigate('HomeScreen')
                 }}
               >
                 <MaterialIcon
@@ -56,7 +53,6 @@ const NavBar: React.FC<TypedProps> = ({ navigation }) => {
         modalData={[]}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        navigation={navigation}
       />
     </React.Fragment>
   )
