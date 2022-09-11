@@ -3,22 +3,14 @@ import { useNavigate } from '../utils/RootNavigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import api from './Axios'
 
-export const useAuthGuard = () => {
-  return useQuery(['auth'],
+export const useGetUser = (id: string) => {
+  return useQuery(['user'],
     async () => {
-      const isLoggedin = await api.get('/api/check-login')
-      return isLoggedin.data.message
+      return await api.get(`/api/user/${ id }`)
     },
     {
+      enabled: !!id,
       refetchInterval: 1000
-    }
-  )
-}
-
-export const useGetUsers = () => {
-  return useQuery(['users'],
-    async () => {
-      return await api.get('/api/users')
     }
   )
 }
@@ -50,7 +42,7 @@ export const useLoginMutation = () => {
     {
       onSuccess: async (data) => {
         const cookies: any = data.headers['set-cookie']
-        await AsyncStorage.setItem('AUTHDATA', cookies[0])
+        await AsyncStorage.setItem('COOKIES', cookies[0])
         queryClient.invalidateQueries(['auth'])
         useNavigate('HomeScreen')
       }
@@ -67,11 +59,10 @@ export const useLogoutMutation = () => {
         console.error(error)
       },
       onSuccess: async () => {
-        await AsyncStorage.setItem('AUTHDATA', '')
+        await AsyncStorage.setItem('COOKIES', '')
         queryClient.invalidateQueries(['users'])
         useNavigate('SignInScreen')
       }
     }
   )
 }
-
