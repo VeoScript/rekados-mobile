@@ -1,13 +1,17 @@
 import React from 'react'
 import tw from 'twrnc'
 import { fonts } from '../styles/global'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { MaterialIcon } from '../utils/Icons'
 import Menu from './Modals/Menu'
 import { useRoute } from '@react-navigation/native'
 import { useNavigate } from '../utils/RootNavigation'
 
-const NavBar = () => {
+interface NavBarTypes {
+  user: any
+}
+
+const NavBar: React.FC<NavBarTypes> = ({ user }) => {
 
   const route = useRoute()
 
@@ -43,13 +47,18 @@ const NavBar = () => {
           }
         </View>
         <View style={tw`flex flex-row items-center justify-center w-[10rem]`}>
-          <Text style={[tw`text-2xl text-center text-[#f2b900]`, fonts.fontPoppinsBlack]}>REKADOS</Text>
+          <Image
+            style={tw`w-[8rem] h-[2rem]`}
+            resizeMode="contain"
+            source={require('../assets/images/favicon2.png')}
+          />
         </View>
         <View style={tw`flex flex-row items-center justify-end w-[5rem]`}>
           <Text style={[tw`text-right text-base`, fonts.fontPoppinsBold]}>Asia</Text>
         </View>
       </View>
       <Menu
+        user={user}
         modalData={[]}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
