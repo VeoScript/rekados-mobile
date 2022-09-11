@@ -1,6 +1,7 @@
-import api from './Axios'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '../utils/RootNavigation'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import api from './Axios'
 
 export const useAuthGuard = () => {
   return useQuery(['auth'],
@@ -17,14 +18,7 @@ export const useAuthGuard = () => {
 export const useGetUsers = () => {
   return useQuery(['users'],
     async () => {
-      const users = await api.get('/api/users')
-
-      if (users.statusText === "OK") {
-        return users.data
-      } else {
-        const json = await users
-        throw String(json.statusText)
-      }
+      return await api.get('/api/users')
     }
   )
 }
@@ -40,7 +34,7 @@ export const useRegisterMutation = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['users'])
-        useNavigate('SignInScreen', null)
+        useNavigate('SignInScreen')
       }
     }
   )
@@ -54,8 +48,11 @@ export const useLoginMutation = () => {
       password: _args.password
     }),
     {
-      onSuccess: () => {
+      onSuccess: async (data) => {
+        const cookies: any = data.headers['set-cookie']
+        await AsyncStorage.setItem('AUTHDATA', cookies[0])
         queryClient.invalidateQueries(['auth'])
+        useNavigate('HomeScreen')
       }
     }
   )
@@ -66,9 +63,13 @@ export const useLogoutMutation = () => {
   return useMutation(() =>
     api.post('/api/logout'),
     {
-      onSuccess: () => {
+      onError: (error) => {
+        console.error(error)
+      },
+      onSuccess: async () => {
+        await AsyncStorage.setItem('AUTHDATA', '')
         queryClient.invalidateQueries(['users'])
-        useNavigate('SignInScreen', null)
+        useNavigate('SignInScreen')
       }
     }
   )
