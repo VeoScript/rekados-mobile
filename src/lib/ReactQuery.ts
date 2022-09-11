@@ -3,13 +3,12 @@ import { useNavigate } from '../utils/RootNavigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import api from './Axios'
 
-export const useGetUser = (id: string) => {
+export const useGetUser = () => {
   return useQuery(['user'],
     async () => {
-      return await api.get(`/api/user/${ id }`)
+      return await api.get(`/api/user`)
     },
     {
-      enabled: !!id,
       refetchInterval: 1000
     }
   )

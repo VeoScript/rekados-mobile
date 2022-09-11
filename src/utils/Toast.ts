@@ -5,7 +5,7 @@ export const Toast = (message: string) => {
     `${message}`,
     ToastAndroid.SHORT,
     ToastAndroid.BOTTOM,
-    25,
+    0,
     100
   )
 }

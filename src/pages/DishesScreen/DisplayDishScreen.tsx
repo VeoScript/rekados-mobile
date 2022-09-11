@@ -1,12 +1,15 @@
 import React, { useCallback } from 'react'
 import tw from 'twrnc'
 import MainLayout from '../../layouts/MainLayout'
+import SplashScreen from '../../layouts/Misc/SplashScreen'
+import ErrorScreen from '../../layouts/Misc/ErrorScreen'
 import YoutubePlayer from 'react-native-youtube-iframe'
 import { ScrollView, View, Text, Image, ActivityIndicator } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { fonts } from '../../styles/global'
 import { MaterialIcon } from '../../utils/Icons'
 import { Toast } from '../../utils/Toast'
+import { useGetUser } from '../../lib/ReactQuery'
 
 const DisplayDishScreen = () => {
 
@@ -25,6 +28,13 @@ const DisplayDishScreen = () => {
     procedures
   } = route.params
 
+  const { data: fetch, isLoading, isError, error }: any = useGetUser()
+
+  if (isLoading) return <SplashScreen />
+  if (isError) return <ErrorScreen error={error.response?.data?.message} />
+
+  const user = fetch.data
+
   const onStateChange = React.useCallback((state: any) => {
     if (state === 'ended') {
       Toast('Video has finished playing.')
@@ -32,7 +42,7 @@ const DisplayDishScreen = () => {
   }, [])
 
   return (
-    <MainLayout>
+    <MainLayout user={user} >
       <ScrollView style={tw`w-full`}>
         <View style={tw`flex flex-col items-start justify-start w-full px-5 py-5`}>
           <View style={tw`flex flex-col items-center w-full`}>

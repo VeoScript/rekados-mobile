@@ -1,11 +1,21 @@
 import React from 'react'
 import MainLayout from '../../layouts/MainLayout'
 import CreateDishLayout from '../../layouts/Panels/CreateDishLayout'
+import SplashScreen from '../../layouts/Misc/SplashScreen'
+import ErrorScreen from '../../layouts/Misc/ErrorScreen'
 import { BackHandler } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { useNavigate } from '../../utils/RootNavigation'
+import { useGetUser } from '../../lib/ReactQuery'
 
 const CreateDishScreen = () => {
+
+  const { data: fetch, isLoading, isError, error }: any = useGetUser()
+
+  if (isLoading) return <SplashScreen />
+  if (isError) return <ErrorScreen error={error.response?.data?.message} />
+
+  const user = fetch.data
 
   // Nig click sa users ug back button muback ra jd sija padong sa HomeScreen
   const handleBackToHomeScreen = () => {
@@ -28,7 +38,7 @@ const CreateDishScreen = () => {
   )
 
   return (
-    <MainLayout>
+    <MainLayout user={user} >
       <CreateDishLayout />
     </MainLayout>
   )

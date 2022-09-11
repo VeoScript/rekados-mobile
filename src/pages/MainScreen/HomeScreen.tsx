@@ -1,21 +1,25 @@
 import React from 'react'
 import MainLayout from '../../layouts/MainLayout'
 import FeedLayout from '../../layouts/Panels/FeedLayout'
-import { View, Text } from 'react-native'
+import SplashScreen from '../../layouts/Misc/SplashScreen'
+import ErrorScreen from '../../layouts/Misc/ErrorScreen'
 import { useGetUser } from '../../lib/ReactQuery'
 
 const HomeScreen = () => {
 
-  const { data: user, isLoading, isError, error }: any = useGetUser('cl7wptull00590mudfbl3gkdo')
+  const { data: fetch, isLoading, isError }: any = useGetUser()
 
-  if (isLoading) return <View><Text>Loading...</Text></View>
+  if (isLoading || isError) return <SplashScreen />
 
-  if (isError) return <View><Text>{`${error.response?.data.message}`}</Text></View>
-  
-  console.log(user)
+  const user = fetch.data
+
+  // console.log({
+  //   'title': 'Home Screen',
+  //   'content': user
+  // })
 
   return (
-    <MainLayout>
+    <MainLayout user={user} >
       <FeedLayout />
     </MainLayout>
   )
