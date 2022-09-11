@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { API_URL } from '@env'
 
-const baseURL = API_URL
+console.log(API_URL)
 
 const api = axios.create({
-  baseURL: `${baseURL}`,
+  baseURL: API_URL,
   withCredentials: true,
   timeout: 3000,
   headers: {

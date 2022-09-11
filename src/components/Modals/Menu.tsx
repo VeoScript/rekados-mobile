@@ -3,7 +3,7 @@ import tw from 'twrnc'
 import { fonts } from '../../styles/global'
 import { MaterialIcon } from '../../utils/Icons'
 import { View, Text, Modal, Pressable, TouchableOpacity } from 'react-native'
-import { useNavigate } from '../../utils/RootNavigation'
+import { useLogoutMutation } from '../../lib/ReactQuery'
 
 interface TypedProps {
   modalData: any
@@ -13,8 +13,10 @@ interface TypedProps {
 
 const Menu: React.FC<TypedProps> = ({ modalData, modalVisible, setModalVisible }) => {
 
+  const logoutMutation = useLogoutMutation()
+
   const onLogout = async () => {
-    useNavigate('SignInScreen')
+    await logoutMutation.mutateAsync()
   }
 
   return (
