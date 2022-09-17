@@ -16,10 +16,11 @@ export const useGetUser = () => {
 
 export const useRegisterMutation = () => {
   const queryClient = useQueryClient()
-  return useMutation((_args: { name: string, email: string, password: string }) =>
+  return useMutation((_args: { name: string, email: string, username: string, password: string }) =>
     api.post('/api/register', {
       name: _args.name,
       email: _args.email,
+      username: _args.username,
       password: _args.password
     }),
     {

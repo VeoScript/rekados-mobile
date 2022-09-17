@@ -44,6 +44,7 @@ const SignUpScreen = () => {
         await registrationMutation.mutateAsync({
           email: email,
           name: name,
+          username: username,
           password: password
         },{
           onError: (error) => {
