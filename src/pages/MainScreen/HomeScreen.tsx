@@ -2,20 +2,19 @@ import React from 'react'
 import MainLayout from '../../layouts/MainLayout'
 import FeedLayout from '../../layouts/Panels/FeedLayout'
 import SplashScreen from '../../layouts/Misc/SplashScreen'
-import { useGetUser } from '../../lib/ReactQuery'
+import { useGetUser, useGetDishes } from '../../lib/ReactQuery'
 
 const HomeScreen = () => {
 
-  const { data: fetch, isLoading, isError }: any = useGetUser()
+  const { data: user, isLoading: userLoading, isError: userError }: any = useGetUser()
+  const { data: dishes, isLoading: dishesIsLoading, isError: dishesIsError }: any = useGetDishes()
 
-  if (isLoading || isError) return <SplashScreen />
+  if (userLoading || dishesIsLoading) return <SplashScreen />
 
-  const user = fetch.data
-
-  // console.log({
-  //   'title': 'Home Screen',
-  //   'content': user
-  // })
+  console.log({
+    'title': 'Home Screen Dishes',
+    'content': dishes.dishes
+  })
 
   return (
     <MainLayout user={user} >

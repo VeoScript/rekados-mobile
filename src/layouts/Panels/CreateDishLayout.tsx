@@ -3,20 +3,32 @@ import AddIngredients from '../../components/Modals/AddIngredients'
 import AddProcedures from '../../components/Modals/AddProcedures'
 import tw from 'twrnc'
 import { fonts, customStyle } from '../../styles/global'
-import { MaterialIcon } from '../../utils/Icons'
+import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
 import { Dropdown } from 'react-native-element-dropdown'
-import { ScrollView, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { launchImageLibrary } from 'react-native-image-picker'
+import { ScrollView, View, Text, TextInput, TouchableOpacity, Platform, Button, Image } from 'react-native'
+import { useCreateDishMutation } from '../../lib/ReactQuery'
+import { IMGBB_API_SECRET } from '@env'
 
-const CreateDishLayout = () => {
+interface TypedProps {
+  user: any
+}
 
+const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
+
+  const createDishMutation = useCreateDishMutation()
+
+  // loading state
   const [isLoading, setIsLoading] = React.useState<Boolean>(false)
+
+  // getting the selected photo for upload
+  const [photo, setPhoto] = React.useState<any>(null)
 
   // input fields state
   const [title, setTitle] = React.useState<string>('')
   const [category, setCategory] = React.useState<string>('')
   const [location, setLocation] = React.useState<string>('')
   const [description, setDescription] = React.useState<string>('')
-  const [author, setAuthor] = React.useState<string>('')
   const [youtubeUrl, setYoutubeUrl] = React.useState<string>('')
 
   // ingredients state
@@ -48,19 +60,74 @@ const CreateDishLayout = () => {
     { label: 'North America', value: 'North America' },
     { label: 'South America', value: 'South America' },
   ]
-  
-  const handleSaveDish = async () => {
-    // console.log('Form Data', {
-    //   title: title,
-    //   category: category,
-    //   location: location,
-    //   description: description,
-    //   author: author,
-    //   youtubeUrl: youtubeUrl
-    // })
-    // console.log('Ingredients', ingredientsState)
-    // console.log('Procedures', proceduresState)
+
+  const handleChoosePhoto = () => {
+    let options: any = {
+      selectionLimit: 1,
+      mediaType: 'photo',
+      includeBase64: false
+    }
+
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        setPhoto(null)
+        return
+      }
+      if (response) {
+        setPhoto(response.assets)
+      }
+    })
   }
+
+  const handleSaveDish = async () => {
+    try {
+      setIsLoading(true)
+
+      const image: any = photo[0]
+      const data = new FormData()
+
+      data.append('image', {
+        uri: image.uri,
+        name: image.fileName,
+        type: image.type,
+        size: image.fileSize
+      })
+      
+      await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_SECRET}`, {
+        method: 'POST',
+        body: data
+      })
+      .then((response) => response.json())
+      .then(async (result) => {
+        await createDishMutation.mutateAsync({
+          image: `${result.data.url}`,
+          title: title,
+          category: category,
+          location: location,
+          description: description,
+          youtube: youtubeUrl,
+          authorId: user.id
+        },
+        {
+          onError: (error) => {
+            setIsLoading(false)
+            console.error(error)
+          },
+          onSuccess: () => {
+            setIsLoading(false)
+          }
+        })
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  // console.log('Ingredients', ingredientsState)
+  // console.log('Procedures', proceduresState)
 
   return (
     <React.Fragment>
@@ -71,6 +138,46 @@ const CreateDishLayout = () => {
             <Text style={[tw`text-sm text-neutral-400`, fonts.fontPoppinsLight]}>Share your dish around the world.</Text>
           </View>
           <View style={tw`flex flex-col w-full mt-3`}>
+            <View style={tw`flex flex-col my-1`}>
+              <View style={tw`relative w-full overflow-hidden rounded-xl my-3`}>
+                {photo === null
+                  ? <View style={tw`flex flex-row items-center justify-center w-full h-[10rem] bg-neutral-100`}>
+                      <Text style={[tw`text-neutral-400 text-sm`, fonts.fontPoppinsBold]}>Add Photo</Text>
+                    </View>
+                  : <Image
+                      style={tw`flex w-full h-[10rem]`}
+                      resizeMode="cover"
+                      source={{
+                        uri: `${ photo[0].uri }`
+                      }}
+                    />
+                }
+                <React.Fragment>
+                  {photo !== null && (
+                    <TouchableOpacity
+                      style={tw`absolute top-3 right-3 rounded-full p-1 bg-white bg-opacity-80`}
+                      onPress={() => setPhoto(null)}
+                    >
+                      <FeatherIcon
+                        name="x"
+                        size="small"
+                        color='#222222'
+                      />
+                    </TouchableOpacity>
+                  )}
+                  <TouchableOpacity
+                    style={tw`absolute bottom-3 right-3 rounded-full p-2 bg-white bg-opacity-80`}
+                    onPress={handleChoosePhoto}
+                  >
+                    <FeatherIcon
+                      name="camera"
+                      size="small"
+                      color='#222222'
+                    />
+                  </TouchableOpacity>
+                </React.Fragment>
+              </View>
+            </View>
             <View style={tw`flex flex-col my-1`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
                 <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Title</Text>
@@ -140,20 +247,6 @@ const CreateDishLayout = () => {
                 value={description}
                 onChangeText={(value: string) => {
                   setDescription(value)
-                }}
-              />
-            </View>
-            <View style={tw`flex flex-col my-1`}>
-              <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Author</Text>
-                <Text style={[tw`text-sm text-red-600`, fonts.fontPoppinsLight]}>*</Text>
-              </View>
-              <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
-                placeholder="Recipe Author"
-                value={author}
-                onChangeText={(value: string) => {
-                  setAuthor(value)
                 }}
               />
             </View>
