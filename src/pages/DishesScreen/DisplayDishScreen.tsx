@@ -28,12 +28,10 @@ const DisplayDishScreen = () => {
     procedures
   } = route.params
 
-  const { data: fetch, isLoading, isError, error }: any = useGetUser()
+  const { data: user, isLoading, isError, error }: any = useGetUser()
 
   if (isLoading) return <SplashScreen />
   if (isError) return <ErrorScreen error={error.response?.data?.message} />
-
-  const user = fetch.data
 
   const onStateChange = React.useCallback((state: any) => {
     if (state === 'ended') {

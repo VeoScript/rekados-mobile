@@ -2,6 +2,7 @@ import React from 'react'
 import AuthLayout from '../../../layouts/AuthLayout'
 import tw from 'twrnc'
 import { fonts } from '../../../styles/global'
+import { MaterialIcon } from '../../../utils/Icons'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { useRegisterMutation } from '../../../lib/ReactQuery'
 
@@ -22,6 +23,7 @@ const SignUpScreen = () => {
   const [usernameError, setUsernameError] = React.useState<string>('')
   const [passwordError, setPasswordError] = React.useState<string>('')
   const [repasswordError, setRepasswordError] = React.useState<string>('')
+  const [signUpError, setSignUpError] = React.useState<string>('')
 
   const registrationMutation = useRegisterMutation()
 
@@ -47,8 +49,8 @@ const SignUpScreen = () => {
           username: username,
           password: password
         },{
-          onError: (error) => {
-            console.error(error),
+          onError: (error: any) => {
+            setSignUpError(error.response?.data?.message)
             clearFormState()
             clearErrorState()
             setIsLoading(false)
@@ -81,6 +83,7 @@ const SignUpScreen = () => {
     setEmail('')
     setUsername('')
     setPassword('')
+    setRepassword('')
   }
 
   const clearErrorState = () => {
@@ -96,6 +99,16 @@ const SignUpScreen = () => {
       <View style={tw`flex flex-row justify-center w-full my-3 overflow-hidden rounded-xl`}>
         <Text style={[tw`text-xl text-[#414143]`, fonts.fontPoppinsBold]}>Create Account</Text>
       </View>
+      {signUpError && (
+        <View style={tw`flex flex-row items-center w-full my-3 px-5 py-3 overflow-hidden rounded-xl bg-red-300`}>
+          <MaterialIcon
+            name="x-circle-fill"
+            size="medium"
+            color="#FF7D7D"
+          />
+          <Text style={[tw`-ml-5 w-full text-center text-sm text-[#FFFFFF]`, fonts.fontPoppinsLight]}>{ signUpError }</Text>
+        </View>
+      )}
       <View style={tw`flex flex-col my-1 w-full`}>
         <View style={tw`flex flex-row items-center mx-2 mb-1`}>
           <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Name</Text>

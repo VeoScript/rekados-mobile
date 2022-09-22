@@ -1,5 +1,6 @@
 import React from 'react'
 import MIcon from 'react-native-vector-icons/Octicons'
+import FeIcon from 'react-native-vector-icons/Feather'
 
 MIcon.loadFont()
 
@@ -23,4 +24,8 @@ export const IconSizes = {
 
 export const MaterialIcon = ({size, name, color}: IconProps) => (
   <MIcon name={name} size={IconSizes[size]} color={color} />
+)
+
+export const FeatherIcon = ({size, name, color}: IconProps) => (
+  <FeIcon name={name} size={IconSizes[size]} color={color} />
 )

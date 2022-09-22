@@ -25,7 +25,7 @@ const App = () => {
     setInterval(async () => {
       const cookies: any = await AsyncStorage.getItem('COOKIES')
       setSession(cookies)
-    }, 1000)
+    }, 500)
   })
 
   return (

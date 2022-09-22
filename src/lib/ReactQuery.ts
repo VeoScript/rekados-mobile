@@ -3,10 +3,13 @@ import { useNavigate } from '../utils/RootNavigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import api from './Axios'
 
+
+// QUERIES
 export const useGetUser = () => {
   return useQuery(['user'],
     async () => {
-      return await api.get(`/api/user`)
+      const user = await api.get(`/api/user`)
+      return user.data
     },
     {
       refetchInterval: 1000
@@ -14,6 +17,20 @@ export const useGetUser = () => {
   )
 }
 
+export const useGetDishes = () => {
+  return useQuery(['dishes'],
+    async () => {
+      const dishes = await api.get(`/api/dishes`)
+      return dishes.data
+    },
+    {
+      refetchInterval: 1000
+    }
+  )
+}
+
+
+// MUTATIONS
 export const useRegisterMutation = () => {
   const queryClient = useQueryClient()
   return useMutation((_args: { name: string, email: string, username: string, password: string }) =>
@@ -42,6 +59,7 @@ export const useLoginMutation = () => {
     {
       onSuccess: async (data) => {
         const cookies: any = data.headers['set-cookie']
+        console.log(cookies[0])
         await AsyncStorage.setItem('COOKIES', cookies[0])
         queryClient.invalidateQueries(['auth'])
         useNavigate('HomeScreen')
@@ -65,4 +83,34 @@ export const useLogoutMutation = () => {
       }
     }
   )
+}
+
+export const useCreateDishMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: {
+    image: string,
+    title: string,
+    category: string,
+    location: string,
+    description: string,
+    youtube: string,
+    authorId: string
+  }) => api.post('/api/create-dish', {
+    image: _args.image,
+    title: _args.title,
+    category: _args.category,
+    location: _args.location,
+    description: _args.description,
+    youtube: _args.youtube,
+    authorId: _args.authorId
+  }),
+  {
+    onError: (error) => {
+      console.error(error)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['dishes'])
+      useNavigate('HomeScreen')
+    }
+  })
 }

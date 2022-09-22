@@ -10,12 +10,10 @@ import { useGetUser } from '../../lib/ReactQuery'
 
 const CreateDishScreen = () => {
 
-  const { data: fetch, isLoading, isError, error }: any = useGetUser()
+  const { data: user, isLoading, isError, error }: any = useGetUser()
 
   if (isLoading) return <SplashScreen />
   if (isError) return <ErrorScreen error={error.response?.data?.message} />
-
-  const user = fetch.data
 
   // Nig click sa users ug back button muback ra jd sija padong sa HomeScreen
   const handleBackToHomeScreen = () => {
@@ -39,7 +37,7 @@ const CreateDishScreen = () => {
 
   return (
     <MainLayout user={user} >
-      <CreateDishLayout />
+      <CreateDishLayout user={user} />
     </MainLayout>
   )
 }
