@@ -16,7 +16,7 @@ const AddProcedures: React.FC<TypedProps> = ({ proceduresState, setProceduresSta
 
   const [addProcedure, setAddProcedure] = React.useState<string>('')
 
-  const handleAddIngredient = (procedureValue: string) => {
+  const handleAddProcedure = (procedureValue: string) => {
     if (procedureValue !== '') {
       const procedureData = [{ name: procedureValue }]
       setProceduresState([...proceduresState, ...procedureData])
@@ -73,7 +73,7 @@ const AddProcedures: React.FC<TypedProps> = ({ proceduresState, setProceduresSta
                 <TouchableOpacity
                   style={tw`mt-2`}
                   onPress={() => {
-                    handleAddIngredient(addProcedure)
+                    handleAddProcedure(addProcedure)
                   }}
                 >
                   <MaterialIcon
@@ -95,7 +95,7 @@ const AddProcedures: React.FC<TypedProps> = ({ proceduresState, setProceduresSta
                   onPress={() => {
                     Alert.alert(
                       '',
-                      'Are you sure you want to reset all ingredients?',
+                      'Are you sure you want to reset all procedures?',
                       [
                         {
                           text: 'Cancel',
