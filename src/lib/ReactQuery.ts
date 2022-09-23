@@ -42,7 +42,7 @@ export const useRegisterMutation = () => {
     }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['users'])
+        queryClient.invalidateQueries(['user'])
         useNavigate('SignInScreen')
       }
     }
@@ -59,9 +59,8 @@ export const useLoginMutation = () => {
     {
       onSuccess: async (data) => {
         const cookies: any = data.headers['set-cookie']
-        console.log(cookies[0])
         await AsyncStorage.setItem('COOKIES', cookies[0])
-        queryClient.invalidateQueries(['auth'])
+        queryClient.invalidateQueries(['user'])
         useNavigate('HomeScreen')
       }
     }
@@ -78,7 +77,7 @@ export const useLogoutMutation = () => {
       },
       onSuccess: async () => {
         await AsyncStorage.setItem('COOKIES', '')
-        queryClient.invalidateQueries(['users'])
+        queryClient.invalidateQueries(['user'])
         useNavigate('SignInScreen')
       }
     }
