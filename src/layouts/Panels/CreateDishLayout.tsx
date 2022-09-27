@@ -7,7 +7,7 @@ import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
 import { Dropdown } from 'react-native-element-dropdown'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { ScrollView, View, Text, TextInput, TouchableOpacity, Platform, Button, Image } from 'react-native'
-import { useCreateDishMutation } from '../../lib/ReactQuery'
+import { useCreateDishMutation, useCreateIngredientsMutation, useCreateProceduresMutation } from '../../lib/ReactQuery'
 import { IMGBB_API_SECRET } from '@env'
 
 interface TypedProps {
@@ -17,9 +17,11 @@ interface TypedProps {
 const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
 
   const createDishMutation = useCreateDishMutation()
+  const createIngredientsMutation = useCreateIngredientsMutation()
+  const createProceduresMutation = useCreateProceduresMutation()
 
   // loading state
-  const [isLoading, setIsLoading] = React.useState<Boolean>(false)
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
   // getting the selected photo for upload
   const [photo, setPhoto] = React.useState<any>(null)
@@ -61,6 +63,18 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
     { label: 'South America', value: 'South America' },
   ]
 
+  const clearState = () => {
+    setIsLoading(false)
+    setPhoto(null)
+    setTitle('')
+    setCategory('')
+    setLocation('')
+    setDescription('')
+    setYoutubeUrl('')
+    setIngredientsState([])
+    setProceduresState([])
+  }
+
   const handleChoosePhoto = () => {
     let options: any = {
       selectionLimit: 1,
@@ -83,6 +97,9 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
     try {
       setIsLoading(true)
 
+      // custom slug generator 4 beats
+      const slug = Math.random().toString(36).slice(-6)
+        
       const image: any = photo[0]
       const data = new FormData()
 
@@ -100,6 +117,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
       .then((response) => response.json())
       .then(async (result) => {
         await createDishMutation.mutateAsync({
+          slug: String(slug),
           image: `${result.data.url}`,
           title: title,
           category: category,
@@ -114,7 +132,21 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
             console.error(error)
           },
           onSuccess: () => {
-            setIsLoading(false)
+            // mutation for ingredients
+            for (let i = 0; i < ingredientsState.length; i++) {
+              createIngredientsMutation.mutateAsync({
+                slug: slug,
+                ingredient: ingredientsState[i].name
+              })
+            }
+            // mutation for procedures
+            for (let j = 0; j < proceduresState.length; j++) {
+              createProceduresMutation.mutateAsync({
+                slug: slug,
+                procedure: proceduresState[j].name
+              })
+            }
+            clearState()
           }
         })
       })
@@ -125,9 +157,6 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
       console.error(error)
     }
   }
-
-  // console.log('Ingredients', ingredientsState)
-  // console.log('Procedures', proceduresState)
 
   return (
     <React.Fragment>
@@ -156,6 +185,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                   {photo !== null && (
                     <TouchableOpacity
                       style={tw`absolute top-3 right-3 rounded-full p-1 bg-white bg-opacity-80`}
+                      disabled={isLoading}
                       onPress={() => setPhoto(null)}
                     >
                       <FeatherIcon
@@ -167,6 +197,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                   )}
                   <TouchableOpacity
                     style={tw`absolute bottom-3 right-3 rounded-full p-2 bg-white bg-opacity-80`}
+                    disabled={isLoading}
                     onPress={handleChoosePhoto}
                   >
                     <FeatherIcon
@@ -186,6 +217,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
               <TextInput
                 style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
                 placeholder="Recipe Title"
+                editable={!isLoading}
                 value={title}
                 onChangeText={(value: string) => {
                   setTitle(value)
@@ -201,6 +233,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                 style={[tw`flex w-full px-3 py-1 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
                 placeholderStyle={[tw`text-sm text-neutral-400`, fonts.fontPoppins]}
                 selectedTextStyle={[tw`text-sm text-black`, fonts.fontPoppins]}
+                disable={isLoading}
                 data={categoryData}
                 maxHeight={250}
                 statusBarIsTranslucent={true}
@@ -222,6 +255,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                 style={[tw`flex w-full px-3 py-1 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
                 placeholderStyle={[tw`text-sm text-neutral-400`, fonts.fontPoppins]}
                 selectedTextStyle={[tw`text-sm text-black`, fonts.fontPoppins]}
+                disable={isLoading}
                 data={locationData}
                 maxHeight={250}
                 statusBarIsTranslucent={true}
@@ -242,6 +276,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
               <TextInput
                 style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins, customStyle.alignTop]}
                 placeholder="Recipe Description"
+                editable={!isLoading}
                 multiline={true}
                 numberOfLines={5}
                 value={description}
@@ -255,6 +290,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
               <TextInput
                 style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
                 placeholder="Recipe Youtube URL"
+                editable={!isLoading}
                 value={youtubeUrl}
                 onChangeText={(value: string) => {
                   setYoutubeUrl(value)
@@ -266,6 +302,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
             <View style={tw`flex flex-row items-center justify-between w-full px-1 py-2`}>
               <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Ingredients</Text>
               <TouchableOpacity
+                disabled={isLoading}
                 onPress={() => {
                   setIngredientsModalVisible(true)
                 }}
@@ -284,6 +321,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                   <View style={tw`flex flex-row items-center justify-between w-full p-3 text-sm rounded-xl border border-neutral-200 bg-white`}>
                     <Text style={[tw`text-black`, fonts.fontPoppins]}>{ ingredient.name }</Text>
                     <TouchableOpacity
+                      disabled={isLoading}
                       onPress={() => {
                         ingredientsState.splice(i, 1)
                         setIngredientsState([...ingredientsState])
@@ -304,6 +342,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
             <View style={tw`flex flex-row items-center justify-between w-full px-1 py-2`}>
               <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Procedures</Text>
               <TouchableOpacity
+                disabled={isLoading}
                 onPress={() => {
                   setProceduresModalVisible(true)
                 }}
@@ -322,6 +361,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                   <View style={tw`flex flex-row items-center justify-between w-full p-3 text-sm rounded-xl border border-neutral-200 bg-white`}>
                     <Text style={[tw`text-black`, fonts.fontPoppins]}>{ procedure.name }</Text>
                     <TouchableOpacity
+                      disabled={isLoading}
                       onPress={() => {
                         proceduresState.splice(i, 1)
                         setProceduresState([...proceduresState])
@@ -337,16 +377,27 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                 </View>
               ))}
             </View>
-            {(ingredientsState.length > 0 && proceduresState.length > 0) && (
-              <View style={tw`flex flex-col my-1`}>
-                <TouchableOpacity
-                  style={tw`flex flex-row items-center justify-center w-full p-3 text-sm rounded-xl bg-[#f2b900]`}
-                  activeOpacity={0.7}
-                  onPress={handleSaveDish}
-                >
-                  <Text style={[tw`text-base text-white`, fonts.fontPoppins]}>Save Dish</Text>
-                </TouchableOpacity>
-              </View>
+            {(photo === null || title === '' || category === '' || location === '' || description === '' || (ingredientsState.length > 0 && proceduresState.length > 0)) && (
+              <React.Fragment>
+                {isLoading && (
+                  <View style={tw`flex flex-col my-1`}>
+                    <View style={tw`flex flex-row items-center justify-center w-full p-3 text-sm rounded-xl bg-[#f2b900] bg-opacity-70`}>
+                      <Text style={[tw`text-base text-white`, fonts.fontPoppins]}>Saving...</Text>
+                    </View>
+                  </View>
+                )}
+                {!isLoading && (
+                  <View style={tw`flex flex-col my-1`}>
+                    <TouchableOpacity
+                      style={tw`flex flex-row items-center justify-center w-full p-3 text-sm rounded-xl bg-[#f2b900]`}
+                      activeOpacity={0.7}
+                      onPress={handleSaveDish}
+                    >
+                      <Text style={[tw`text-base text-white`, fonts.fontPoppins]}>Save Dish</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </React.Fragment>
             )}
           </View>
         </View>
