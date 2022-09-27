@@ -20,12 +20,12 @@ const AuthLayout: React.FC<TypedProps> = ({ children }) => {
           <View style={tw`flex-col items-center w-full`}>
             <View style={tw`flex-row justify-center w-full overflow-hidden rounded-xl`}>
               <Image
-                style={tw`w-full h-[5rem]`}
+                style={tw`w-[15rem] h-[3rem]`}
                 resizeMode="contain"
-                source={require('../assets/images/favicon.png')}
+                source={require('../assets/images/rekados-official.png')}
               />
             </View>
-            <Text style={[tw`text-base text-[#33333] mt-2 mr-1`, fonts.fontPoppinsLight]}>Your daily recipe at a glance</Text>
+            <Text style={[tw`text-base text-[#33333] mt-1 mr-1`, fonts.fontPoppinsLight]}>Your daily recipe at a glance</Text>
           </View>
           <View style={tw`flex-col items-center w-full py-5`}>
             {children}

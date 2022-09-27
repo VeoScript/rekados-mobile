@@ -97,7 +97,7 @@ const SignUpScreen = () => {
   return (
     <AuthLayout>
       <View style={tw`flex flex-row justify-center w-full my-3 overflow-hidden rounded-xl`}>
-        <Text style={[tw`text-xl text-[#414143]`, fonts.fontPoppinsBold]}>Create Account</Text>
+        <Text style={[tw`text-xl text-neutral-600`, fonts.fontPoppinsBold]}>Create Account</Text>
       </View>
       {signUpError && (
         <View style={tw`flex flex-row items-center w-full my-3 px-5 py-3 overflow-hidden rounded-xl bg-red-300`}>
@@ -187,15 +187,15 @@ const SignUpScreen = () => {
       </View>
       <View style={tw`flex flex-col w-full my-1`}>
         {isLoading
-          ? <View style={tw`flex flex-row items-center justify-center w-full p-3 rounded-xl bg-[#231F20] bg-opacity-50`}>
-              <Text style={[tw`text-base text-[#f2b900]`, fonts.fontPoppins]}>Loading...</Text>
+          ? <View style={tw`flex flex-row items-center justify-center w-full p-3 text-sm rounded-xl bg-[#f2b900] bg-opacity-70`}>
+              <Text style={[tw`text-base text-white`, fonts.fontPoppins]}>Loading...</Text>
             </View>
           : <TouchableOpacity
-              style={tw`flex flex-row items-center justify-center w-full p-3 rounded-xl bg-[#231F20]`}
+              style={tw`flex flex-row items-center justify-center w-full p-3 text-sm rounded-xl bg-[#f2b900]`}
               activeOpacity={0.7}
               onPress={onSignUp}
             >
-              <Text style={[tw`text-base text-[#f2b900]`, fonts.fontPoppins]}>Sign Up</Text>
+              <Text style={[tw`text-base text-white`, fonts.fontPoppins]}>Sign Up</Text>
             </TouchableOpacity>
         }
       </View>
