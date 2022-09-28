@@ -377,7 +377,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                 </View>
               ))}
             </View>
-            {(photo !== null || title !== '' || category !== '' || location !== '' || description !== '' || (ingredientsState.length > 0 && proceduresState.length > 0)) && (
+            {(photo !== null && title !== '' && category !== '' && location !== '' && description !== '' && (ingredientsState.length > 0 && proceduresState.length > 0)) && (
               <React.Fragment>
                 {isLoading && (
                   <View style={tw`flex flex-col my-1`}>

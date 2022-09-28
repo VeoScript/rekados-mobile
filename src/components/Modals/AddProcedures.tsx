@@ -124,7 +124,7 @@ const AddProcedures: React.FC<TypedProps> = ({ proceduresState, setProceduresSta
                     key={i}
                     style={tw`flex flex-row items-center justify-between w-full p-3 my-0.5 text-sm rounded-xl border border-neutral-200 bg-white`}
                   >
-                    <Text style={[tw`text-neutral-600`, fonts.fontPoppins]}>{ procedure.name }</Text>
+                    <Text style={[tw`text-neutral-600 pr-5`, fonts.fontPoppins]}>{ procedure.name }</Text>
                     <TouchableOpacity
                       onPress={() => {
                         proceduresState.splice(i, 1)

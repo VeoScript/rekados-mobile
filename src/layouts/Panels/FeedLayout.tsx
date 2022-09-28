@@ -3,7 +3,7 @@ import SplashScreen from '../Misc/SplashScreen'
 import DishCard from '../../components/Cards/DishCard'
 import tw from 'twrnc'
 import { fonts } from '../../styles/global'
-import { SafeAreaView, View, Text, TextInput, FlatList, ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, FlatList, ActivityIndicator } from 'react-native'
 import { useGetDishes } from '../../lib/ReactQuery'
 
 const FeedLayout = () => {
@@ -50,7 +50,11 @@ const FeedLayout = () => {
   }
 
   const renderData = (item: any) => {
-    return (<DishCard dish={item} />)
+    return (
+      <View style={tw`flex p-3`}>
+        <DishCard dish={item} />
+      </View>
+    )
   }
 
   return (
