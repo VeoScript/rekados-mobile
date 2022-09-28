@@ -66,7 +66,7 @@ const DisplayDishScreen = () => {
           <View style={tw`flex flex-col items-start w-full overflow-hidden`}>
             <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Ingredients</Text>
             {ingredients.map((ingredient: { name: string }, i: number) => (
-              <View key={i} style={tw`flex flex-row items-center mt-2`}>
+              <View key={i} style={tw`flex flex-row items-start mt-2`}>
                 <MaterialIcon
                   name="dot-fill"
                   size="small"

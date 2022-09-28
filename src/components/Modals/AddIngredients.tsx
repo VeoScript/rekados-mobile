@@ -120,7 +120,7 @@ const AddIngredients: React.FC<TypedProps> = ({ ingredientsState, setIngredients
                     key={i}
                     style={tw`flex flex-row items-center justify-between w-full p-3 my-0.5 text-sm rounded-xl border border-neutral-200 bg-white`}
                   >
-                    <Text style={[tw`text-neutral-600`, fonts.fontPoppins]}>{ ingredient.name }</Text>
+                    <Text style={[tw`text-neutral-600 pr-5`, fonts.fontPoppins]}>{ ingredient.name }</Text>
                     <TouchableOpacity
                       onPress={() => {
                         ingredientsState.splice(i, 1)
