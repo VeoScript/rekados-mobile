@@ -23,7 +23,7 @@ const DisplayDishScreen = () => {
     location,
     description,
     author,
-    youtubeId,
+    youtube,
     ingredients,
     procedures
   } = route.params
@@ -78,14 +78,14 @@ const DisplayDishScreen = () => {
           </View>
           <View style={tw`flex flex-col items-start w-full mt-5 overflow-hidden`}>
             <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Procedures</Text>
-            {procedures.map((procedure: { name: string }, i: number) => (
+            {procedures.map((procedure: { details: string }, i: number) => (
               <View key={i} style={tw`flex flex-row items-start mt-2`}>
                 <Text style={[tw`text-base text-neutral-400`, fonts.fontPoppinsBold]}>Step {i + 1}: </Text>
-                <Text style={[tw`w-[15rem] ml-1 text-base`, fonts.fontPoppins]}>{ procedure.name }</Text>
+                <Text style={[tw`w-[15rem] ml-1 text-base`, fonts.fontPoppins]}>{ procedure.details }</Text>
               </View>
             ))}
           </View>
-          {youtubeId && (
+          {youtube && (
             <View style={tw`flex flex-col items-start w-full mt-5 overflow-hidden`}>
               <Text style={[tw`mb-3 text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>YouTube Video</Text>
               <View style={tw`relative overflow-hidden rounded-xl w-full bg-neutral-100`}>
@@ -94,7 +94,7 @@ const DisplayDishScreen = () => {
                 </View>
                 <YoutubePlayer
                   height={180}
-                  videoId={youtubeId}
+                  videoId={youtube}
                   onChangeState={onStateChange}
                 />
               </View>
