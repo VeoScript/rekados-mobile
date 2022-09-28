@@ -51,7 +51,7 @@ const FeedLayout = () => {
 
   const renderData = (item: any) => {
     return (
-      <View style={tw`flex p-3`}>
+      <View style={tw`flex px-3`}>
         <DishCard dish={item} />
       </View>
     )
