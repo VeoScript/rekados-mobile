@@ -2,7 +2,7 @@ import React from 'react'
 import tw from 'twrnc'
 import NavBar from '../components/NavBar'
 import BottomBar from '../components/BottomBar'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 
 interface MainLayoutTypes {
@@ -17,7 +17,9 @@ const MainLayout: React.FC<MainLayoutTypes> = ({ user, children }) => {
   return (
     <SafeAreaView style={tw`flex flex-col items-center justify-between w-full h-full bg-white`}>
       <NavBar user={user} />
-      { children }
+      <View style={tw`flex-1 w-full`}>
+        { children }
+      </View>
       {route.name !== 'DisplayDishScreen' && (
         <BottomBar />
       )}

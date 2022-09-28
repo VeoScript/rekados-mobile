@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useMutation, useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '../utils/RootNavigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import api from './Axios'
@@ -18,13 +18,14 @@ export const useGetUser = () => {
 }
 
 export const useGetDishes = () => {
-  return useQuery(['dishes'],
-    async () => {
-      const dishes = await api.get(`/api/dishes`)
+  return useInfiniteQuery(['dishes'],
+    async ({ pageParam = ''}) => {
+      const dishes = await api.get(`/api/dishes?cursor=${ pageParam }`)
       return dishes.data
     },
     {
-      refetchInterval: 1000
+      refetchInterval: 1000,
+      getNextPageParam: (lastPage) => lastPage.nextId ?? false
     }
   )
 }
