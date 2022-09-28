@@ -1,9 +1,9 @@
 import React from 'react'
-import SplashScreen from '../Misc/SplashScreen'
 import DishCard from '../../components/Cards/DishCard'
+import NewsFeedSkeletonLoader from '../../components/SkeletonLoaders/NewsFeedSkeletonLoader'
 import tw from 'twrnc'
 import { fonts } from '../../styles/global'
-import { View, Text, TextInput, FlatList, ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, FlatList, ActivityIndicator, ScrollView } from 'react-native'
 import { useGetDishes } from '../../lib/ReactQuery'
 
 const FeedLayout = () => {
@@ -15,8 +15,6 @@ const FeedLayout = () => {
     fetchNextPage,
     isFetchingNextPage
   }: any = useGetDishes()
-
-  if (isLoading) return <SplashScreen />
 
   const itemKeyExtractor = (item: any, index: { toString: () => any }) => {
     return index.toString()
@@ -59,15 +57,22 @@ const FeedLayout = () => {
 
   return (
     <View style={tw`flex flex-col w-full`}>
-      <FlatList
-        ListHeaderComponent={headerComponent}
-        data={dishes.pages.map((page: any) => page.dishes).flat()}
-        renderItem={renderData}
-        keyExtractor={itemKeyExtractor}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-        ListFooterComponent={isFetchingNextPage ? renderSpinner : null}
-      />
+      {isLoading && (
+        <ScrollView contentContainerStyle={tw`px-3`}>
+          <NewsFeedSkeletonLoader />
+        </ScrollView>
+      )}
+      {!isLoading && (
+        <FlatList
+          ListHeaderComponent={headerComponent}
+          data={dishes.pages.map((page: any) => page.dishes).flat()}
+          renderItem={renderData}
+          keyExtractor={itemKeyExtractor}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.3}
+          ListFooterComponent={isFetchingNextPage ? renderSpinner : null}
+        />
+      )}
     </View>
   )
 }
