@@ -9,6 +9,7 @@ interface TypedProps {
   dish: {
     item: {
       id: string
+      slug: string
       title: string
       image: string
       category: string
@@ -17,15 +18,13 @@ interface TypedProps {
       youtube: string
       ingredients: Object
       procedures: Object
+      comments: Object
       author: any
     }
   }
 }
 
 const DishCard: React.FC<TypedProps> = ({ dish }) => {
-
-  console.log(dish)
-
   return (
     <TouchableOpacity
       style={tw`flex flex-col items-start w-full p-3 mb-2 bg-neutral-50 rounded-xl`}
@@ -33,6 +32,7 @@ const DishCard: React.FC<TypedProps> = ({ dish }) => {
       onPress={() => {
         useNavigate('DisplayDishScreen', {
           id: dish.item.id,
+          slug: dish.item.slug,
           title: dish.item.title,
           image: dish.item.image,
           category: dish.item.category,
