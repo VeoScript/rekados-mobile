@@ -30,6 +30,19 @@ export const useGetDishes = () => {
   )
 }
 
+export const useGetComments = (slug: string) => {
+  return useQuery(['comments', slug],
+    async () => {
+      const comments = await api.get(`/api/comments?slug=${ slug }`)
+      return comments.data
+    },
+    {
+      enabled: !!slug,
+      refetchInterval: 1000
+    }
+  )
+}
+
 
 // MUTATIONS
 export const useRegisterMutation = () => {
@@ -154,6 +167,32 @@ export const useCreateProceduresMutation = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['dishes'])
         useNavigate('HomeScreen')
+      }
+    }
+  )
+}
+
+export const useCreateCommentMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { comment: string, slug: string }) =>
+    api.post('/api/create-comment', {
+      comment: _args.comment,
+      slug: _args.slug
+    }),
+    {
+      onMutate: async (newComment) => {
+        await queryClient.cancelQueries(['comments', newComment.comment])
+        const previousComments = queryClient.getQueryData(['comments', newComment.comment])
+        queryClient.setQueryData(['comments', newComment.comment], newComment)
+
+        return { previousComments, newComment }
+      },
+      onError: (error: any, newComment, context: any) => {
+        queryClient.setQueryData(['comments', context.newComment.comment], context.previousComments)
+        console.error(error.response.data)
+      },
+      onSettled: (newComment: any) => {
+        queryClient.invalidateQueries(['comments', newComment.comment])
       }
     }
   )

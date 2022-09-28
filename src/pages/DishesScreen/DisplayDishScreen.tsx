@@ -1,6 +1,7 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import tw from 'twrnc'
 import MainLayout from '../../layouts/MainLayout'
+import DishComments from '../../components/Cards/DishComments'
 import SplashScreen from '../../layouts/Misc/SplashScreen'
 import ErrorScreen from '../../layouts/Misc/ErrorScreen'
 import YoutubePlayer from 'react-native-youtube-iframe'
@@ -16,7 +17,7 @@ const DisplayDishScreen = () => {
   const route: any = useRoute()
 
   const {
-    id,
+    slug,
     title,
     image,
     category,
@@ -101,6 +102,7 @@ const DisplayDishScreen = () => {
             </View>
           )}
         </View>
+        <DishComments slug={slug} />
         <View style={tw`flex flex-row items-center justify-center w-full py-3`}>
           <Text style={[tw`text-xs text-neutral-400`, fonts.fontPoppinsLight]}>
             &copy; 2022 Rekados. All rights reserved.
