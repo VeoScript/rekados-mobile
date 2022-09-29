@@ -172,6 +172,36 @@ export const useCreateProceduresMutation = () => {
   )
 }
 
+export const useLikeMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { slug: string }) =>
+    api.post(`/api/like?slug=${ _args.slug }`),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: async () => {
+        queryClient.invalidateQueries(['dishes'])
+      }
+    }
+  )
+}
+
+export const useUnlikeMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { slug: string }) =>
+    api.delete(`/api/unlike?slug=${ _args.slug }`),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: async () => {
+        queryClient.invalidateQueries(['dishes'])
+      }
+    }
+  )
+}
+
 export const useCreateCommentMutation = () => {
   const queryClient = useQueryClient()
   return useMutation((_args: { comment: string, slug: string }) =>

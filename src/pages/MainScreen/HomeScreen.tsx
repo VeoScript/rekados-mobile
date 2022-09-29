@@ -12,7 +12,7 @@ const HomeScreen = () => {
 
   return (
     <MainLayout user={user} >
-      <FeedLayout />
+      <FeedLayout user={user} />
     </MainLayout>
   )
 }

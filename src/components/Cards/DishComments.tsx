@@ -99,8 +99,8 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
                 }
               </View>
               <View style={tw`flex-1 flex-col mx-3 my-3`}>
-                <Text style={[tw`text-base`, fonts.fontPoppinsBold]}>{ comment.user.name }</Text>
-                <Text style={[tw`text-sm mt-1`, fonts.fontPoppins]}>{ comment.content }</Text>
+                <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppinsBold]}>{ comment.user.name }</Text>
+                <Text style={[tw`text-sm text-neutral-600 mt-1`, fonts.fontPoppins]}>{ comment.content }</Text>
                 <Text style={[tw`text-xs text-neutral-400 mt-3`, fonts.fontPoppinsLight]}>{ moment(comment.createdAt).fromNow() }</Text>
               </View>
             </View>
