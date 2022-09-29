@@ -71,7 +71,7 @@ const DisplayDishScreen = () => {
                 <MaterialIcon
                   name="dot-fill"
                   size="small"
-                  color="#c3c3c3"
+                  color="#f2b900"
                 />
                 <Text style={[tw`w-[15rem] ml-2 text-base`, fonts.fontPoppins]}>{ ingredient.name }</Text>
               </View>
@@ -81,7 +81,7 @@ const DisplayDishScreen = () => {
             <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Procedures</Text>
             {procedures.map((procedure: { details: string }, i: number) => (
               <View key={i} style={tw`flex flex-row items-start mt-2`}>
-                <Text style={[tw`text-base text-neutral-400`, fonts.fontPoppinsBold]}>Step {i + 1}: </Text>
+                <Text style={[tw`text-base text-[#f2b900]`, fonts.fontPoppinsBold]}>Step {i + 1}: </Text>
                 <Text style={[tw`w-[15rem] ml-1 text-base`, fonts.fontPoppins]}>{ procedure.details }</Text>
               </View>
             ))}

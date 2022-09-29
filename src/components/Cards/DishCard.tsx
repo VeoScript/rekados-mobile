@@ -1,11 +1,13 @@
 import React from 'react'
+import LikeButton from '../Interactions/LikeButton'
 import tw from 'twrnc'
-import { MaterialIcon } from '../../utils/Icons'
+import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
 import { View, Text, Image, TouchableOpacity, Alert } from 'react-native'
 import { fonts } from '../../styles/global'
 import { useNavigate } from '../../utils/RootNavigation'
 
 interface TypedProps {
+  user: Object
   dish: {
     item: {
       id: string
@@ -18,13 +20,14 @@ interface TypedProps {
       youtube: string
       ingredients: Object
       procedures: Object
-      comments: Object
+      likes: any
+      comments: any
       author: any
     }
   }
 }
 
-const DishCard: React.FC<TypedProps> = ({ dish }) => {
+const DishCard: React.FC<TypedProps> = ({ user, dish }) => {
   return (
     <TouchableOpacity
       style={tw`flex flex-col items-start w-full p-3 mb-2 bg-neutral-50 rounded-xl`}
@@ -41,7 +44,8 @@ const DishCard: React.FC<TypedProps> = ({ dish }) => {
           author: dish.item.author.name,
           youtube: dish.item.youtube,
           ingredients: dish.item.ingredients,
-          procedures: dish.item.procedures
+          procedures: dish.item.procedures,
+          likes: dish.item.likes
         })
       }}
     >
@@ -54,17 +58,11 @@ const DishCard: React.FC<TypedProps> = ({ dish }) => {
           />
           <Text style={[tw`text-lg text-neutral-600 mx-2 capitalize`, fonts.fontPoppinsBold]}>{ dish.item.title }</Text>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert('Alert', `You Saved ${ dish.item.title } Successfully!`)
-          }}
-        >
-          <MaterialIcon
-            name="heart"
-            size="medium"
-            color="#c3c3c3"
-          />
-        </TouchableOpacity>
+        <LikeButton
+          user={user}
+          slug={dish.item.slug}
+          likes={dish.item.likes}
+        />
       </View>
       <View style={tw`w-full overflow-hidden rounded-xl my-3`}>
         <Image
@@ -75,8 +73,26 @@ const DishCard: React.FC<TypedProps> = ({ dish }) => {
           }}
         />
       </View>
-      <View style={tw`py-1`}>
+      <View style={tw`flex-row items-center justify-between w-full py-1`}>
         <Text style={[tw`px-2 py-0.5 rounded-full text-xs text-white bg-[#f2b900]`, fonts.fontPoppinsLight]}>{ dish.item.category }</Text>
+        <View style={tw`flex-row items-center`}>
+          <View style={tw`flex-row items-center`}>
+            <MaterialIcon
+              name="heart"
+              size="small"
+              color="#676767"
+            />
+            <Text style={[tw`text-sm mx-1`, fonts.fontPoppins]}>{ dish.item.likes && dish.item.likes.length }</Text>
+          </View>
+          <View style={tw`flex-row items-center`}>
+            <FeatherIcon
+              name="message-square"
+              size="small"
+              color="#676767"
+            />
+            <Text style={[tw`text-sm mx-1`, fonts.fontPoppins]}>{ dish.item.comments && dish.item.comments.length }</Text>
+          </View>
+        </View>
       </View>
       <View style={tw`py-1`}>
         <Text style={[tw`rounded-full text-sm`, fonts.fontPoppinsLight]}>{ dish.item.description }</Text>

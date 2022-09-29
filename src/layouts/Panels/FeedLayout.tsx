@@ -6,7 +6,11 @@ import { fonts } from '../../styles/global'
 import { View, Text, TextInput, FlatList, ActivityIndicator, ScrollView } from 'react-native'
 import { useGetDishes } from '../../lib/ReactQuery'
 
-const FeedLayout = () => {
+interface TypedProps {
+  user: Object
+}
+
+const FeedLayout: React.FC<TypedProps> = ({ user }) => {
   
   const {
     data: dishes,
@@ -50,7 +54,10 @@ const FeedLayout = () => {
   const renderData = (item: any) => {
     return (
       <View style={tw`flex px-3`}>
-        <DishCard dish={item} />
+        <DishCard
+          user={user}
+          dish={item}
+        />
       </View>
     )
   }
