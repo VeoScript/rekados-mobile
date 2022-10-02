@@ -20,7 +20,7 @@ export const useOnlineManager = () => {
 }
 
 
-// QUERIES
+// FOR QUERIES
 export const useGetUser = () => {
   return useQuery(['user'],
     async () => {
@@ -46,6 +46,19 @@ export const useGetDishes = () => {
   )
 }
 
+export const useGetDish = (slug: string) => {
+  return useQuery(['dish', slug],
+    async () => {
+      const dish = await api.get(`/api/dish/${ slug }`)
+      return dish.data
+    },
+    {
+      enabled: !!slug,
+      refetchInterval: 1000,
+    }
+  )
+}
+
 export const useGetComments = (slug: string) => {
   return useQuery(['comments', slug],
     async () => {
@@ -58,9 +71,10 @@ export const useGetComments = (slug: string) => {
     }
   )
 }
+// END FOR QUERIES
 
 
-// MUTATIONS
+// FOR MUTATIONS
 export const useRegisterMutation = () => {
   const queryClient = useQueryClient()
   return useMutation((_args: { name: string, email: string, username: string, password: string }) =>
@@ -243,3 +257,4 @@ export const useCreateCommentMutation = () => {
     }
   )
 }
+// END FOR MUTATIONS
