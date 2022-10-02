@@ -18,7 +18,7 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
   const { data: comments, isLoading, isError }: any = useGetComments(slug)
 
   const [comment, setComment] = React.useState<string>('')
-  const [commentHeight, setCommentHeight] = React.useState<number>(50)
+  const [commentHeight, setCommentHeight] = React.useState<number>(10)
 
   const onComment = async () => {
     await createCommentMutation.mutateAsync({
@@ -49,10 +49,10 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
           />
         </View>
       </View>
-      <View style={tw`flex-1 flex-row-reverse items-start w-full my-3 overflow-hidden rounded-xl border border-neutral-200`}>
-        {comment !== '' && (
+      <View style={tw`flex-row-reverse items-center w-full my-3 overflow-hidden rounded-xl border border-neutral-200`}>
+        {(comment !== '' && !(/^\s*$/.test(comment))) && (
           <TouchableOpacity
-            style={tw`px-3 py-3`}
+            style={tw`px-2`}
             onPress={onComment}
           >
             <FeatherIcon
