@@ -4,7 +4,7 @@ import SignUpScreen from './src/pages/MainScreen/Auth/SignUpScreen'
 import HomeScreen from './src/pages/MainScreen/HomeScreen'
 import CreateDishScreen from './src/pages/MainScreen/CreateDishScreen'
 import SaveDishScreen from './src/pages/MainScreen/SaveDishScreen'
-import LocationScreen from './src/pages/MainScreen/LocationScreen'
+import NotificationScreen from './src/pages/MainScreen/NotificationScreen'
 import DisplayDishScreen from './src/pages/DishesScreen/DisplayDishScreen'
 import { StatusBar } from 'react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -83,8 +83,8 @@ const App = () => {
                     }}
                   />
                   <Stack.Screen
-                    name="LocationScreen"
-                    component={LocationScreen}
+                    name="NotificationScreen"
+                    component={NotificationScreen}
                     options={{
                       headerShown: false,
                       animation: 'none'

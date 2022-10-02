@@ -50,13 +50,13 @@ const BottomBar = () => {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => {
-          useNavigate('LocationScreen')
+          useNavigate('NotificationScreen')
         }}
       >
         <MaterialIcon
-          name="location"
+          name="bell"
           size="large"
-          color={route.name === 'LocationScreen' ? '#f2b900' : '#7c7c7c'}
+          color={route.name === 'NotificationScreen' ? '#f2b900' : '#7c7c7c'}
         />
       </TouchableOpacity>
     </View>
