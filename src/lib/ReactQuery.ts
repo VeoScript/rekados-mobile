@@ -1,7 +1,23 @@
-import { useQuery, useMutation, useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
+import React from 'react'
+import { Platform } from 'react-native'
 import { useNavigate } from '../utils/RootNavigation'
+import { useQuery, useMutation, useInfiniteQuery, useQueryClient, onlineManager } from '@tanstack/react-query'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import NetInfo from '@react-native-community/netinfo'
 import api from './Axios'
+
+// CHECK NETINFO STATE (Online / Offline) FOR REACT QUERY
+export const useOnlineManager = () => {
+  React.useEffect(() => {
+    if (Platform.OS !== 'web') {
+      return NetInfo.addEventListener((state) => {
+        onlineManager.setOnline(
+          state.isConnected != null && state.isConnected && Boolean(state.isInternetReachable)
+        )
+      })
+    }
+  }, [])
+}
 
 
 // QUERIES

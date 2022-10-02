@@ -1,4 +1,5 @@
 import React from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import SignInScreen from './src/pages/MainScreen/Auth/SignInScreen'
 import SignUpScreen from './src/pages/MainScreen/Auth/SignUpScreen'
 import HomeScreen from './src/pages/MainScreen/HomeScreen'
@@ -6,19 +7,31 @@ import CreateDishScreen from './src/pages/MainScreen/CreateDishScreen'
 import SaveDishScreen from './src/pages/MainScreen/SaveDishScreen'
 import NotificationScreen from './src/pages/MainScreen/NotificationScreen'
 import DisplayDishScreen from './src/pages/DishesScreen/DisplayDishScreen'
-import { StatusBar } from 'react-native'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import SplashScreen from './src/layouts/Misc/SplashScreen'
+import { AppStateStatus, Platform, StatusBar } from 'react-native'
+import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { navigationRef } from './src/utils/RootNavigation'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useAppState } from './src/hooks/useAppState'
+import { useOnlineManager } from './src/lib/ReactQuery'
+import { useCheckOnline } from './src/hooks/useCheckOnline'
 
-const queryClient = new QueryClient()
+const onAppStateChange = (status: AppStateStatus) => {
+  if (Platform.OS !== 'web') {
+    focusManager.setFocused(status === 'active')
+  }
+}
+
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: 2 } }
+})
 
 const Stack = createNativeStackNavigator()
 
 const App = () => {
 
+  // checking the session
   const [session, setSession] = React.useState<string>()
 
   React.useEffect(() => {
@@ -27,6 +40,17 @@ const App = () => {
       setSession(cookies)
     }, 500)
   })
+
+  // check online and offline state for react-query
+  useOnlineManager()
+
+  // check appstate if the app is running in the background
+  useAppState(onAppStateChange)
+
+  // getting the online and offline state
+  const checkOnline = useCheckOnline()
+
+  if ((checkOnline !== null && !checkOnline)) return <SplashScreen />
 
   return (
     <React.Fragment>
