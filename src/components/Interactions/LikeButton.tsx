@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Alert } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { MaterialIcon } from '../../utils/Icons'
 import { useLikeMutation, useUnlikeMutation } from '../../lib/ReactQuery'
 
@@ -38,8 +38,8 @@ const LikeButton: React.FC<TypedProps> = ({ slug, user, likes }) => {
   return (
     <TouchableOpacity
       onPress={async () => {
-        like ? await onUnlike(slug) : await onLike(slug)
         setLike(!like)
+        like ? await onUnlike(slug) : await onLike(slug)
       }}
     >
       {like ? (
