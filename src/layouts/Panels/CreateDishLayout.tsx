@@ -6,7 +6,7 @@ import { fonts, customStyle } from '../../styles/global'
 import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
 import { Dropdown } from 'react-native-element-dropdown'
 import { launchImageLibrary } from 'react-native-image-picker'
-import { ScrollView, View, Text, TextInput, TouchableOpacity, Platform, Button, Image } from 'react-native'
+import { ScrollView, View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
 import { useCreateDishMutation, useCreateIngredientsMutation, useCreateProceduresMutation } from '../../lib/ReactQuery'
 import { IMGBB_API_SECRET } from '@env'
 

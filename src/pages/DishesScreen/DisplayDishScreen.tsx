@@ -6,8 +6,9 @@ import SplashScreen from '../../layouts/Misc/SplashScreen'
 import ErrorScreen from '../../layouts/Misc/ErrorScreen'
 import ViewDishSkeletonLoader from '../../components/SkeletonLoaders/ViewDishSkeletonLoader'
 import LikeButton from '../../components/Interactions/LikeButton'
+import DeleteDish from '../../components/Modals/DeleteDish'
 import YoutubePlayer from 'react-native-youtube-iframe'
-import { ScrollView, View, Text, Image, ActivityIndicator } from 'react-native'
+import { ScrollView, View, Text, Image, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { fonts } from '../../styles/global'
 import { MaterialIcon } from '../../utils/Icons'
@@ -19,6 +20,8 @@ const DisplayDishScreen = () => {
   const route: any = useRoute()
 
   const { slug } = route.params
+
+  const [modalVisible, setModalVisible] = React.useState(false)
 
   const { data: user, isLoading, isError, error }: any = useGetUser()
   const { data: dish, isLoading: dishIsLoading, isError: dishIsError, error: dishError }: any = useGetDish(slug)
@@ -45,30 +48,45 @@ const DisplayDishScreen = () => {
               <View style={tw`flex flex-col items-center w-full`}>
                 <Text style={[tw`ml-1 text-3xl text-neutral-600`, fonts.fontPoppinsBlack]}>{ dish.title }</Text>
                 <Text style={[tw`mt-1 px-2 py-0.5 rounded-full text-sm text-white bg-[#f2b900]`, fonts.fontPoppinsLight]}>{ dish.category }</Text>
-                <View style={tw`mt-3`}>
-                  <Text style={[tw`text-lg text-center text-neutral-500`, fonts.fontPoppinsBold]}>{ dish.location }</Text>
-                  <Text style={[tw`text-sm text-center text-neutral-400`, fonts.fontPoppins]}>by { dish.author.name }</Text>
+                <View style={tw`w-full overflow-hidden rounded-xl my-3`}>
+                  <Image
+                    style={tw`flex w-full h-[12rem]`}
+                    resizeMode="cover"
+                    source={{
+                      uri: `${ dish.image }`
+                    }}
+                  />
                 </View>
               </View>
-              <View style={tw`absolute top-5 right-5 flex-row items-center`}>
-                <LikeButton
-                  user={user}
-                  slug={slug}
-                  likes={dish.likes}
-                />
-                <Text style={[tw`text-base ml-1.5`, fonts.fontPoppins]}>{ dish.likes && dish.likes.length }</Text>
-              </View>
-              <View style={tw`w-full overflow-hidden rounded-xl my-3`}>
-                <Image
-                  style={tw`flex w-full h-[12rem]`}
-                  resizeMode="cover"
-                  source={{
-                    uri: `${ dish.image }`
-                  }}
-                />
+              <View style={tw`flex-row items-center justify-between w-full px-1`}>
+                <View style={tw`mt-3`}>
+                  <Text style={[tw`text-lg text-neutral-500`, fonts.fontPoppinsBold]}>{ dish.location }</Text>
+                  <Text style={[tw`text-sm text-neutral-400`, fonts.fontPoppins]}>by { dish.author.name }</Text>
+                </View>
+                <View style={tw`flex-row items-center`}>
+                  <View style={tw`flex-row items-center mx-1.5`}>
+                    <LikeButton
+                      user={user}
+                      slug={slug}
+                      likes={dish.likes}
+                    />
+                    {/* <Text style={[tw`text-base ml-1.5`, fonts.fontPoppins]}>{ dish.likes && dish.likes.length }</Text> */}
+                  </View>
+                  {(user.id === dish.author.id) && (
+                    <View style={tw`flex-row items-center mx-1.5`}>
+                      <TouchableOpacity onPress={() => setModalVisible(true)}>
+                        <MaterialIcon
+                          name="trash"
+                          size="medium"
+                          color="#c3c3c3"
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
               </View>
               <View style={tw`flex flex-col items-center w-full pb-5`}>
-                <Text style={[tw`mt-3 px-3 text-base text-center text-neutral-500`, fonts.fontPoppins]}>{ dish.description }</Text>
+                <Text style={[tw`mt-3 text-base text-left text-neutral-500`, fonts.fontPoppins]}>{ dish.description }</Text>
               </View>
               <View style={tw`flex flex-col items-start w-full overflow-hidden`}>
                 <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Ingredients</Text>
@@ -114,6 +132,12 @@ const DisplayDishScreen = () => {
                 &copy; 2022 Rekados. All rights reserved.
               </Text>
             </View>
+            <DeleteDish
+              title={dish.title}
+              slug={slug}
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+            />
           </React.Fragment>
         )}
       </ScrollView>
