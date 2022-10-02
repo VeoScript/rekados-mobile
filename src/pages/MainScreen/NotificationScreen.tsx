@@ -7,7 +7,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import { useNavigate } from '../../utils/RootNavigation'
 import { useGetUser } from '../../lib/ReactQuery'
 
-const LocationScreen = () => {
+const NotificationScreen = () => {
 
   const { data: user, isLoading, isError, error }: any = useGetUser()
 
@@ -37,10 +37,10 @@ const LocationScreen = () => {
   return (
     <MainLayout user={user} >
       <View>
-        <Text>This is Location Screen</Text>
+        <Text>This is Notification Screen</Text>
       </View>
     </MainLayout>
   )
 }
 
-export default LocationScreen
+export default NotificationScreen
