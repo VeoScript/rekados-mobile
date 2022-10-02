@@ -2,8 +2,12 @@ import React from 'react'
 import tw from 'twrnc'
 import { fonts } from '../../styles/global'
 import { SafeAreaView, View, Text, Image, ActivityIndicator } from 'react-native'
+import { useCheckOnline } from '../../hooks/useCheckOnline'
 
 const SplashScreen = () => {
+
+  const checkOnline = useCheckOnline()
+
   return (
     <SafeAreaView style={tw`flex-1 flex-col items-center justify-center w-full bg-white`}>
       <View style={tw`flex-col items-center w-full`}>
@@ -22,6 +26,16 @@ const SplashScreen = () => {
           size={50}
         />
       </View>
+      {(checkOnline !== null && !checkOnline) && (
+        <View style={tw`flex-col items-center w-full`}>
+          <Text style={[tw`w-full text-center text-sm text-neutral-500`, fonts.fontPoppinsSemiBold]}>
+            You are offline.
+          </Text>
+          <Text style={[tw`w-full text-center text-sm text-neutral-500`, fonts.fontPoppinsSemiBold]}>
+            Check your internet connection.
+          </Text>
+        </View>
+      )}
     </SafeAreaView>
   )
 }
