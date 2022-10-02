@@ -46,7 +46,7 @@ const LikeButton: React.FC<TypedProps> = ({ slug, user, likes }) => {
           <MaterialIcon
             name="heart-fill"
             size="medium"
-            color="#FF0404"
+            color="#FF4F4F"
           />
         ) : (
           <MaterialIcon

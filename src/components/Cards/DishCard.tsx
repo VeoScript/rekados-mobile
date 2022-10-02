@@ -33,20 +33,7 @@ const DishCard: React.FC<TypedProps> = ({ user, dish }) => {
       style={tw`flex flex-col items-start w-full p-3 mb-2 bg-neutral-50 rounded-xl`}
       activeOpacity={0.6}
       onPress={() => {
-        useNavigate('DisplayDishScreen', {
-          id: dish.item.id,
-          slug: dish.item.slug,
-          title: dish.item.title,
-          image: dish.item.image,
-          category: dish.item.category,
-          location: dish.item.location,
-          description: dish.item.description,
-          author: dish.item.author.name,
-          youtube: dish.item.youtube,
-          ingredients: dish.item.ingredients,
-          procedures: dish.item.procedures,
-          likes: dish.item.likes
-        })
+        useNavigate('DisplayDishScreen', { slug: dish.item.slug })
       }}
     >
       <View style={tw`flex flex-row items-center justify-between w-full`}>
