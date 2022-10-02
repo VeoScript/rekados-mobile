@@ -4,7 +4,6 @@ import { fonts } from '../../styles/global'
 import { MaterialIcon } from '../../utils/Icons'
 import { View, Text, Modal, Pressable, TouchableOpacity } from 'react-native'
 import { useLogoutMutation } from '../../lib/ReactQuery'
-import SplashScreen from '../../layouts/Misc/SplashScreen'
 
 interface MenuTypes {
   user: any

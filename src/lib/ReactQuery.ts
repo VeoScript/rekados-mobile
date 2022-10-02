@@ -257,4 +257,20 @@ export const useCreateCommentMutation = () => {
     }
   )
 }
+
+export const useDeleteDishMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { slug: string }) =>
+    api.delete(`/api/delete-dish/${_args.slug}`),
+    {
+      onError: (error) => {
+        console.error(error)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['dishes'])
+        useNavigate('HomeScreen')
+      }
+    }
+  )
+}
 // END FOR MUTATIONS
