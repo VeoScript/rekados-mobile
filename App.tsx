@@ -4,6 +4,7 @@ import SignInScreen from './src/pages/MainScreen/Auth/SignInScreen'
 import SignUpScreen from './src/pages/MainScreen/Auth/SignUpScreen'
 import HomeScreen from './src/pages/MainScreen/HomeScreen'
 import CreateDishScreen from './src/pages/MainScreen/CreateDishScreen'
+import EditDishScreen from './src/pages/MainScreen/EditDishScreen'
 import SaveDishScreen from './src/pages/MainScreen/SaveDishScreen'
 import NotificationScreen from './src/pages/MainScreen/NotificationScreen'
 import DisplayDishScreen from './src/pages/DishesScreen/DisplayDishScreen'
@@ -93,6 +94,14 @@ const App = () => {
                   <Stack.Screen
                     name="CreateDishScreen"
                     component={CreateDishScreen}
+                    options={{
+                      headerShown: false,
+                      animation: 'none'
+                    }}
+                  />
+                  <Stack.Screen
+                    name="EditDishScreen"
+                    component={EditDishScreen}
                     options={{
                       headerShown: false,
                       animation: 'none'

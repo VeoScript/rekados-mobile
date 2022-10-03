@@ -18,7 +18,7 @@ const AddProcedures: React.FC<TypedProps> = ({ proceduresState, setProceduresSta
 
   const handleAddProcedure = (procedureValue: string) => {
     if (procedureValue !== '') {
-      const procedureData = [{ name: procedureValue }]
+      const procedureData = [{ details: procedureValue }]
       setProceduresState([...proceduresState, ...procedureData])
       setAddProcedure('')
     } else {
@@ -119,12 +119,12 @@ const AddProcedures: React.FC<TypedProps> = ({ proceduresState, setProceduresSta
                 </TouchableOpacity>
               </View>
               <View style={tw`flex flex-col w-full my-3`}>
-                {proceduresState.map((procedure: { name: string }, i: number) => (
+                {proceduresState.map((procedure: { details: string }, i: number) => (
                   <View
                     key={i}
                     style={tw`flex flex-row items-center justify-between w-full p-3 my-0.5 text-sm rounded-xl border border-neutral-200 bg-white`}
                   >
-                    <Text style={[tw`text-neutral-600 pr-5`, fonts.fontPoppins]}>{ procedure.name }</Text>
+                    <Text style={[tw`text-neutral-600 pr-5`, fonts.fontPoppins]}>{ procedure.details }</Text>
                     <TouchableOpacity
                       onPress={() => {
                         proceduresState.splice(i, 1)

@@ -7,17 +7,32 @@ import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
 import { Dropdown } from 'react-native-element-dropdown'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { ScrollView, View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
-import { useCreateDishMutation, useCreateIngredientsMutation, useCreateProceduresMutation } from '../../lib/ReactQuery'
-import { useNavigate } from '../../utils/RootNavigation'
+import { useUpdateDishMutation, useCreateIngredientsMutation, useCreateProceduresMutation } from '../../lib/ReactQuery'
+import { useRoute } from '@react-navigation/native'
+import { useGoBack, useNavigate } from '../../utils/RootNavigation'
 import { IMGBB_API_SECRET } from '@env'
 
 interface TypedProps {
   user: any
 }
 
-const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
+const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
 
-  const createDishMutation = useCreateDishMutation()
+  const route: any = useRoute()
+
+  const {
+    slug: dishSlug,
+    title: dishTitle,
+    image: dishImage,
+    category: dishCategory,
+    location: dishLocation,
+    description: dishDescription,
+    youtube: dishYoutube,
+    ingredients: dishIngredients,
+    procedures: dishProcedures
+  } = route.params
+
+  const updateDishMutation = useUpdateDishMutation()
   const createIngredientsMutation = useCreateIngredientsMutation()
   const createProceduresMutation = useCreateProceduresMutation()
 
@@ -28,19 +43,19 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
   const [photo, setPhoto] = React.useState<any>(null)
 
   // input fields state
-  const [title, setTitle] = React.useState<string>('')
-  const [category, setCategory] = React.useState<string>('')
-  const [location, setLocation] = React.useState<string>('')
-  const [description, setDescription] = React.useState<string>('')
-  const [youtubeUrl, setYoutubeUrl] = React.useState<string>('')
+  const [title, setTitle] = React.useState<string>(dishTitle)
+  const [category, setCategory] = React.useState<string>(dishCategory)
+  const [location, setLocation] = React.useState<string>(dishLocation)
+  const [description, setDescription] = React.useState<string>(dishDescription)
+  const [youtubeUrl, setYoutubeUrl] = React.useState<string>(dishYoutube)
 
   // ingredients state
   const [ingredientsModalVisible, setIngredientsModalVisible] = React.useState<Boolean>(false)
-  const [ingredientsState, setIngredientsState] = React.useState<any>([])
+  const [ingredientsState, setIngredientsState] = React.useState<any>(dishIngredients)
 
   // procedures state
   const [proceduresModalVisible, setProceduresModalVisible] = React.useState<Boolean>(false)
-  const [proceduresState, setProceduresState] = React.useState<any>([])
+  const [proceduresState, setProceduresState] = React.useState<any>(dishProcedures)
 
   // dropdown values for category
   const categoryData = [
@@ -94,32 +109,69 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
     })
   }
 
-  const handleSaveDish = async () => {
+  const handleUpdateDish = async () => {
     try {
       setIsLoading(true)
-
-      // custom slug generator 4 beats
-      const slug = Math.random().toString(36).slice(-6)
         
-      const image: any = photo[0]
-      const data = new FormData()
+      if (photo !== null) {
+        const image: any = photo[0]
+        const data = new FormData()
 
-      data.append('image', {
-        uri: image.uri,
-        name: image.fileName,
-        type: image.type,
-        size: image.fileSize
-      })
-      
-      await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_SECRET}`, {
-        method: 'POST',
-        body: data
-      })
-      .then((response) => response.json())
-      .then(async (result) => {
-        await createDishMutation.mutateAsync({
-          slug: String(slug),
-          image: `${result.data.url}`,
+        data.append('image', {
+          uri: image.uri,
+          name: image.fileName,
+          type: image.type,
+          size: image.fileSize
+        })
+        
+        await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_SECRET}`, {
+          method: 'POST',
+          body: data
+        })
+        .then((response) => response.json())
+        .then(async (result) => {
+          await updateDishMutation.mutateAsync({
+            slug: dishSlug,
+            image: `${result.data.url}`,
+            title: title,
+            category: category,
+            location: location,
+            description: description,
+            youtube: youtubeUrl,
+            authorId: user.id
+          },
+          {
+            onError: (error) => {
+              setIsLoading(false)
+              console.error(error)
+            },
+            onSuccess: () => {
+              // mutation for ingredients
+              for (let i = 0; i < ingredientsState.length; i++) {
+                createIngredientsMutation.mutateAsync({
+                  slug: dishSlug,
+                  ingredient: ingredientsState[i].name
+                })
+              }
+              // mutation for procedures
+              for (let j = 0; j < proceduresState.length; j++) {
+                createProceduresMutation.mutateAsync({
+                  slug: dishSlug,
+                  procedure: proceduresState[j].details
+                })
+              }
+              clearState()
+              useGoBack()
+            }
+          })
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+      } else {
+        await updateDishMutation.mutateAsync({
+          slug: dishSlug,
+          image: `${dishImage}`,
           title: title,
           category: category,
           location: location,
@@ -136,25 +188,23 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
             // mutation for ingredients
             for (let i = 0; i < ingredientsState.length; i++) {
               createIngredientsMutation.mutateAsync({
-                slug: slug,
+                slug: dishSlug,
                 ingredient: ingredientsState[i].name
               })
             }
             // mutation for procedures
             for (let j = 0; j < proceduresState.length; j++) {
               createProceduresMutation.mutateAsync({
-                slug: slug,
+                slug: dishSlug,
                 procedure: proceduresState[j].details
               })
             }
             clearState()
-            useNavigate('HomeScreen')
+            useGoBack()
           }
         })
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+      }
+
     } catch (error) {
       console.error(error)
     }
@@ -165,16 +215,20 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
       <ScrollView style={tw`flex flex-col w-full`}>
         <View style={tw`flex flex-col p-3`}>
           <View style={tw`flex flex-col px-1`}>
-            <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>Create Dish</Text>
-            <Text style={[tw`text-sm text-neutral-400`, fonts.fontPoppinsLight]}>Share your dish around the world.</Text>
+            <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>Edit Dish</Text>
+            <Text style={[tw`text-sm text-neutral-400`, fonts.fontPoppinsLight]}>Stay updated with your dishes.</Text>
           </View>
           <View style={tw`flex flex-col w-full mt-3`}>
             <View style={tw`flex flex-col my-1`}>
               <View style={tw`relative w-full overflow-hidden rounded-xl my-3`}>
                 {photo === null
-                  ? <View style={tw`flex flex-row items-center justify-center w-full h-[10rem] bg-neutral-100`}>
-                      <Text style={[tw`text-neutral-400 text-sm`, fonts.fontPoppinsBold]}>Add Photo</Text>
-                    </View>
+                  ? <Image
+                      style={tw`flex w-full h-[10rem]`}
+                      resizeMode="cover"
+                      source={{
+                        uri: `${ dishImage }`
+                      }}
+                    />
                   : <Image
                       style={tw`flex w-full h-[10rem]`}
                       resizeMode="cover"
@@ -379,12 +433,12 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                 </View>
               ))}
             </View>
-            {(photo !== null && title !== '' && category !== '' && location !== '' && description !== '' && (ingredientsState.length > 0 && proceduresState.length > 0)) && (
+            {(title !== '' && category !== '' && location !== '' && description !== '' && (ingredientsState.length > 0 && proceduresState.length > 0)) && (
               <React.Fragment>
                 {isLoading && (
                   <View style={tw`flex flex-col my-1`}>
                     <View style={tw`flex flex-row items-center justify-center w-full p-3 text-sm rounded-xl bg-[#f2b900] bg-opacity-70`}>
-                      <Text style={[tw`text-base text-white`, fonts.fontPoppins]}>Saving...</Text>
+                      <Text style={[tw`text-base text-white`, fonts.fontPoppins]}>Updating...</Text>
                     </View>
                   </View>
                 )}
@@ -393,9 +447,9 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                     <TouchableOpacity
                       style={tw`flex flex-row items-center justify-center w-full p-3 text-sm rounded-xl bg-[#f2b900]`}
                       activeOpacity={0.7}
-                      onPress={handleSaveDish}
+                      onPress={handleUpdateDish}
                     >
-                      <Text style={[tw`text-base text-white`, fonts.fontPoppins]}>Save Dish</Text>
+                      <Text style={[tw`text-base text-white`, fonts.fontPoppins]}>Update Dish</Text>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -420,4 +474,4 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
   )
 }
 
-export default CreateDishLayout
+export default EditDishLayout
