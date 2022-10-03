@@ -10,8 +10,9 @@ import DeleteDish from '../../components/Modals/DeleteDish'
 import YoutubePlayer from 'react-native-youtube-iframe'
 import { ScrollView, View, Text, Image, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { useRoute } from '@react-navigation/native'
+import { useNavigate } from '../../utils/RootNavigation'
 import { fonts } from '../../styles/global'
-import { MaterialIcon } from '../../utils/Icons'
+import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
 import { Toast } from '../../utils/Toast'
 import { useGetUser, useGetDish } from '../../lib/ReactQuery'
 
@@ -73,15 +74,42 @@ const DisplayDishScreen = () => {
                     {/* <Text style={[tw`text-base ml-1.5`, fonts.fontPoppins]}>{ dish.likes && dish.likes.length }</Text> */}
                   </View>
                   {(user.id === dish.author.id) && (
-                    <View style={tw`flex-row items-center mx-1.5`}>
-                      <TouchableOpacity onPress={() => setModalVisible(true)}>
-                        <MaterialIcon
-                          name="trash"
-                          size="medium"
-                          color="#c3c3c3"
-                        />
-                      </TouchableOpacity>
-                    </View>
+                    <React.Fragment>
+                      <View style={tw`flex-row items-center mx-1.5`}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            useNavigate('EditDishScreen', {
+                              id: dish.id,
+                              slug: dish.slug,
+                              title: dish.title,
+                              image: dish.image,
+                              category: dish.category,
+                              location: dish.location,
+                              description: dish.description,
+                              youtube: dish.youtube,
+                              ingredients: dish.ingredients,
+                              procedures: dish.procedures,
+                              author: dish.author
+                            })
+                          }}
+                        >
+                          <FeatherIcon
+                            name="edit"
+                            size="medium"
+                            color="#c3c3c3"
+                          />
+                        </TouchableOpacity>
+                      </View>
+                      <View style={tw`flex-row items-center mx-1.5`}>
+                        <TouchableOpacity onPress={() => setModalVisible(true)}>
+                          <MaterialIcon
+                            name="trash"
+                            size="medium"
+                            color="#c3c3c3"
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </React.Fragment>
                   )}
                 </View>
               </View>

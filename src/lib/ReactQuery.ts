@@ -165,6 +165,37 @@ export const useCreateDishMutation = () => {
   })
 }
 
+export const useUpdateDishMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: {
+    slug: string,
+    image: string,
+    title: string,
+    category: string,
+    location: string,
+    description: string,
+    youtube: string,
+    authorId: string
+  }) => api.put('/api/update-dish', {
+    slug: _args.slug,
+    image: _args.image,
+    title: _args.title,
+    category: _args.category,
+    location: _args.location,
+    description: _args.description,
+    youtube: _args.youtube,
+    authorId: _args.authorId
+  }),
+  {
+    onError: (error: any) => {
+      console.error(error.response.data)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['dish'])
+    }
+  })
+}
+
 export const useCreateIngredientsMutation = () => {
   const queryClient = useQueryClient()
   return useMutation((_args: { ingredient: string, slug: string }) =>
@@ -196,7 +227,6 @@ export const useCreateProceduresMutation = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries(['dishes'])
-        useNavigate('HomeScreen')
       }
     }
   )
