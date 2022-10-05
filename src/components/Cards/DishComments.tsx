@@ -39,7 +39,7 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
   return (
     <View style={tw`flex-col w-full px-5 py-3`}>
       <View style={tw`flex-row items-center justify-between w-full`}>
-        <Text style={[tw`text-lg`, fonts.fontPoppinsBold]}>Comments</Text>
+        <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Comments</Text>
         <View style={tw`flex-row items-center`}>
           <Text style={[tw`text-sm mx-1`, fonts.fontPoppins]}>{ comments && comments.length }</Text>
           <FeatherIcon
