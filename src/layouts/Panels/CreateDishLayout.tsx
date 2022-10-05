@@ -132,17 +132,17 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
             setIsLoading(false)
             console.error(error)
           },
-          onSuccess: () => {
+          onSuccess: async () => {
             // mutation for ingredients
             for (let i = 0; i < ingredientsState.length; i++) {
-              createIngredientsMutation.mutateAsync({
+              await createIngredientsMutation.mutateAsync({
                 slug: slug,
                 ingredient: ingredientsState[i].name
               })
             }
             // mutation for procedures
             for (let j = 0; j < proceduresState.length; j++) {
-              createProceduresMutation.mutateAsync({
+              await createProceduresMutation.mutateAsync({
                 slug: slug,
                 procedure: proceduresState[j].details
               })
@@ -234,7 +234,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
               <Dropdown
                 style={[tw`flex w-full px-3 py-1 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
                 placeholderStyle={[tw`text-sm text-neutral-400`, fonts.fontPoppins]}
-                selectedTextStyle={[tw`text-sm text-black`, fonts.fontPoppins]}
+                selectedTextStyle={[tw`text-sm ${isLoading ? 'text-neutral-300' : 'text-black'}`, fonts.fontPoppins]}
                 disable={isLoading}
                 data={categoryData}
                 maxHeight={250}
@@ -256,7 +256,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
               <Dropdown
                 style={[tw`flex w-full px-3 py-1 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
                 placeholderStyle={[tw`text-sm text-neutral-400`, fonts.fontPoppins]}
-                selectedTextStyle={[tw`text-sm text-black`, fonts.fontPoppins]}
+                selectedTextStyle={[tw`text-sm ${isLoading ? 'text-neutral-300' : 'text-black'}`, fonts.fontPoppins]}
                 disable={isLoading}
                 data={locationData}
                 maxHeight={250}
@@ -303,18 +303,19 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
           <View>
             <View style={tw`flex flex-row items-center justify-between w-full px-1 py-2`}>
               <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Ingredients</Text>
-              <TouchableOpacity
-                disabled={isLoading}
-                onPress={() => {
-                  setIngredientsModalVisible(true)
-                }}
-              >
-                <MaterialIcon
-                  name="plus"
-                  size="medium"
-                  color="#222222"
-                />
-              </TouchableOpacity>
+              {!isLoading && (
+                <TouchableOpacity
+                  onPress={() => {
+                    setIngredientsModalVisible(true)
+                  }}
+                >
+                  <MaterialIcon
+                    name="plus"
+                    size="medium"
+                    color="#222222"
+                  />
+                </TouchableOpacity>
+              )}
             </View>
             <View style={tw`flex flex-col w-full`}>
               {ingredientsState.map((ingredient: { name: string }, i: number) => (
@@ -322,19 +323,20 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                   <Text style={[tw`mx-2 mb-1 text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Ingredient { i + 1 }</Text>
                   <View style={tw`flex flex-row items-center justify-between w-full p-3 text-sm rounded-xl border border-neutral-200 bg-white`}>
                     <Text style={[tw`text-black`, fonts.fontPoppins]}>{ ingredient.name }</Text>
-                    <TouchableOpacity
-                      disabled={isLoading}
-                      onPress={() => {
-                        ingredientsState.splice(i, 1)
-                        setIngredientsState([...ingredientsState])
-                      }}
-                    >
-                      <MaterialIcon
-                        name="x"
-                        size="small"
-                        color="#c3c3c3"
-                      />
-                    </TouchableOpacity>
+                    {!isLoading && (
+                      <TouchableOpacity
+                        onPress={() => {
+                          ingredientsState.splice(i, 1)
+                          setIngredientsState([...ingredientsState])
+                        }}
+                      >
+                        <MaterialIcon
+                          name="x"
+                          size="small"
+                          color="#c3c3c3"
+                        />
+                      </TouchableOpacity>
+                    )}
                   </View>
                 </View>
               ))}
@@ -343,18 +345,19 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
           <View>
             <View style={tw`flex flex-row items-center justify-between w-full px-1 py-2`}>
               <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Procedures</Text>
-              <TouchableOpacity
-                disabled={isLoading}
-                onPress={() => {
-                  setProceduresModalVisible(true)
-                }}
-              >
-                <MaterialIcon
-                  name="plus"
-                  size="medium"
-                  color="#222222"
-                />
-              </TouchableOpacity>
+              {!isLoading && (
+                <TouchableOpacity
+                  onPress={() => {
+                    setProceduresModalVisible(true)
+                  }}
+                >
+                  <MaterialIcon
+                    name="plus"
+                    size="medium"
+                    color="#222222"
+                  />
+                </TouchableOpacity>
+              )}
             </View>
             <View style={tw`flex flex-col w-full`}>
               {proceduresState.map((procedure: { details: string }, i: number) => (
@@ -362,19 +365,20 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
                   <Text style={[tw`mx-2 mb-1 text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Procedure { i + 1 }</Text>
                   <View style={tw`flex flex-row items-center justify-between w-full p-3 text-sm rounded-xl border border-neutral-200 bg-white`}>
                     <Text style={[tw`text-black`, fonts.fontPoppins]}>{ procedure.details }</Text>
-                    <TouchableOpacity
-                      disabled={isLoading}
-                      onPress={() => {
-                        proceduresState.splice(i, 1)
-                        setProceduresState([...proceduresState])
-                      }}
-                    >
-                      <MaterialIcon
-                        name="x"
-                        size="small"
-                        color="#c3c3c3"
-                      />
-                    </TouchableOpacity>
+                    {!isLoading && (
+                      <TouchableOpacity
+                        onPress={() => {
+                          proceduresState.splice(i, 1)
+                          setProceduresState([...proceduresState])
+                        }}
+                      >
+                        <MaterialIcon
+                          name="x"
+                          size="small"
+                          color="#c3c3c3"
+                        />
+                      </TouchableOpacity>
+                    )}
                   </View>
                 </View>
               ))}
