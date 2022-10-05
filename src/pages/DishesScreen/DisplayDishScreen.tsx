@@ -61,8 +61,8 @@ const DisplayDishScreen = () => {
               </View>
               <View style={tw`flex-row items-center justify-between w-full px-1`}>
                 <View style={tw`mt-3`}>
-                  <Text style={[tw`text-lg text-neutral-500`, fonts.fontPoppinsBold]}>{ dish.location }</Text>
-                  <Text style={[tw`text-sm text-neutral-400`, fonts.fontPoppins]}>by { dish.author.name }</Text>
+                  <Text style={[tw`text-lg text-neutral-600`, fonts.fontPoppinsBold]}>{ dish.location }</Text>
+                  <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppins]}>by { dish.author.name }</Text>
                 </View>
                 <View style={tw`flex-row items-center`}>
                   <View style={tw`flex-row items-center mx-1.5`}>
@@ -114,7 +114,7 @@ const DisplayDishScreen = () => {
                 </View>
               </View>
               <View style={tw`flex flex-col items-center w-full pb-5`}>
-                <Text style={[tw`mt-3 text-base text-left text-neutral-500`, fonts.fontPoppins]}>{ dish.description }</Text>
+                <Text style={[tw`mt-3 text-base text-left text-neutral-600`, fonts.fontPoppins]}>{ dish.description }</Text>
               </View>
               <View style={tw`flex flex-col items-start w-full overflow-hidden`}>
                 <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Ingredients</Text>
@@ -125,7 +125,7 @@ const DisplayDishScreen = () => {
                       size="small"
                       color="#f2b900"
                     />
-                    <Text style={[tw`w-[15rem] ml-2 text-base`, fonts.fontPoppins]}>{ ingredient.name }</Text>
+                    <Text style={[tw`w-[15rem] ml-2 text-base text-neutral-600`, fonts.fontPoppins]}>{ ingredient.name }</Text>
                   </View>
                 ))}
               </View>
@@ -134,7 +134,7 @@ const DisplayDishScreen = () => {
                 {dish.procedures.map((procedure: { details: string }, i: number) => (
                   <View key={i} style={tw`flex flex-row items-start mt-2`}>
                     <Text style={[tw`text-base text-[#f2b900]`, fonts.fontPoppinsBold]}>Step {i + 1}: </Text>
-                    <Text style={[tw`w-[15rem] ml-1 text-base`, fonts.fontPoppins]}>{ procedure.details }</Text>
+                    <Text style={[tw`w-[15rem] ml-1 text-base text-neutral-600`, fonts.fontPoppins]}>{ procedure.details }</Text>
                   </View>
                 ))}
               </View>
