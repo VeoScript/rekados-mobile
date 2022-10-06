@@ -20,7 +20,7 @@ const MainLayout: React.FC<MainLayoutTypes> = ({ user, children }) => {
       <View style={tw`flex-1 w-full`}>
         { children }
       </View>
-      {route.name !== 'DisplayDishScreen' && (
+      {(route.name !== 'DisplayDishScreen' && route.name !== 'EditDishScreen') && (
         <BottomBar />
       )}
     </SafeAreaView>
