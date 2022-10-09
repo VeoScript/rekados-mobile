@@ -59,6 +59,19 @@ export const useGetDish = (slug: string) => {
   )
 }
 
+export const useGetSaveDishes = () => {
+  return useInfiniteQuery(['saveDishes'],
+    async ({ pageParam = ''}) => {
+      const saveDishes = await api.get(`/api/save-dish?cursor=${ pageParam }`)
+      return saveDishes.data
+    },
+    {
+      refetchInterval: 1000,
+      getNextPageParam: (lastPage) => lastPage.nextId ?? false
+    }
+  )
+}
+
 export const useGetComments = (slug: string) => {
   return useQuery(['comments', slug],
     async () => {

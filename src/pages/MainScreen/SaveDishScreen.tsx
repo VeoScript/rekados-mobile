@@ -1,5 +1,6 @@
 import React from 'react'
 import MainLayout from '../../layouts/MainLayout'
+import SaveDishLayout from '../../layouts/Panels/SaveDishLayout'
 import SplashScreen from '../../layouts/Misc/SplashScreen'
 import ErrorScreen from '../../layouts/Misc/ErrorScreen'
 import { View, Text, BackHandler } from 'react-native'
@@ -36,9 +37,7 @@ const SaveDishScreen = () => {
 
   return (
     <MainLayout user={user} >
-      <View>
-        <Text>This is Save Dish Screen</Text>
-      </View>
+      <SaveDishLayout user={user} />
     </MainLayout>
   )
 }
