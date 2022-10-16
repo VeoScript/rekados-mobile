@@ -1,9 +1,9 @@
 import React from 'react'
+import TopHeader from '../../components/TopHeader'
 import DishCard from '../../components/Cards/DishCard'
 import NewsFeedSkeletonLoader from '../../components/SkeletonLoaders/NewsFeedSkeletonLoader'
 import tw from 'twrnc'
-import { fonts } from '../../styles/global'
-import { View, Text, TextInput, FlatList, ActivityIndicator, ScrollView } from 'react-native'
+import { View, FlatList, ActivityIndicator, ScrollView } from 'react-native'
 import { useGetDishes } from '../../lib/ReactQuery'
 
 interface TypedProps {
@@ -36,18 +36,10 @@ const FeedLayout: React.FC<TypedProps> = ({ user }) => {
 
   const headerComponent = () => {
     return (
-      <View style={tw`flex flex-col w-full p-3`}>
-        <View style={tw`flex flex-col px-1 py-3`}>
-          <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>Feed</Text>
-          <Text style={[tw`text-sm text-neutral-400`, fonts.fontPoppinsLight]}>Browse dishes around the world.</Text>
-        </View>
-        <View style={tw`flex flex-col items-start justify-center w-full py-2`}>
-          <TextInput
-            style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
-            placeholder="Search Dish"
-          />
-        </View>
-      </View>
+      <TopHeader
+        title="Feed"
+        subtitle="Browse dishes around the world."
+      />
     )
   }
 
@@ -65,9 +57,15 @@ const FeedLayout: React.FC<TypedProps> = ({ user }) => {
   return (
     <View style={tw`flex flex-col w-full`}>
       {isLoading && (
-        <ScrollView contentContainerStyle={tw`px-3`}>
-          <NewsFeedSkeletonLoader />
-        </ScrollView>
+        <React.Fragment>
+          <TopHeader
+            title="Feed"
+            subtitle="Browse dishes around the world."
+          />
+          <ScrollView contentContainerStyle={tw`px-3`}>
+            <NewsFeedSkeletonLoader />
+          </ScrollView>
+        </React.Fragment>
       )}
       {!isLoading && (
         <FlatList

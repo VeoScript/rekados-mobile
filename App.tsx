@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import SignInScreen from './src/pages/MainScreen/Auth/SignInScreen'
 import SignUpScreen from './src/pages/MainScreen/Auth/SignUpScreen'
 import HomeScreen from './src/pages/MainScreen/HomeScreen'
-import CreateDishScreen from './src/pages/MainScreen/CreateDishScreen'
-import EditDishScreen from './src/pages/MainScreen/EditDishScreen'
+import CreateDishScreen from './src/pages/DishesScreen/CreateDishScreen'
+import EditDishScreen from './src/pages/DishesScreen/EditDishScreen'
 import SaveDishScreen from './src/pages/MainScreen/SaveDishScreen'
 import NotificationScreen from './src/pages/MainScreen/NotificationScreen'
 import DisplayDishScreen from './src/pages/DishesScreen/DisplayDishScreen'
@@ -40,7 +40,7 @@ const App = () => {
       const cookies: any = await AsyncStorage.getItem('COOKIES')
       setSession(cookies)
     }, 500)
-  })
+  }, [])
 
   // check online and offline state for react-query
   useOnlineManager()
