@@ -66,6 +66,11 @@ const DishesTab = () => {
               )}
               {!(isLoading || isError) && (
                 <React.Fragment>
+                  {dishResults.length === 0 && (
+                    <View style={tw`flex-row items-center justify-center w-full`}>
+                      <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppins]}>No Results Found</Text>
+                    </View>
+                  )}
                   {dishResults.map((dish: { id: string, slug: string, image: string, title: string, description: string }) => (
                     <SearchResultDisplay
                       key={dish.id}
