@@ -58,15 +58,13 @@ const SaveDishLayout: React.FC<TypedProps> = ({ user }) => {
   return (
     <View style={tw`flex flex-col w-full`}>
       {isLoading && (
-        <React.Fragment>
+        <ScrollView contentContainerStyle={tw`px-3`}>
           <TopHeader
             title="Saved Dishes"
             subtitle="Your saved dishes list."
           />
-          <ScrollView contentContainerStyle={tw`px-3`}>
-            <NewsFeedSkeletonLoader />
-          </ScrollView>
-        </React.Fragment>
+          <NewsFeedSkeletonLoader />
+        </ScrollView>
       )}
       {!isLoading && (
         <FlatList

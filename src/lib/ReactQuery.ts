@@ -79,7 +79,19 @@ export const useGetComments = (slug: string) => {
       return comments.data
     },
     {
-      enabled: !!slug,
+      enabled: !!slug
+    }
+  )
+}
+
+export const useGetDishSearch = (search: string) => {
+  return useQuery(['dishSearch', search],
+    async () => {
+      const searchDishes = await api.get(`/api/search-dish/${ search }`)
+      return searchDishes.data
+    },
+    {
+      enabled: !!search,
       refetchInterval: 1000
     }
   )
