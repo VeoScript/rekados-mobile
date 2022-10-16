@@ -6,6 +6,7 @@ import HomeScreen from './src/pages/MainScreen/HomeScreen'
 import CreateDishScreen from './src/pages/DishesScreen/CreateDishScreen'
 import EditDishScreen from './src/pages/DishesScreen/EditDishScreen'
 import SaveDishScreen from './src/pages/MainScreen/SaveDishScreen'
+import SearchScreen from './src/pages/MainScreen/SearchScreen'
 import NotificationScreen from './src/pages/MainScreen/NotificationScreen'
 import DisplayDishScreen from './src/pages/DishesScreen/DisplayDishScreen'
 import SplashScreen from './src/layouts/Misc/SplashScreen'
@@ -86,6 +87,14 @@ const App = () => {
                   <Stack.Screen
                     name="HomeScreen"
                     component={HomeScreen}
+                    options={{
+                      headerShown: false,
+                      animation: 'none'
+                    }}
+                  />
+                  <Stack.Screen
+                    name="SearchScreen"
+                    component={SearchScreen}
                     options={{
                       headerShown: false,
                       animation: 'none'

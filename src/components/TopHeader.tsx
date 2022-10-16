@@ -2,8 +2,9 @@ import React from 'react'
 import tw from 'twrnc'
 import { fonts } from '../styles/global'
 import { FeatherIcon } from '../utils/Icons'
-import { Toast } from '../utils/Toast'
 import { View, Text, TouchableOpacity } from 'react-native'
+import { useNavigate } from '../utils/RootNavigation'
+import { useRoute } from '@react-navigation/native'
 
 interface TypedProps {
   title: string
@@ -11,24 +12,29 @@ interface TypedProps {
 }
 
 const TopHeader: React.FC<TypedProps> = ({ title, subtitle }) => {
+
+  const route = useRoute()
+
   return (
     <View style={tw`flex flex-row items-center justify-between w-full p-3`}>
       <View style={tw`flex flex-col px-1 py-3`}>
         <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>{ title }</Text>
         <Text style={[tw`text-sm text-neutral-400`, fonts.fontPoppinsLight]}>{ subtitle }</Text>
       </View>
-      <TouchableOpacity
-        style={tw`p-2 bg-neutral-100 rounded-full`}
-        onPress={() => {
-          Toast('You pressed search button.')
-        }}
-      >
-        <FeatherIcon
-          name="search"
-          size="large"
-          color="#7c7c7c"
-        />
-      </TouchableOpacity>
+      {route.name !== 'SearchScreen' && (
+        <TouchableOpacity
+          style={tw`p-2 bg-neutral-100 rounded-full`}
+          onPress={() => {
+            useNavigate('SearchScreen')
+          }}
+        >
+          <FeatherIcon
+            name="search"
+            size="medium"
+            color="#7c7c7c"
+          />
+        </TouchableOpacity>
+      )}
     </View>
   )
 }
