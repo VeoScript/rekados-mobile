@@ -6,13 +6,7 @@ import { MaterialIcon } from '../../../utils/Icons'
 import { Toast } from '../../../utils/Toast'
 import { TouchableOpacity, View, ScrollView, TextInput, Text } from 'react-native'
 
-interface TypedProps {
-  image: string
-  title: string
-  description: string
-}
-
-const PeopleTab: React.FC<TypedProps> = ({ image, title, description }) => {
+const PeopleTab = () => {
 
   const [search, setSearch] = React.useState<string>('')
   
@@ -55,9 +49,9 @@ const PeopleTab: React.FC<TypedProps> = ({ image, title, description }) => {
             </TouchableOpacity>
           </View>
           <SearchResultDisplay
-            image={image}
-            title={title}
-            description={description}
+            image="https://i.pinimg.com/originals/15/8c/51/158c5113e3001ede9b0c05afc76eace7.jpg"
+            title="People Name"
+            description="People Description"
           />
         </View>
       </ScrollView>

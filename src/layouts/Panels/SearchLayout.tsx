@@ -15,21 +15,13 @@ const SearchLayout = () => {
 
   const DishesTabComponent = () => {
     return (
-      <DishesTab
-        image="https://i.pinimg.com/originals/15/8c/51/158c5113e3001ede9b0c05afc76eace7.jpg"
-        title="Dishes Name"
-        description="Dishes Description"
-      />
+      <DishesTab />
     )
   }
 
   const PeopleTabComponent = () => {
     return (
-      <PeopleTab
-        image="https://i.pinimg.com/originals/15/8c/51/158c5113e3001ede9b0c05afc76eace7.jpg"
-        title="People Name"
-        description="People Description"
-      />
+      <PeopleTab />
     )
   }
 
@@ -39,14 +31,14 @@ const SearchLayout = () => {
         title="Search"
         subtitle="Browse and Explore"
       />
-      <View style={{ flex: 1, height: screen.height }}>
+      <View style={{ flex: 1, marginTop: -10, height: screen.height }}>
         <Tab.Navigator
           initialRouteName="SearchTab"
           screenOptions={{
             tabBarActiveTintColor: '#414143',
             tabBarLabelStyle: [tw`text-[12px]`, fonts.fontPoppins],
             tabBarIndicatorStyle: [tw`bg-[#F3B900]`],
-            tabBarStyle: [tw`bg-neutral-50`],
+            tabBarStyle: [tw`bg-white`],
             tabBarPressColor: '#F3B900'
           }}
         >

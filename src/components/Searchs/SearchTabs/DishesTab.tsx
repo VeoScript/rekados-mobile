@@ -1,20 +1,18 @@
 import React from 'react'
 import SearchResultDisplay from '../SearchResultDisplay'
+import SearchResultsLoader from '../../SkeletonLoaders/SearchResultsLoader'
 import tw from 'twrnc'
 import { fonts } from '../../../styles/global'
 import { MaterialIcon } from '../../../utils/Icons'
 import { Toast } from '../../../utils/Toast'
 import { TouchableOpacity, View, ScrollView, TextInput, Text } from 'react-native'
+import { useGetDishSearch } from '../../../lib/ReactQuery'
 
-interface TypedProps {
-  image: string
-  title: string
-  description: string
-}
-
-const DishesTab: React.FC<TypedProps> = ({ image, title, description }) => {
+const DishesTab = () => {
 
   const [search, setSearch] = React.useState<string>('')
+
+  const { data: dishResults, isLoading, isError } = useGetDishSearch(search)
   
   return (
     <View style={tw`flex-1 bg-white`}>
@@ -54,11 +52,34 @@ const DishesTab: React.FC<TypedProps> = ({ image, title, description }) => {
               <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppinsLight]}>Clear all</Text>
             </TouchableOpacity>
           </View>
-          <SearchResultDisplay
-            image={image}
-            title={title}
-            description={description}
-          />
+          {!search && (
+            <SearchResultDisplay
+              image="https://i.pinimg.com/originals/15/8c/51/158c5113e3001ede9b0c05afc76eace7.jpg"
+              title="Dishes Name"
+              description="Dishes Description"
+            />
+          )}
+          {search && (
+            <React.Fragment>
+              {(isLoading || isError) && (
+                <SearchResultsLoader />
+              )}
+              {!(isLoading || isError) && (
+                <React.Fragment>
+                  {dishResults.map((dish: { id: string, slug: string, image: string, title: string, description: string }) => (
+                    <SearchResultDisplay
+                      key={dish.id}
+                      id={dish.id}
+                      slug={dish.slug}
+                      image={dish.image}
+                      title={dish.title}
+                      description={dish.description}
+                    />
+                  ))}
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          )}
         </View>
       </ScrollView>
     </View>

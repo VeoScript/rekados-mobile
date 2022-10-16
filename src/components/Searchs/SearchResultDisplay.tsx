@@ -3,19 +3,22 @@ import tw from 'twrnc'
 import { fonts } from '../../styles/global'
 import { Toast } from '../../utils/Toast'
 import { TouchableOpacity, Image, View, Text } from 'react-native'
+import { useNavigate } from '../../utils/RootNavigation'
 
 interface TypedProps {
+  id?: string
+  slug?: string
   image: string
   title: string
   description: string
 }
 
-const SearchResultDisplay: React.FC<TypedProps> = ({ image, title, description }) => {
+const SearchResultDisplay: React.FC<TypedProps> = ({ slug, image, title, description }) => {
   return (
     <TouchableOpacity
       style={tw`flex-row items-start w-full mb-3`}
       onPress={() => {
-        Toast('You pressed recent history.')
+        useNavigate('DisplayDishScreen', { slug: slug })
       }}
     >
       <Image
