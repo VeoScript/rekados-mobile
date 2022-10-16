@@ -42,30 +42,40 @@ const DishesTab = () => {
           </View>
         </View>
         <View style={tw`flex-col w-full px-3 py-3`}>
-          <View style={tw`flex-row items-center justify-between w-full pb-5`}>
-            <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsBold]}>Recent</Text>
-            <TouchableOpacity
-              onPress={() => {
-                Toast('You pressed clear all recent search history.')
-              }}
-            >
-              <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppinsLight]}>Clear all</Text>
-            </TouchableOpacity>
-          </View>
           {!search && (
-            <SearchResultDisplay
-              image="https://i.pinimg.com/originals/15/8c/51/158c5113e3001ede9b0c05afc76eace7.jpg"
-              title="Dishes Name"
-              description="Dishes Description"
-            />
+            <React.Fragment>
+              <View style={tw`flex-row items-center justify-between w-full pb-5`}>
+                <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsBold]}>Recent</Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    Toast('You pressed clear all recent search history.')
+                  }}
+                >
+                  <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppinsLight]}>Clear all</Text>
+                </TouchableOpacity>
+              </View>
+              <SearchResultDisplay
+                image="https://i.pinimg.com/originals/15/8c/51/158c5113e3001ede9b0c05afc76eace7.jpg"
+                title="Dishes Name"
+                description="Dishes Description"
+              />
+            </React.Fragment>
           )}
           {search && (
             <React.Fragment>
+              <View style={tw`flex-row items-center justify-between w-full pb-5`}>
+                <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsBold]}>Results</Text>
+              </View>
               {(isLoading || isError) && (
                 <SearchResultsLoader />
               )}
               {!(isLoading || isError) && (
                 <React.Fragment>
+                  {dishResults.length === 0 && (
+                    <View style={tw`flex-row items-center justify-center w-full`}>
+                      <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppins]}>No Results Found</Text>
+                    </View>
+                  )}
                   {dishResults.map((dish: { id: string, slug: string, image: string, title: string, description: string }) => (
                     <SearchResultDisplay
                       key={dish.id}
