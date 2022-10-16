@@ -1,14 +1,18 @@
 import React from 'react'
 import SearchResultDisplay from '../SearchResultDisplay'
+import SearchResultsLoader from '../../SkeletonLoaders/SearchResultsLoader'
 import tw from 'twrnc'
 import { fonts } from '../../../styles/global'
 import { MaterialIcon } from '../../../utils/Icons'
 import { Toast } from '../../../utils/Toast'
 import { TouchableOpacity, View, ScrollView, TextInput, Text } from 'react-native'
+import { useGetUserSearch } from '../../../lib/ReactQuery'
 
 const PeopleTab = () => {
 
   const [search, setSearch] = React.useState<string>('')
+
+  const { data: userResults, isLoading, isError } = useGetUserSearch(search)
   
   return (
     <View style={tw`flex-1 bg-white`}>
@@ -38,21 +42,53 @@ const PeopleTab = () => {
           </View>
         </View>
         <View style={tw`flex-col w-full px-3 py-3`}>
-          <View style={tw`flex-row items-center justify-between w-full pb-5`}>
-            <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsBold]}>Recent</Text>
-            <TouchableOpacity
-              onPress={() => {
-                Toast('You pressed clear all recent search history.')
-              }}
-            >
-              <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppinsLight]}>Clear all</Text>
-            </TouchableOpacity>
-          </View>
-          <SearchResultDisplay
-            image="https://i.pinimg.com/originals/15/8c/51/158c5113e3001ede9b0c05afc76eace7.jpg"
-            title="People Name"
-            description="People Description"
-          />
+        {!search && (
+            <React.Fragment>
+              <View style={tw`flex-row items-center justify-between w-full pb-5`}>
+                <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsBold]}>Recent</Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    Toast('You pressed clear all recent search history.')
+                  }}
+                >
+                  <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppinsLight]}>Clear all</Text>
+                </TouchableOpacity>
+              </View>
+              <SearchResultDisplay
+                image="https://i.pinimg.com/originals/15/8c/51/158c5113e3001ede9b0c05afc76eace7.jpg"
+                title="Dishes Name"
+                description="Dishes Description"
+              />
+            </React.Fragment>
+          )}
+          {search && (
+            <React.Fragment>
+              <View style={tw`flex-row items-center justify-between w-full pb-5`}>
+                <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsBold]}>Results</Text>
+              </View>
+              {(isLoading || isError) && (
+                <SearchResultsLoader />
+              )}
+              {!(isLoading || isError) && (
+                <React.Fragment>
+                  {userResults.length === 0 && (
+                    <View style={tw`flex-row items-center justify-center w-full`}>
+                      <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppins]}>No Results Found</Text>
+                    </View>
+                  )}
+                  {userResults.map((user: { id: string, profile: string, name: string, username: string, location: string }) => (
+                    <SearchResultDisplay
+                      key={user.id}
+                      id={user.id}
+                      image={user.profile}
+                      title={user.name}
+                      description={user.username}
+                    />
+                  ))}
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          )}
         </View>
       </ScrollView>
     </View>
