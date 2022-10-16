@@ -91,8 +91,19 @@ export const useGetDishSearch = (search: string) => {
       return searchDishes.data
     },
     {
-      enabled: !!search,
-      refetchInterval: 1000
+      enabled: !!search
+    }
+  )
+}
+
+export const useGetUserSearch = (search: string) => {
+  return useQuery(['userSearch', search],
+    async () => {
+      const searchUsers = await api.get(`/api/search-user/${ search }`)
+      return searchUsers.data
+    },
+    {
+      enabled: !!search
     }
   )
 }

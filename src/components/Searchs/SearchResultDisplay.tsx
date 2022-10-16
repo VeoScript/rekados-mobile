@@ -1,9 +1,10 @@
 import React from 'react'
 import tw from 'twrnc'
 import { fonts } from '../../styles/global'
-import { Toast } from '../../utils/Toast'
+import { FeatherIcon } from '../../utils/Icons'
 import { TouchableOpacity, Image, View, Text } from 'react-native'
 import { useNavigate } from '../../utils/RootNavigation'
+import { useRoute } from '@react-navigation/native'
 
 interface TypedProps {
   id?: string
@@ -14,20 +15,36 @@ interface TypedProps {
 }
 
 const SearchResultDisplay: React.FC<TypedProps> = ({ slug, image, title, description }) => {
+
+  const route = useRoute()
+
   return (
     <TouchableOpacity
       style={tw`flex-row items-start w-full mb-3`}
       onPress={() => {
-        useNavigate('DisplayDishScreen', { slug: slug })
+        if (route.name === 'DishesTab') {
+          useNavigate('DisplayDishScreen', { slug: slug })
+        } else {
+          useNavigate('HomeScreen')
+        }
       }}
     >
-      <Image
-        style={tw`flex rounded-xl w-[3rem] h-[3rem]`}
-        resizeMode="cover"
-        source={{
-          uri: `${ image }`
-        }}
-      />
+      {image
+        ? <Image
+            style={tw`flex ${route.name === 'DishesTab' ? 'rounded-xl' : 'rounded-full'} w-[3rem] h-[3rem]`}
+            resizeMode="cover"
+            source={{
+              uri: `${ image }`
+            }}
+          />
+        : <View style={tw`flex-row items-center justify-center w-[3rem] h-[3rem] p-2 overflow-hidden rounded-full bg-neutral-200`}>
+            <FeatherIcon
+              name="user"
+              size="medium"
+              color="#676767"
+            />
+          </View>
+      }
       <View style={tw`flex-1 flex-col w-full mx-3`}>
         <Text style={[tw`text-lg text-neutral-600`, fonts.fontPoppinsBold]}>{ title }</Text>
         <Text
@@ -35,7 +52,7 @@ const SearchResultDisplay: React.FC<TypedProps> = ({ slug, image, title, descrip
           numberOfLines={3}
           style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsLight]}
         >
-          { description }
+          { route.name === 'DishesTab' ? description : `@${description}` }
         </Text>
       </View>
     </TouchableOpacity>
