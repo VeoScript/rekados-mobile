@@ -1,9 +1,10 @@
 import React from 'react'
+import Menu from './Modals/Menu'
 import tw from 'twrnc'
 import { fonts } from '../styles/global'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { MaterialIcon } from '../utils/Icons'
-import Menu from './Modals/Menu'
+import { Toast } from '../utils/Toast'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { useNavigate } from '../utils/RootNavigation'
 
@@ -13,7 +14,7 @@ interface NavBarTypes {
 
 const NavBar: React.FC<NavBarTypes> = ({ user }) => {
 
-  const route = useRoute()
+  const route: any = useRoute()
 
   const [modalVisible, setModalVisible] = React.useState(false)
 
@@ -54,12 +55,26 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
           />
         </View>
         <View style={tw`flex flex-row items-center justify-end w-[5rem]`}>
-          <Text style={[tw`text-right text-base`, fonts.fontPoppinsBold]}>Asia</Text>
+          {(route.name === 'UserScreen' && user.id === route.params?.id)
+            ? <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    Toast('Navigate to Account Settings')
+                  }}
+                >
+                  <MaterialIcon
+                    name="gear"
+                    size="medium"
+                    color="#7c7c7c"
+                  />
+                </TouchableOpacity>
+              </View>
+            : <Text style={[tw`text-right text-base`, fonts.fontPoppinsBold]}>Asia</Text>
+          }
         </View>
       </View>
       <Menu
         user={user}
-        modalData={[]}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
       />
