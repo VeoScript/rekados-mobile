@@ -4,15 +4,15 @@ import { fonts } from '../../styles/global'
 import { MaterialIcon } from '../../utils/Icons'
 import { View, Text, Modal, Pressable, TouchableOpacity } from 'react-native'
 import { useLogoutMutation } from '../../lib/ReactQuery'
+import { useNavigate } from '../../utils/RootNavigation'
 
 interface MenuTypes {
   user: any
-  modalData: any
   modalVisible: any
   setModalVisible: any
 }
 
-const Menu: React.FC<MenuTypes> = ({ user, modalData, modalVisible, setModalVisible }) => {
+const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
 
   const logoutMutation = useLogoutMutation()
 
@@ -45,7 +45,8 @@ const Menu: React.FC<MenuTypes> = ({ user, modalData, modalVisible, setModalVisi
               style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
               activeOpacity={0.6}
               onPress={() => {
-                console.log('Administrator')
+                useNavigate('UserScreen', { id: user.id })
+                setModalVisible(false)
               }}
             >
               <MaterialIcon

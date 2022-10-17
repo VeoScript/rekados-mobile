@@ -9,6 +9,7 @@ import SaveDishScreen from './src/pages/MainScreen/SaveDishScreen'
 import SearchScreen from './src/pages/MainScreen/SearchScreen'
 import NotificationScreen from './src/pages/MainScreen/NotificationScreen'
 import DisplayDishScreen from './src/pages/DishesScreen/DisplayDishScreen'
+import UserScreen from './src/pages/ProfileScreen/UserScreen'
 import SplashScreen from './src/layouts/Misc/SplashScreen'
 import { AppStateStatus, Platform, StatusBar } from 'react-native'
 import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -135,6 +136,14 @@ const App = () => {
                   <Stack.Screen
                     name="DisplayDishScreen"
                     component={DisplayDishScreen}
+                    options={{
+                      headerShown: false,
+                      animation: 'none'
+                    }}
+                  />
+                  <Stack.Screen
+                    name="UserScreen"
+                    component={UserScreen}
                     options={{
                       headerShown: false,
                       animation: 'none'

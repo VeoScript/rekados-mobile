@@ -33,6 +33,19 @@ export const useGetUser = () => {
   )
 }
 
+export const useGetUserById = (id: string) => {
+  return useQuery(['userById'],
+    async () => {
+      const user = await api.get(`/api/user/${id}`)
+      return user.data
+    },
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: 'always'
+    }
+  )
+}
+
 export const useGetDishes = () => {
   return useInfiniteQuery(['dishes'],
     async ({ pageParam = ''}) => {
@@ -165,6 +178,23 @@ export const useLogoutMutation = () => {
         await AsyncStorage.setItem('COOKIES', '')
         queryClient.invalidateQueries(['user'])
         useNavigate('SignInScreen')
+      }
+    }
+  )
+}
+
+export const useChangeProfile = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { id: string, profileURL: string }) =>
+    api.put(`/api/change-profile/${_args.id}`, {
+      profileURL: _args.profileURL
+    }),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: async () => {
+        queryClient.invalidateQueries(['userById'])
       }
     }
   )
