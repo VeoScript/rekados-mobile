@@ -34,7 +34,7 @@ export const useGetUser = () => {
 }
 
 export const useGetUserById = (id: string) => {
-  return useQuery(['userById'],
+  return useQuery(['userById', id],
     async () => {
       const user = await api.get(`/api/user/${id}`)
       return user.data

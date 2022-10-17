@@ -55,7 +55,7 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
           />
         </View>
         <View style={tw`flex flex-row items-center justify-end w-[5rem]`}>
-          {(route.name === 'UserScreen' && user.id === route.params?.id)
+          {(route.name === 'UserScreen' && user?.id === route.params?.id)
             ? <View>
                 <TouchableOpacity
                   onPress={() => {
