@@ -14,7 +14,7 @@ interface TypedProps {
   description: string
 }
 
-const SearchResultDisplay: React.FC<TypedProps> = ({ slug, image, title, description }) => {
+const SearchResultDisplay: React.FC<TypedProps> = ({ id, slug, image, title, description }) => {
 
   const route = useRoute()
 
@@ -25,7 +25,7 @@ const SearchResultDisplay: React.FC<TypedProps> = ({ slug, image, title, descrip
         if (route.name === 'DishesTab') {
           useNavigate('DisplayDishScreen', { slug: slug })
         } else {
-          useNavigate('HomeScreen')
+          useNavigate('UserScreen', { id: id })
         }
       }}
     >

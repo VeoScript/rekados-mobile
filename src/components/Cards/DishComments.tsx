@@ -6,6 +6,7 @@ import { View, Text, TouchableOpacity, TextInput, Image } from 'react-native'
 import { fonts } from '../../styles/global'
 import { FeatherIcon } from '../../utils/Icons'
 import { useGetComments, useCreateCommentMutation } from '../../lib/ReactQuery'
+import { useNavigate } from '../../utils/RootNavigation'
 
 interface TypedProps {
   slug: string
@@ -82,7 +83,7 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
         <React.Fragment>
           {comments.map((comment: { content: string, createdAt: Date, user: any }, i: number) => (
             <View key={i} style={tw`flex-row items-start w-full`}>
-              <View style={tw`overflow-hidden rounded-full my-3 bg-neutral-200 p-2`}>
+              <View style={tw`overflow-hidden rounded-full my-3 bg-neutral-200 ${comment.user.profile ? 'p-0' : 'p-3'}`}>
                 {comment.user.profile
                   ? <Image
                       style={tw`flex rounded-full w-[3rem] h-[3rem]`}
@@ -99,7 +100,13 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
                 }
               </View>
               <View style={tw`flex-1 flex-col mx-3 my-3`}>
-                <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppinsBold]}>{ comment.user.name }</Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    useNavigate('UserScreen', { id: comment.user.id })
+                  }}
+                >
+                  <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppinsBold]}>{ comment.user.name }</Text>
+                </TouchableOpacity>
                 <Text style={[tw`text-sm text-neutral-600 mt-1`, fonts.fontPoppins]}>{ comment.content }</Text>
                 <Text style={[tw`text-xs text-neutral-400 mt-3`, fonts.fontPoppinsLight]}>{ moment(comment.createdAt).fromNow() }</Text>
               </View>
