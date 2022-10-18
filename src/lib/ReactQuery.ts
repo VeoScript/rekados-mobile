@@ -347,6 +347,21 @@ export const useCreateCommentMutation = () => {
   )
 }
 
+export const useDeleteCommentMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { id: string }) =>
+    api.delete(`/api/delete-comment/${_args.id}`),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: async () => {
+        queryClient.invalidateQueries(['comments']);
+      }
+    }
+  )
+}
+
 export const useDeleteDishMutation = () => {
   const queryClient = useQueryClient()
   return useMutation((_args: { slug: string }) =>

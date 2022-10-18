@@ -154,7 +154,10 @@ const DisplayDishScreen = () => {
                 </View>
               )}
             </View>
-            <DishComments slug={slug} />
+            <DishComments
+              user={user}
+              slug={slug}
+            />
             <View style={tw`flex flex-row items-center justify-center w-full py-3`}>
               <Text style={[tw`text-xs text-neutral-400`, fonts.fontPoppinsLight]}>
                 &copy; 2022 Rekados. All rights reserved.

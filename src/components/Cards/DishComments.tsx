@@ -1,25 +1,31 @@
 import React from 'react'
 import CommentSkeletonLoader from '../SkeletonLoaders/CommentSkeletonLoader'
+import DeleteComment from '../Modals/DeleteComment'
 import tw from 'twrnc'
 import moment from 'moment'
 import { View, Text, TouchableOpacity, TextInput, Image } from 'react-native'
 import { fonts } from '../../styles/global'
-import { FeatherIcon } from '../../utils/Icons'
-import { useGetComments, useCreateCommentMutation } from '../../lib/ReactQuery'
+import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
+import { useGetComments, useCreateCommentMutation, useDeleteCommentMutation } from '../../lib/ReactQuery'
 import { useNavigate } from '../../utils/RootNavigation'
 
 interface TypedProps {
+  user: {
+    id: string
+  }
   slug: string
 }
 
-const DishComments: React.FC<TypedProps> = ({ slug }) => {
+const DishComments: React.FC<TypedProps> = ({ slug, user }) => {
 
   const createCommentMutation = useCreateCommentMutation()
 
   const { data: comments, isLoading, isError }: any = useGetComments(slug)
 
   const [loading, setLoading] = React.useState<boolean>(false)
+  const [modalVisible, setModalVisible] = React.useState(false)
 
+  const [commentId, setCommentId] = React.useState<string>('')
   const [comment, setComment] = React.useState<string>('')
   const [commentHeight, setCommentHeight] = React.useState<number>(10)
 
@@ -97,44 +103,68 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
       )}
       {!isLoading && (
         <React.Fragment>
-          {comments.map((comment: { content: string, createdAt: Date, user: any }, i: number) => (
-            <View key={i} style={tw`flex-row items-start w-full`}>
-              <TouchableOpacity
-                style={tw`overflow-hidden rounded-full my-3 bg-neutral-200 ${comment.user.profile ? 'p-0' : 'p-3'}`}
-                onPress={() => {
-                  useNavigate('UserScreen', { id: comment.user.id })
-                }}
-              >
-                {comment.user.profile
-                  ? <Image
-                      style={tw`flex rounded-full w-[3rem] h-[3rem]`}
-                      resizeMode="cover"
-                      source={{
-                        uri: `${ comment.user.profile }`
-                      }}
-                    />
-                  : <FeatherIcon
-                      name="user"
-                      size="medium"
-                      color="#676767"
-                    />
-                }
-              </TouchableOpacity>
-              <View style={tw`flex-1 flex-col mx-3 my-3`}>
+          {comments.map((comment: { id: string, content: string, createdAt: Date, user: any }, i: number) => (
+            <View key={i} style={tw`flex-row items-start justify-between w-full`}>
+              <View style={tw`flex-row items-start w-full`}>
                 <TouchableOpacity
+                  style={tw`overflow-hidden rounded-full my-3 bg-neutral-200 ${comment.user.profile ? 'p-0' : 'p-3'}`}
                   onPress={() => {
                     useNavigate('UserScreen', { id: comment.user.id })
                   }}
                 >
-                  <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppinsBold]}>{ comment.user.name }</Text>
+                  {comment.user.profile
+                    ? <Image
+                        style={tw`flex rounded-full w-[3rem] h-[3rem]`}
+                        resizeMode="cover"
+                        source={{
+                          uri: `${ comment.user.profile }`
+                        }}
+                      />
+                    : <FeatherIcon
+                        name="user"
+                        size="medium"
+                        color="#676767"
+                      />
+                  }
                 </TouchableOpacity>
-                <Text style={[tw`text-sm text-neutral-600 mt-1`, fonts.fontPoppins]}>{ comment.content }</Text>
-                <Text style={[tw`text-xs text-neutral-400 mt-3`, fonts.fontPoppinsLight]}>{ moment(comment.createdAt).fromNow() }</Text>
+                <View style={tw`flex-col mx-3 my-3`}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      useNavigate('UserScreen', { id: comment.user.id })
+                    }}
+                  >
+                    <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppinsBold]}>{ comment.user.name }</Text>
+                  </TouchableOpacity>
+                  <Text style={[tw`text-sm text-neutral-600 mt-1`, fonts.fontPoppins]}>{ comment.content }</Text>
+                  <Text style={[tw`text-xs text-neutral-400 mt-3`, fonts.fontPoppinsLight]}>{ moment(comment.createdAt).fromNow() }</Text>
+                </View>
               </View>
+              {comment.user.id === user?.id && (
+                <View style={tw`mt-5 -ml-8`}>
+                  <TouchableOpacity
+                    style={tw`p-2`}
+                    onPress={() => {
+                      setModalVisible(true)
+                      setCommentId(comment.id)
+                    }}
+                  >
+                    <MaterialIcon
+                      name="trash"
+                      size="small"
+                      color="#CDCDCD"
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           ))}
         </React.Fragment>
       )}
+      <DeleteComment
+        id={commentId}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
     </View>
   )
 }
