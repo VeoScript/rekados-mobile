@@ -72,13 +72,14 @@ export const useGetDish = (slug: string) => {
   )
 }
 
-export const useGetSaveDishes = () => {
-  return useInfiniteQuery(['saveDishes'],
+export const useGetSaveDishes = (userId: string) => {
+  return useInfiniteQuery(['saveDishes', userId],
     async ({ pageParam = ''}) => {
       const saveDishes = await api.get(`/api/save-dish?cursor=${ pageParam }`)
       return saveDishes.data
     },
     {
+      enabled: !!userId,
       refetchInterval: 1000,
       getNextPageParam: (lastPage) => lastPage.nextId ?? false
     }
@@ -336,19 +337,11 @@ export const useCreateCommentMutation = () => {
       slug: _args.slug
     }),
     {
-      onMutate: async (newComment) => {
-        await queryClient.cancelQueries(['comments', newComment.comment])
-        const previousComments = queryClient.getQueryData(['comments', newComment.comment])
-        queryClient.setQueryData(['comments', newComment.comment], newComment)
-
-        return { previousComments, newComment }
-      },
-      onError: (error: any, newComment, context: any) => {
-        queryClient.setQueryData(['comments', context.newComment.comment], context.previousComments)
+      onError: (error: any) => {
         console.error(error.response.data)
       },
-      onSettled: (newComment: any) => {
-        queryClient.invalidateQueries(['comments', newComment.comment])
+      onSuccess: async () => {
+        queryClient.invalidateQueries(['comments']);
       }
     }
   )

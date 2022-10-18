@@ -8,7 +8,9 @@ import { View, FlatList, ActivityIndicator, ScrollView } from 'react-native'
 import { useGetSaveDishes } from '../../lib/ReactQuery'
 
 interface TypedProps {
-  user: Object
+  user: {
+    id: string
+  }
 }
 
 const SaveDishLayout: React.FC<TypedProps> = ({ user }) => {
@@ -19,7 +21,7 @@ const SaveDishLayout: React.FC<TypedProps> = ({ user }) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
-  }: any = useGetSaveDishes()
+  }: any = useGetSaveDishes(user.id)
 
   const itemKeyExtractor = (item: any, index: { toString: () => any }) => {
     return index.toString()

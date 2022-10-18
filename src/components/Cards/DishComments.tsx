@@ -18,10 +18,13 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
 
   const { data: comments, isLoading, isError }: any = useGetComments(slug)
 
+  const [loading, setLoading] = React.useState<boolean>(false)
+
   const [comment, setComment] = React.useState<string>('')
   const [commentHeight, setCommentHeight] = React.useState<number>(10)
 
   const onComment = async () => {
+    setLoading(true)
     await createCommentMutation.mutateAsync({
       comment: comment,
       slug: slug
@@ -30,9 +33,11 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
       onError: (error) => {
         console.error(error.response.data)
         setComment('')
+        setLoading(false)
       },
       onSuccess: () => {
         setComment('')
+        setLoading(false)
       }
     })
   }
@@ -52,29 +57,40 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
       </View>
       <View style={tw`flex-row-reverse items-center w-full my-3 overflow-hidden rounded-xl border border-neutral-200`}>
         {(comment !== '' && !(/^\s*$/.test(comment))) && (
-          <TouchableOpacity
-            style={tw`px-2`}
-            onPress={onComment}
-          >
-            <FeatherIcon
-              name="send"
-              size="medium"
-              color="#ABABAB"
-            />
-          </TouchableOpacity>
+          <React.Fragment>
+            {!loading && (
+              <TouchableOpacity
+                style={tw`px-2`}
+                onPress={onComment}
+              >
+                <FeatherIcon
+                  name="send"
+                  size="medium"
+                  color="#ABABAB"
+                />
+              </TouchableOpacity>
+            )}
+          </React.Fragment>
         )}
-        <TextInput
-          style={[tw`flex-1 w-full px-3 py-2 text-sm bg-white`, { height: commentHeight }, fonts.fontPoppins]}
-          placeholder="Write your comment..."
-          value={comment}
-          multiline={true}
-          onChangeText={(value: string) => {
-            setComment(value)
-          }}
-          onContentSizeChange={(e) => {
-            setCommentHeight(e.nativeEvent.contentSize.height)
-          }}
-        />
+        {loading && (
+          <Text style={[tw`flex-1 w-full px-3 py-2 text-sm bg-white`, fonts.fontPoppins]}>
+            Commenting...
+          </Text>
+        )}
+        {!loading && (
+          <TextInput
+            style={[tw`flex-1 w-full px-3 py-2 text-sm bg-white`, { height: commentHeight }, fonts.fontPoppins]}
+            placeholder="Write your comment..."
+            value={comment}
+            multiline={true}
+            onChangeText={(value: string) => {
+              setComment(value)
+            }}
+            onContentSizeChange={(e) => {
+              setCommentHeight(e.nativeEvent.contentSize.height)
+            }}
+          />
+        )}
       </View>
       {(isLoading || isError) && (
         <CommentSkeletonLoader />
@@ -83,7 +99,12 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
         <React.Fragment>
           {comments.map((comment: { content: string, createdAt: Date, user: any }, i: number) => (
             <View key={i} style={tw`flex-row items-start w-full`}>
-              <View style={tw`overflow-hidden rounded-full my-3 bg-neutral-200 ${comment.user.profile ? 'p-0' : 'p-3'}`}>
+              <TouchableOpacity
+                style={tw`overflow-hidden rounded-full my-3 bg-neutral-200 ${comment.user.profile ? 'p-0' : 'p-3'}`}
+                onPress={() => {
+                  useNavigate('UserScreen', { id: comment.user.id })
+                }}
+              >
                 {comment.user.profile
                   ? <Image
                       style={tw`flex rounded-full w-[3rem] h-[3rem]`}
@@ -98,7 +119,7 @@ const DishComments: React.FC<TypedProps> = ({ slug }) => {
                       color="#676767"
                     />
                 }
-              </View>
+              </TouchableOpacity>
               <View style={tw`flex-1 flex-col mx-3 my-3`}>
                 <TouchableOpacity
                   onPress={() => {
