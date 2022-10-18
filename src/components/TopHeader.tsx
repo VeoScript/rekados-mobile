@@ -23,7 +23,7 @@ const TopHeader: React.FC<TypedProps> = ({ title, subtitle }) => {
       </View>
       {route.name !== 'SearchScreen' && (
         <TouchableOpacity
-          style={tw`p-2 bg-neutral-100 rounded-full`}
+          style={tw`p-2 rounded-full`}
           onPress={() => {
             useNavigate('SearchScreen')
           }}

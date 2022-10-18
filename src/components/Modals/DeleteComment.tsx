@@ -3,35 +3,33 @@ import tw from 'twrnc'
 import { fonts } from '../../styles/global'
 import { Toast } from '../../utils/Toast'
 import { Modal, Pressable, Text, TouchableOpacity, View } from 'react-native'
-import { useDeleteDishMutation } from '../../lib/ReactQuery'
+import { useDeleteCommentMutation } from '../../lib/ReactQuery'
 
 interface TypedProps {
-  title: string
-  slug: string
+  id: string
   modalVisible: any
   setModalVisible: any
 }
 
-const DeleteDish: React.FC<TypedProps> = ({ title, slug, modalVisible, setModalVisible }) => {
+const DeleteComment: React.FC<TypedProps> = ({ id, modalVisible, setModalVisible }) => {
 
-  const deleteDishMutation = useDeleteDishMutation()
+  const deleteCommentMutation = useDeleteCommentMutation()
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
-  const onDelete = async () => {
+  const onDeleteComment = async (id: string) => {
     setIsLoading(true)
-    await deleteDishMutation.mutateAsync({
-      slug: slug
-    },
+    await deleteCommentMutation.mutateAsync({ id },
     {
-      onError: (error: any) => {
-        setIsLoading(false)
-        Toast(`${error.response.data}`)
-      },
-      onSuccess: () => {
+      onError: (error) => {
+        console.error(error.response.data)
         setIsLoading(false)
         setModalVisible(false)
-        Toast('Deleted Successfully.')
+      },
+      onSuccess: () => {
+        Toast('Deleted Successfully')
+        setIsLoading(false)
+        setModalVisible(false)
       }
     })
   }
@@ -58,7 +56,7 @@ const DeleteDish: React.FC<TypedProps> = ({ title, slug, modalVisible, setModalV
       <View style={tw`absolute top-1/2 -mt-16 w-full px-5`}>
         <View style={tw`flex-col items-center justify-center w-full p-5 rounded-xl overflow-hidden bg-white`}>
           <Text style={[tw`text-xl text-center text-red-500`, fonts.fontPoppinsBold]}>Delete</Text>
-          <Text style={[tw`my-3 text-base text-center text-neutral-600`, fonts.fontPoppins]}>Are you sure you want to delete {title}?</Text>
+          <Text style={[tw`my-3 text-base text-center text-neutral-600`, fonts.fontPoppins]}>Are you sure you want to delete this comment?</Text>
           <View style={tw`flex-row items-center justify-center w-full`}>
             {isLoading && (
               <View style={tw`w-full`}>
@@ -67,7 +65,7 @@ const DeleteDish: React.FC<TypedProps> = ({ title, slug, modalVisible, setModalV
             )}
             {!isLoading && (
               <React.Fragment>
-                <TouchableOpacity onPress={onDelete}>
+                <TouchableOpacity onPress={() => onDeleteComment(id)}>
                   <Text style={[tw`w-[7rem] mx-0.5 text-sm text-center text-white bg-red-500 px-3 py-2 rounded-xl`, fonts.fontPoppins]}>Delete</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setModalVisible(false)}>
@@ -82,4 +80,4 @@ const DeleteDish: React.FC<TypedProps> = ({ title, slug, modalVisible, setModalV
   )
 }
 
-export default DeleteDish
+export default DeleteComment

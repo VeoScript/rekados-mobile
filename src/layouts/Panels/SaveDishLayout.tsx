@@ -4,7 +4,7 @@ import DishCard from '../../components/Cards/DishCard'
 import NewsFeedSkeletonLoader from '../../components/SkeletonLoaders/NewsFeedSkeletonLoader'
 import tw from 'twrnc'
 import { fonts } from '../../styles/global'
-import { View, FlatList, ActivityIndicator, ScrollView } from 'react-native'
+import { View, Text, FlatList, ActivityIndicator, ScrollView } from 'react-native'
 import { useGetSaveDishes } from '../../lib/ReactQuery'
 
 interface TypedProps {
@@ -46,6 +46,17 @@ const SaveDishLayout: React.FC<TypedProps> = ({ user }) => {
     )
   }
 
+  const listIsEmpty = () => {
+    return (
+      <View style={tw`flex-1 flex-col items-center justify-center w-full h-full my-5`}>
+        <View style={tw`flex-1 w-full max-w-xs h-full`}>
+          <Text style={[tw`text-3xl text-neutral-500`, fonts.fontPoppins]}>You don't have saved dishes yet.</Text>
+          <Text style={[tw`text-lg text-neutral-400`, fonts.fontPoppins]}>When you do, your saved dishes will shown up here.</Text>
+        </View>
+      </View>
+    )
+  }
+
   const renderData = (item: any) => {
     return (
       <View style={tw`flex px-3`}>
@@ -71,6 +82,7 @@ const SaveDishLayout: React.FC<TypedProps> = ({ user }) => {
       {!isLoading && (
         <FlatList
           ListHeaderComponent={headerComponent}
+          ListEmptyComponent={listIsEmpty}
           data={saveDishes.pages.map((page: any) => page.saveDish).flat()}
           renderItem={renderData}
           keyExtractor={itemKeyExtractor}
