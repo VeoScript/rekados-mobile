@@ -22,6 +22,7 @@ const EditIngredients: React.FC<TypedProps> = ({ ingredientsState, setIngredient
       let ingredientIndex = ingredientsState.findIndex(((ingredient : { id: string }) => ingredient.id === ingredientID))
       ingredientsState[ingredientIndex].name = ingredientValue
       setEditIngredient('')
+      setIngredientID('')
     } else {
       Toast('Ingredient is required')
     }
@@ -63,12 +64,14 @@ const EditIngredients: React.FC<TypedProps> = ({ ingredientsState, setIngredient
               <View style={tw`flex flex-row items-center justify-between w-full px-3 text-sm rounded-xl border border-neutral-200 bg-white`}>
                 <TextInput
                   style={[tw`flex flex-row w-[17rem]`, fonts.fontPoppins]}
+                  editable={ingredientID !== ''}
                   value={editIngredient}
                   onChangeText={(value: string) => {
                     setEditIngredient(value)
                   }}
                 />
                 <TouchableOpacity
+                  disabled={ingredientID === ''}
                   onPress={() => {
                     handleEditIngredient(editIngredient)
                   }}
@@ -76,7 +79,7 @@ const EditIngredients: React.FC<TypedProps> = ({ ingredientsState, setIngredient
                   <MaterialIcon
                     name="check"
                     size="medium"
-                    color="#f2b900"
+                    color={ingredientID === '' ? '#CDCDCD' : '#f2b900'}
                   />
                 </TouchableOpacity>
               </View>
