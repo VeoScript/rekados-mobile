@@ -1,6 +1,7 @@
 import React from 'react'
 import AddIngredients from '../../components/Modals/AddIngredients'
 import AddProcedures from '../../components/Modals/AddProcedures'
+import EditIngredients from '../../components/Modals/EditIngredients'
 import tw from 'twrnc'
 import { fonts, customStyle } from '../../styles/global'
 import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
@@ -358,17 +359,32 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
             <View style={tw`flex flex-row items-center justify-between w-full px-1 py-2`}>
               <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Ingredients</Text>
               {!isLoading && (
-                <TouchableOpacity
-                  onPress={() => {
-                    setIngredientsModalVisible(true)
-                  }}
-                >
-                  <MaterialIcon
-                    name="plus"
-                    size="medium"
-                    color="#222222"
-                  />
-                </TouchableOpacity>
+                <View style={tw`flex-row items-center`}>
+                  <TouchableOpacity
+                    style={tw`mx-1`}
+                    onPress={() => {
+                      setIngredientsModalVisible(true)
+                    }}
+                  >
+                    <MaterialIcon
+                      name="plus"
+                      size="large"
+                      color="#c3c3c3"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={tw`mx-1`}
+                    onPress={() => {
+                      setIngredientsModalVisible(true)
+                    }}
+                  >
+                    <FeatherIcon
+                      name="edit"
+                      size="medium"
+                      color="#c3c3c3"
+                    />
+                  </TouchableOpacity>
+                </View>
               )}
             </View>
             <View style={tw`flex flex-col w-full`}>
@@ -407,8 +423,8 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
                 >
                   <MaterialIcon
                     name="plus"
-                    size="medium"
-                    color="#222222"
+                    size="large"
+                    color="#c3c3c3"
                   />
                 </TouchableOpacity>
               )}
@@ -473,6 +489,12 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
         setProceduresState={setProceduresState}
         modalVisible={proceduresModalVisible}
         setModalVisible={setProceduresModalVisible} 
+      />
+      <EditIngredients
+        ingredientsState={ingredientsState}
+        setIngredientsState={setIngredientsState}
+        modalVisible={ingredientsModalVisible}
+        setModalVisible={setIngredientsModalVisible} 
       />
     </React.Fragment>
   )
