@@ -87,8 +87,11 @@ const EditIngredients: React.FC<TypedProps> = ({ ingredientsState, setIngredient
           </View>
           {ingredientsState.length > 0 && (
             <React.Fragment>
-              <View style={tw`flex flex-row items-center justify-between w-full px-2`}>
-                <Text style={[tw`text-xl text-neutral-600`, fonts.fontPoppinsBold]}>Ingredients List</Text>
+              <View style={tw`flex flex-row items-start justify-between w-full px-2`}>
+                <View style={tw`flex-col`}>
+                  <Text style={[tw`text-xl text-neutral-600`, fonts.fontPoppinsBold]}>Ingredients List</Text>
+                  <Text style={[tw`text-sm text-yellow-500 mt-1`, fonts.fontPoppinsLight]}>Click something on the list to edit.</Text>
+                </View>
                 <TouchableOpacity
                   style={tw`flex flex-row items-center justify-center px-3 py-0.5 rounded-md bg-neutral-600`}
                   activeOpacity={0.7}

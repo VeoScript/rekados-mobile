@@ -140,7 +140,7 @@ const DishComments: React.FC<TypedProps> = ({ slug, user }) => {
                 </View>
               </View>
               {comment.user.id === user?.id && (
-                <View style={tw`mt-5 -ml-8`}>
+                <View style={tw`-ml-7`}>
                   <TouchableOpacity
                     style={tw`p-2`}
                     onPress={() => {

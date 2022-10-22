@@ -3,6 +3,7 @@ import AddIngredients from '../../components/Modals/AddIngredients'
 import AddProcedures from '../../components/Modals/AddProcedures'
 import EditIngredients from '../../components/Modals/EditIngredients'
 import EditProcedures from '../../components/Modals/EditProcedures'
+import CreateEditSplashScreen from '../Misc/CreateEditSplashScreen'
 import tw from 'twrnc'
 import { fonts, customStyle } from '../../styles/global'
 import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
@@ -229,6 +230,8 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
       console.error(error)
     }
   }
+
+  if (isLoading) return <CreateEditSplashScreen message="Updating your dish." />
 
   return (
     <React.Fragment>

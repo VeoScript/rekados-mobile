@@ -1,6 +1,9 @@
 import React from 'react'
 import AddIngredients from '../../components/Modals/AddIngredients'
 import AddProcedures from '../../components/Modals/AddProcedures'
+import EditIngredients from '../../components/Modals/EditIngredients'
+import EditProcedures from '../../components/Modals/EditProcedures'
+import CreateEditSplashScreen from '../Misc/CreateEditSplashScreen'
 import tw from 'twrnc'
 import { fonts, customStyle } from '../../styles/global'
 import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
@@ -36,10 +39,12 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
 
   // ingredients state
   const [ingredientsModalVisible, setIngredientsModalVisible] = React.useState<Boolean>(false)
+  const [ingredientsEditModalVisible, setIngredientsEditModalVisible] = React.useState<Boolean>(false)
   const [ingredientsState, setIngredientsState] = React.useState<any>([])
 
   // procedures state
   const [proceduresModalVisible, setProceduresModalVisible] = React.useState<Boolean>(false)
+  const [proceduresEditModalVisible, setProceduresEditModalVisible] = React.useState<Boolean>(false)
   const [proceduresState, setProceduresState] = React.useState<any>([])
 
   // dropdown values for category
@@ -159,6 +164,8 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
       console.error(error)
     }
   }
+
+  if (isLoading) return <CreateEditSplashScreen message="Creating your dish." />
 
   return (
     <React.Fragment>
@@ -304,17 +311,34 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
             <View style={tw`flex flex-row items-center justify-between w-full px-1 py-2`}>
               <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Ingredients</Text>
               {!isLoading && (
-                <TouchableOpacity
-                  onPress={() => {
-                    setIngredientsModalVisible(true)
-                  }}
-                >
-                  <MaterialIcon
-                    name="plus"
-                    size="medium"
-                    color="#222222"
-                  />
-                </TouchableOpacity>
+                <View style={tw`flex-row items-center`}>
+                  <TouchableOpacity
+                    style={tw`mx-1`}
+                    onPress={() => {
+                      setIngredientsModalVisible(true)
+                    }}
+                  >
+                    <MaterialIcon
+                      name="plus"
+                      size="large"
+                      color="#c3c3c3"
+                    />
+                  </TouchableOpacity>
+                  {ingredientsState.length > 0 && (
+                    <TouchableOpacity
+                      style={tw`mx-1`}
+                      onPress={() => {
+                        setIngredientsEditModalVisible(true)
+                      }}
+                    >
+                      <FeatherIcon
+                        name="edit"
+                        size="medium"
+                        color="#c3c3c3"
+                      />
+                    </TouchableOpacity>
+                  )}
+                </View>
               )}
             </View>
             <View style={tw`flex flex-col w-full`}>
@@ -346,17 +370,34 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
             <View style={tw`flex flex-row items-center justify-between w-full px-1 py-2`}>
               <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Procedures</Text>
               {!isLoading && (
-                <TouchableOpacity
-                  onPress={() => {
-                    setProceduresModalVisible(true)
-                  }}
-                >
-                  <MaterialIcon
-                    name="plus"
-                    size="medium"
-                    color="#222222"
-                  />
-                </TouchableOpacity>
+                <View style={tw`flex-row items-center`}>
+                  <TouchableOpacity
+                    style={tw`mx-1`}
+                    onPress={() => {
+                      setProceduresModalVisible(true)
+                    }}
+                  >
+                    <MaterialIcon
+                      name="plus"
+                      size="large"
+                      color="#c3c3c3"
+                    />
+                  </TouchableOpacity>
+                  {proceduresState.length > 0 && (
+                    <TouchableOpacity
+                      style={tw`mx-1`}
+                      onPress={() => {
+                        setProceduresEditModalVisible(true)
+                      }}
+                    >
+                      <FeatherIcon
+                        name="edit"
+                        size="medium"
+                        color="#c3c3c3"
+                      />
+                    </TouchableOpacity>
+                  )}
+                </View>
               )}
             </View>
             <View style={tw`flex flex-col w-full`}>
@@ -419,6 +460,18 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
         setProceduresState={setProceduresState}
         modalVisible={proceduresModalVisible}
         setModalVisible={setProceduresModalVisible} 
+      />
+      <EditIngredients
+        ingredientsState={ingredientsState}
+        setIngredientsState={setIngredientsState}
+        modalVisible={ingredientsEditModalVisible}
+        setModalVisible={setIngredientsEditModalVisible} 
+      />
+      <EditProcedures
+        proceduresState={proceduresState}
+        setProceduresState={setProceduresState}
+        modalVisible={proceduresEditModalVisible}
+        setModalVisible={setProceduresEditModalVisible}
       />
     </React.Fragment>
   )
