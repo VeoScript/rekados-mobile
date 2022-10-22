@@ -120,13 +120,13 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
               }}
             >
               <MaterialIcon
-                name="rss"
+                name="globe"
                 size="small"
                 color="#7c7c7c"
               />
               <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>Website</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
               activeOpacity={0.6}
               onPress={() => {
@@ -139,7 +139,7 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
                 color="#7c7c7c"
               />
               <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>Rate this app</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
               activeOpacity={0.6}
