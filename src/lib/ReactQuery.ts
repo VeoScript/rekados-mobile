@@ -41,7 +41,7 @@ export const useGetUserById = (id: string) => {
     },
     {
       enabled: !!id,
-      refetchOnWindowFocus: 'always'
+      refetchOnMount: true
     }
   )
 }
@@ -189,6 +189,45 @@ export const useChangeProfile = () => {
   return useMutation((_args: { id: string, profileURL: string }) =>
     api.put(`/api/change-profile/${_args.id}`, {
       profileURL: _args.profileURL
+    }),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: async () => {
+        queryClient.invalidateQueries(['userById'])
+      }
+    }
+  )
+}
+
+export const useUpdateAccount = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { id: string, name: string, username: string, email: string, location: string, bio: string }) =>
+    api.put(`/api/update-account/${_args.id}`, {
+      name: _args.name,
+      username: _args.username,
+      email: _args.email,
+      location: _args.location,
+      bio: _args.bio
+    }),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: async () => {
+        queryClient.invalidateQueries(['userById'])
+      }
+    }
+  )
+}
+
+export const useChangePassword = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { id: string, oldPassword: string, newPassword: string }) =>
+    api.put(`/api/change-password/${_args.id}`, {
+      oldPassword: _args.oldPassword,
+      newPassword: _args.newPassword
     }),
     {
       onError: (error: any) => {

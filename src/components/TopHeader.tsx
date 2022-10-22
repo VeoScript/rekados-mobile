@@ -21,7 +21,7 @@ const TopHeader: React.FC<TypedProps> = ({ title, subtitle }) => {
         <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>{ title }</Text>
         <Text style={[tw`text-sm text-neutral-400`, fonts.fontPoppinsLight]}>{ subtitle }</Text>
       </View>
-      {route.name !== 'SearchScreen' && (
+      {(route.name !== 'SearchScreen' && route.name !== 'UserSettingScreen') && (
         <TouchableOpacity
           style={tw`p-2 rounded-full`}
           onPress={() => {

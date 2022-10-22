@@ -20,9 +20,9 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
 
   return (
     <React.Fragment>
-      <View style={tw`flex flex-row items-center justify-center w-full bg-white px-3 py-5 border-b border-neutral-300`}>
-        <View style={tw`flex flex-row items-center justify-start w-[5rem]`}>
-          {route.name === 'DisplayDishScreen'
+      <View style={tw`flex-row items-center justify-center w-full bg-white px-3 py-5 border-b border-neutral-300`}>
+        <View style={tw`flex-1 flex-row items-center justify-start w-[5rem]`}>
+          {(route.name === 'DisplayDishScreen' || route.name === 'CreateDishScreen' || route.name === 'EditDishScreen')
             ? <TouchableOpacity
                 onPress={() => {
                   useNavigate('HomeScreen')
@@ -55,22 +55,39 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
           />
         </View>
         <View style={tw`flex flex-row items-center justify-end w-[5rem]`}>
-          {(route.name === 'UserScreen' && user?.id === route.params?.id)
-            ? <View>
-                <TouchableOpacity
-                  onPress={() => {
-                    Toast('Navigate to Account Settings')
-                  }}
-                >
-                  <MaterialIcon
-                    name="gear"
-                    size="medium"
-                    color="#7c7c7c"
-                  />
-                </TouchableOpacity>
-              </View>
-            : <Text style={[tw`text-right text-base`, fonts.fontPoppinsBold]}>Asia</Text>
-          }
+          {(route.name !== 'UserScreen' && route.name !== 'UserSettingScreen') && (
+            <Text style={[tw`text-right text-base`, fonts.fontPoppinsBold]}>Asia</Text>
+          )}
+          {(route.name === 'UserScreen' && user?.id === route.params?.id) && (
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  useNavigate('UserSettingScreen', { id: user?.id })
+                }}
+              >
+                <MaterialIcon
+                  name="gear"
+                  size="medium"
+                  color="#7c7c7c"
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+          {(route.name === 'UserSettingScreen' && user?.id === route.params?.id) && (
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  useNavigate('UserScreen', { id: user?.id })
+                }}
+              >
+                <MaterialIcon
+                  name="person"
+                  size="medium"
+                  color="#7c7c7c"
+                />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
       <Menu

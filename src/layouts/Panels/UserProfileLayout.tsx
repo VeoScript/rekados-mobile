@@ -3,7 +3,7 @@ import ProfileImageUpload from '../../components/Uploads/ProfileImageUpload'
 import tw from 'twrnc'
 import { fonts } from '../../styles/global'
 import { FeatherIcon } from '../../utils/Icons'
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Text, Image, TouchableOpacity } from 'react-native'
 import { launchImageLibrary } from 'react-native-image-picker'
 
 interface TypedProps {
@@ -40,8 +40,8 @@ const UserProfileLayout: React.FC<TypedProps> = ({ user, profileId }) => {
   }
 
   return (
-    <React.Fragment>
-      <View style={tw`flex-col items-center justify-start w-full h-full py-3`}>
+    <View style={tw`flex-col w-full h-full`}>
+      <ScrollView contentContainerStyle={tw`flex-col items-center justify-start w-full py-3`}>
         <View style={tw`relative my-3`}>
           {user.profile
             ? <Image
@@ -75,7 +75,7 @@ const UserProfileLayout: React.FC<TypedProps> = ({ user, profileId }) => {
         </View>
         <View style={tw`flex-col items-center w-full my-3`}>
           <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>{ user.name }</Text>
-          <Text style={[tw`text-lg text-neutral-600`, fonts.fontPoppinsLight]}>@{ user.username }</Text>
+          <Text style={[tw`my-2 text-sm text-center text-neutral-600`, fonts.fontPoppinsLight]}>{(user.bio || user.bio !== '') ? user.bio : 'Welcome to Rekados'}</Text>
         </View>
         <View style={tw`flex-row items-center justify-between w-full`}>
           <View style={tw`flex-1 flex-col items-center w-full p-3 bg-[#F3B900] bg-opacity-50 border-r border-white`}>
@@ -89,19 +89,19 @@ const UserProfileLayout: React.FC<TypedProps> = ({ user, profileId }) => {
         </View>
         <View style={tw`flex-col items-center w-full`}>
           <View style={tw`flex-col items-start w-full p-3 border-b border-neutral-100`}>
-            <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppins]}>Bio</Text>
-            <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppins]}>{ user.bio ?? 'Welcome to Rekados' }</Text>
+            <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppins]}>Location</Text>
+            <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppins]}>{ (user.location || user.location !== '') ? user.location : 'Philippines' }</Text>
           </View>
           <View style={tw`flex-col items-start w-full p-3 border-b border-neutral-100`}>
-            <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppins]}>Location</Text>
-            <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppins]}>{ user.location ?? 'Philippines' }</Text>
+            <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppins]}>Username</Text>
+            <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppins]}>@{ user.username }</Text>
           </View>
           <View style={tw`flex-col items-start w-full p-3 border-b border-neutral-100`}>
             <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppins]}>Email</Text>
             <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppins]}>{ user.email }</Text>
           </View>
         </View>
-      </View>
+      </ScrollView>
       <ProfileImageUpload
         userId={user.id}
         modalVisible={modalVisible}
@@ -109,7 +109,7 @@ const UserProfileLayout: React.FC<TypedProps> = ({ user, profileId }) => {
         photo={photo}
         setPhoto={setPhoto}
       />
-    </React.Fragment>
+    </View>
   )
 }
 

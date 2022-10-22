@@ -6,6 +6,6 @@ export const Toast = (message: string) => {
     ToastAndroid.SHORT,
     ToastAndroid.BOTTOM,
     0,
-    100
+    110
   )
 }
