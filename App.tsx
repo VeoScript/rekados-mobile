@@ -11,6 +11,7 @@ import NotificationScreen from './src/pages/MainScreen/NotificationScreen'
 import DisplayDishScreen from './src/pages/DishesScreen/DisplayDishScreen'
 import UserScreen from './src/pages/ProfileScreen/UserScreen'
 import SplashScreen from './src/layouts/Misc/SplashScreen'
+import UserSettingScreen from './src/pages/ProfileScreen/UserSettingScreen'
 import { AppStateStatus, Platform, StatusBar } from 'react-native'
 import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { NavigationContainer } from '@react-navigation/native'
@@ -144,6 +145,14 @@ const App = () => {
                   <Stack.Screen
                     name="UserScreen"
                     component={UserScreen}
+                    options={{
+                      headerShown: false,
+                      animation: 'none'
+                    }}
+                  />
+                  <Stack.Screen
+                    name="UserSettingScreen"
+                    component={UserSettingScreen}
                     options={{
                       headerShown: false,
                       animation: 'none'
