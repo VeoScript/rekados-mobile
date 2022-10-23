@@ -75,7 +75,7 @@ const UserProfileLayout: React.FC<TypedProps> = ({ user, profileId }) => {
         </View>
         <View style={tw`flex-col items-center w-full my-3`}>
           <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>{ user.name }</Text>
-          <Text style={[tw`my-2 text-sm text-center text-neutral-600`, fonts.fontPoppinsLight]}>{(user.bio || user.bio !== '') ? user.bio : 'Welcome to Rekados'}</Text>
+          <Text style={[tw`my-2 text-sm text-center text-neutral-600`, fonts.fontPoppinsLight]}>{(user.bio && user.bio !== '') ? user.bio : 'Welcome to Rekados'}</Text>
         </View>
         <View style={tw`flex-row items-center justify-between w-full`}>
           <View style={tw`flex-1 flex-col items-center w-full p-3 bg-[#F3B900] bg-opacity-50 border-r border-white`}>
@@ -90,7 +90,7 @@ const UserProfileLayout: React.FC<TypedProps> = ({ user, profileId }) => {
         <View style={tw`flex-col items-center w-full`}>
           <View style={tw`flex-col items-start w-full p-3 border-b border-neutral-100`}>
             <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppins]}>Location</Text>
-            <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppins]}>{ (user.location || user.location !== '') ? user.location : 'Philippines' }</Text>
+            <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppins]}>{ (user.location && user.location !== '') ? user.location : 'Philippines' }</Text>
           </View>
           <View style={tw`flex-col items-start w-full p-3 border-b border-neutral-100`}>
             <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppins]}>Username</Text>
