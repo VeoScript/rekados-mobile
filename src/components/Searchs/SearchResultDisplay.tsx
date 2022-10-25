@@ -1,4 +1,5 @@
 import React from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import tw from 'twrnc'
 import { fonts } from '../../styles/global'
 import { FeatherIcon } from '../../utils/Icons'
@@ -17,12 +18,55 @@ interface TypedProps {
 const SearchResultDisplay: React.FC<TypedProps> = ({ id, slug, image, title, description }) => {
 
   const route = useRoute()
+  
+  const searchDishHistory = async () => {
+    const searchToSave = {
+      id: id,
+      slug: slug,
+      image: image,
+      title: title,
+      description: description,
+      updatedAt: new Date()
+    }
+
+    // checking if there is already a dish search history in storage
+    const existingSearchHistory: any = await AsyncStorage.getItem('DISH_SEARCH_HISTORY')
+
+    let newSearchHistory = JSON.parse(existingSearchHistory)
+
+    if (!newSearchHistory) {
+      newSearchHistory = []
+    }
+
+    // the search history limit is 5, hence it will delete the last dish history
+    if (newSearchHistory.length == 5) {
+      newSearchHistory.pop()
+      newSearchHistory.push(searchToSave)
+      await AsyncStorage.setItem('DISH_SEARCH_HISTORY', JSON.stringify(newSearchHistory))
+      return
+    }
+    
+    // check if the search dish is already in the storage, hence it will appear to the top of history sorted by dish history updatedAt
+    const checkDuplication = newSearchHistory?.find((history: { id: string }) => history.id === searchToSave.id)
+
+    if (checkDuplication) {
+      let dishIndex = newSearchHistory.findIndex(((history: any) => history.id === searchToSave.id))
+      newSearchHistory[dishIndex].updatedAt = new Date()  
+      await AsyncStorage.setItem('DISH_SEARCH_HISTORY', JSON.stringify(newSearchHistory))
+      return
+    }
+
+    // for adding new dish search history
+    newSearchHistory.push(searchToSave)
+    await AsyncStorage.setItem('DISH_SEARCH_HISTORY', JSON.stringify(newSearchHistory))
+  }
 
   return (
     <TouchableOpacity
       style={tw`flex-row items-start w-full mb-3`}
       onPress={() => {
         if (route.name === 'DishesTab') {
+          searchDishHistory()
           useNavigate('DisplayDishScreen', { slug: slug })
         } else {
           useNavigate('UserScreen', { id: id })
