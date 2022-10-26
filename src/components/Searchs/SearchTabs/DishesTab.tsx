@@ -5,7 +5,6 @@ import SearchResultsLoader from '../../SkeletonLoaders/SearchResultsLoader'
 import tw from 'twrnc'
 import { fonts } from '../../../styles/global'
 import { MaterialIcon } from '../../../utils/Icons'
-import { Toast } from '../../../utils/Toast'
 import { TouchableOpacity, View, ScrollView, TextInput, Text, Alert } from 'react-native'
 import { useGetDishSearch } from '../../../lib/ReactQuery'
 

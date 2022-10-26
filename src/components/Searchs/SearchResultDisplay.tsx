@@ -61,6 +61,48 @@ const SearchResultDisplay: React.FC<TypedProps> = ({ id, slug, image, title, des
     await AsyncStorage.setItem('DISH_SEARCH_HISTORY', JSON.stringify(newSearchHistory))
   }
 
+  const searchPeopleHistory = async () => {
+    const searchToSave = {
+      id: id,
+      slug: slug,
+      image: image,
+      title: title,
+      description: description,
+      updatedAt: new Date()
+    }
+
+    // checking if there is already a people search history in storage
+    const existingSearchHistory: any = await AsyncStorage.getItem('DISH_PEOPLE_HISTORY')
+
+    let newSearchHistory = JSON.parse(existingSearchHistory)
+
+    if (!newSearchHistory) {
+      newSearchHistory = []
+    }
+
+    // the search history limit is 5, hence it will delete the last people history
+    if (newSearchHistory.length == 5) {
+      newSearchHistory.pop()
+      newSearchHistory.push(searchToSave)
+      await AsyncStorage.setItem('DISH_PEOPLE_HISTORY', JSON.stringify(newSearchHistory))
+      return
+    }
+    
+    // check if the search people is already in the storage, hence it will appear to the top of history sorted by people history updatedAt
+    const checkDuplication = newSearchHistory?.find((history: { id: string }) => history.id === searchToSave.id)
+
+    if (checkDuplication) {
+      let peopleIndex = newSearchHistory.findIndex(((history: any) => history.id === searchToSave.id))
+      newSearchHistory[peopleIndex].updatedAt = new Date()  
+      await AsyncStorage.setItem('DISH_PEOPLE_HISTORY', JSON.stringify(newSearchHistory))
+      return
+    }
+
+    // for adding new people search history
+    newSearchHistory.push(searchToSave)
+    await AsyncStorage.setItem('DISH_PEOPLE_HISTORY', JSON.stringify(newSearchHistory))
+  }
+
   return (
     <TouchableOpacity
       style={tw`flex-row items-start w-full mb-3`}
@@ -69,6 +111,7 @@ const SearchResultDisplay: React.FC<TypedProps> = ({ id, slug, image, title, des
           searchDishHistory()
           useNavigate('DisplayDishScreen', { slug: slug })
         } else {
+          searchPeopleHistory()
           useNavigate('UserScreen', { id: id })
         }
       }}
