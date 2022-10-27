@@ -38,14 +38,6 @@ const SearchResultDisplay: React.FC<TypedProps> = ({ id, slug, image, title, des
       newSearchHistory = []
     }
 
-    // the search history limit is 5, hence it will delete the last dish history
-    if (newSearchHistory.length == 5) {
-      newSearchHistory.pop()
-      newSearchHistory.push(searchToSave)
-      await AsyncStorage.setItem('DISH_SEARCH_HISTORY', JSON.stringify(newSearchHistory))
-      return
-    }
-    
     // check if the search dish is already in the storage, hence it will appear to the top of history sorted by dish history updatedAt
     const checkDuplication = newSearchHistory?.find((history: { id: string }) => history.id === searchToSave.id)
 
@@ -78,14 +70,6 @@ const SearchResultDisplay: React.FC<TypedProps> = ({ id, slug, image, title, des
 
     if (!newSearchHistory) {
       newSearchHistory = []
-    }
-
-    // the search history limit is 5, hence it will delete the last people history
-    if (newSearchHistory.length == 5) {
-      newSearchHistory.pop()
-      newSearchHistory.push(searchToSave)
-      await AsyncStorage.setItem('DISH_PEOPLE_HISTORY', JSON.stringify(newSearchHistory))
-      return
     }
     
     // check if the search people is already in the storage, hence it will appear to the top of history sorted by people history updatedAt

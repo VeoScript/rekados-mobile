@@ -99,7 +99,7 @@ const DishesTab = () => {
               </View>
               {dishRecentSearches
                 ? <React.Fragment>
-                    {dishRecentSearches.map((history: any, i: number) => (
+                    {dishRecentSearches.slice(0, 5).map((history: any, i: number) => (
                       <SearchResultDisplay
                         key={i}
                         id={history.id}
