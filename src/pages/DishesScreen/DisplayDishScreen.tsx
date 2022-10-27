@@ -2,8 +2,8 @@ import React from 'react'
 import tw from 'twrnc'
 import MainLayout from '../../layouts/MainLayout'
 import DishComments from '../../components/Cards/DishComments'
-import SplashScreen from '../../layouts/Misc/SplashScreen'
-import ErrorScreen from '../../layouts/Misc/ErrorScreen'
+import MainSplashScreen from '../../components/SplashScreens/MainSplashScreen'
+import ErrorScreen from '../../components/SplashScreens/ErrorScreen'
 import ViewDishSkeletonLoader from '../../components/SkeletonLoaders/ViewDishSkeletonLoader'
 import LikeButton from '../../components/Interactions/LikeButton'
 import DeleteDish from '../../components/Modals/DeleteDish'
@@ -27,7 +27,7 @@ const DisplayDishScreen = () => {
   const { data: user, isLoading, isError, error }: any = useGetUser()
   const { data: dish, isLoading: dishIsLoading, isError: dishIsError, error: dishError }: any = useGetDish(slug)
 
-  if (isLoading) return <SplashScreen />
+  if (isLoading) return <MainSplashScreen />
   if (isError) return <ErrorScreen error={error.response?.data?.message} />
   if (dishIsError) return <ErrorScreen error={dishError.response?.data?.message} />
 

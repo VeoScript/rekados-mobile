@@ -1,15 +1,15 @@
 import React from 'react'
 import MainLayout from '../../layouts/MainLayout'
 import FeedLayout from '../../layouts/Panels/FeedLayout'
-import SplashScreen from '../../layouts/Misc/SplashScreen'
-import ErrorScreen from '../../layouts/Misc/ErrorScreen'
+import MainSplashScreen from '../../components/SplashScreens/MainSplashScreen'
+import ErrorScreen from '../../components/SplashScreens/ErrorScreen'
 import { useGetUser } from '../../lib/ReactQuery'
 
 const HomeScreen = () => {
 
   const { data: user, isLoading: userLoading }: any = useGetUser()
 
-  if (userLoading) return <SplashScreen />
+  if (userLoading) return <MainSplashScreen />
 
   return (
     <MainLayout user={user} >
