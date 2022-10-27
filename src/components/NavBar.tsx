@@ -20,7 +20,7 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
 
   return (
     <React.Fragment>
-      <View style={tw`flex-row items-center justify-center w-full bg-white px-3 py-5 border-b border-neutral-300`}>
+      <View style={tw`flex-row items-center justify-center w-full bg-white p-5 border-b border-neutral-300`}>
         <View style={tw`flex-1 flex-row items-center justify-start w-[5rem]`}>
           {(route.name === 'DisplayDishScreen' || route.name === 'CreateDishScreen' || route.name === 'EditDishScreen')
             ? <TouchableOpacity
@@ -47,14 +47,14 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
               </TouchableOpacity>      
           }
         </View>
-        <View style={tw`flex flex-row items-center justify-center w-[10rem]`}>
+        <View style={tw`flex-1 flex-row items-center justify-center w-[10rem]`}>
           <Image
             style={tw`w-[8rem] h-[2rem]`}
             resizeMode="contain"
             source={require('../assets/images/rekados-official.png')}
           />
         </View>
-        <View style={tw`flex flex-row items-center justify-end w-[5rem]`}>
+        <View style={tw`flex-1 flex-row items-center justify-end w-[5rem]`}>
           {(route.name !== 'UserScreen' && route.name !== 'UserSettingScreen') && (
             <Text style={[tw`text-right text-base`, fonts.fontPoppinsBold]}>Asia</Text>
           )}
