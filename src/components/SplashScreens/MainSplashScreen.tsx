@@ -4,7 +4,7 @@ import { fonts } from '../../styles/global'
 import { SafeAreaView, View, Text, Image, ActivityIndicator } from 'react-native'
 import { useCheckOnline } from '../../hooks/useCheckOnline'
 
-const SplashScreen = () => {
+const MainSplashScreen = () => {
 
   const checkOnline = useCheckOnline()
 
@@ -40,4 +40,4 @@ const SplashScreen = () => {
   )
 }
 
-export default SplashScreen
+export default MainSplashScreen
