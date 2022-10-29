@@ -46,13 +46,14 @@ export const useGetUserById = (id: string) => {
   )
 }
 
-export const useGetDishes = () => {
-  return useInfiniteQuery(['dishes'],
+export const useGetDishes = (userId: string) => {
+  return useInfiniteQuery(['dishes', userId],
     async ({ pageParam = ''}) => {
       const dishes = await api.get(`/api/dishes?cursor=${ pageParam }`)
       return dishes.data
     },
     {
+      enabled: !!userId,
       refetchInterval: 1000,
       getNextPageParam: (lastPage) => lastPage.nextId ?? false
     }

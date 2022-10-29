@@ -7,7 +7,7 @@ import { View, FlatList, ActivityIndicator, ScrollView } from 'react-native'
 import { useGetDishes } from '../../lib/ReactQuery'
 
 interface TypedProps {
-  user: Object
+  user: Object | any
 }
 
 const FeedLayout: React.FC<TypedProps> = ({ user }) => {
@@ -18,7 +18,7 @@ const FeedLayout: React.FC<TypedProps> = ({ user }) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
-  }: any = useGetDishes()
+  }: any = useGetDishes(user.id)
 
   const itemKeyExtractor = (item: any, index: { toString: () => any }) => {
     return index.toString()
@@ -31,7 +31,7 @@ const FeedLayout: React.FC<TypedProps> = ({ user }) => {
   }
 
   const renderSpinner = () => {
-    return <ActivityIndicator color='#F3B900' size={40} />
+    return <ActivityIndicator style={tw`pb-3`} color='#F3B900' size={40} />
   }
 
   const headerComponent = () => {
