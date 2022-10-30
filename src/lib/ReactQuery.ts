@@ -122,6 +122,18 @@ export const useGetUserSearch = (search: string) => {
     }
   )
 }
+
+export const useGetSearchHistory = (userId: string, type: string) => {
+  return useQuery(['userSearchHistory', userId, type],
+    async () => {
+      const userSearchHistory = await api.get(`/api/search-history/${userId}/${type}`)
+      return userSearchHistory.data
+    },
+    {
+      enabled: !!userId && !!type
+    }
+  )
+}
 // END FOR QUERIES
 
 
@@ -413,6 +425,80 @@ export const useDeleteDishMutation = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['dishes'])
         useNavigate('HomeScreen')
+      }
+    }
+  )
+}
+
+export const useStoreDishesSearchHistory = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { searchId: string, slug: string, image: string, title: string, description: string, userId: string }) =>
+    api.post(`/api/search-dish-history`, {
+      searchId: _args.searchId,
+      slug: _args.slug,
+      image: _args.image,
+      title: _args.title,
+      description: _args.description,
+      userId: _args.userId
+    }),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['userSearchHistory'])
+      }
+    }
+  )
+}
+
+export const useStorePeopleSearchHistory = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { searchId: string, slug: string, image: string, title: string, description: string, userId: string }) =>
+    api.post(`/api/search-people-history`, {
+      searchId: _args.searchId,
+      slug: _args.slug,
+      image: _args.image,
+      title: _args.title,
+      description: _args.description,
+      userId: _args.userId
+    }),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['userSearchHistory'])
+      }
+    }
+  )
+}
+
+export const useDeleteDishesSearchHistory = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { userId: string }) =>
+    api.delete(`/api/search-dish-history/${_args.userId}`),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['userSearchHistory'])
+      }
+    }
+  )
+}
+
+export const useDeletePeopleSearchHistory = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { userId: string }) =>
+    api.delete(`/api/search-people-history/${_args.userId}`),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['userSearchHistory'])
       }
     }
   )

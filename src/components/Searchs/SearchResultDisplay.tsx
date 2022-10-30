@@ -6,8 +6,10 @@ import { FeatherIcon } from '../../utils/Icons'
 import { TouchableOpacity, Image, View, Text } from 'react-native'
 import { useNavigate } from '../../utils/RootNavigation'
 import { useRoute } from '@react-navigation/native'
+import { useStoreDishesSearchHistory, useStorePeopleSearchHistory } from '../../lib/ReactQuery'
 
 interface TypedProps {
+  userId: string
   id?: string
   slug?: string
   image: string
@@ -15,76 +17,33 @@ interface TypedProps {
   description: string
 }
 
-const SearchResultDisplay: React.FC<TypedProps> = ({ id, slug, image, title, description }) => {
+const SearchResultDisplay: React.FC<TypedProps> = ({ userId, id, slug, image, title, description }) => {
 
   const route = useRoute()
+
+  const storeDishesSearchHistory = useStoreDishesSearchHistory()
+  const storePeopleSearchHistory = useStorePeopleSearchHistory()
   
   const searchDishHistory = async () => {
-    const searchToSave = {
-      id: id,
-      slug: slug,
-      image: image,
-      title: title,
-      description: description,
-      updatedAt: new Date()
-    }
-
-    // checking if there is already a dish search history in storage
-    const existingSearchHistory: any = await AsyncStorage.getItem('DISH_SEARCH_HISTORY')
-
-    let newSearchHistory = JSON.parse(existingSearchHistory)
-
-    if (!newSearchHistory) {
-      newSearchHistory = []
-    }
-
-    // check if the search dish is already in the storage, hence it will appear to the top of history sorted by dish history updatedAt
-    const checkDuplication = newSearchHistory?.find((history: { id: string }) => history.id === searchToSave.id)
-
-    if (checkDuplication) {
-      let dishIndex = newSearchHistory.findIndex(((history: any) => history.id === searchToSave.id))
-      newSearchHistory[dishIndex].updatedAt = new Date()  
-      await AsyncStorage.setItem('DISH_SEARCH_HISTORY', JSON.stringify(newSearchHistory))
-      return
-    }
-
-    // for adding new dish search history
-    newSearchHistory.push(searchToSave)
-    await AsyncStorage.setItem('DISH_SEARCH_HISTORY', JSON.stringify(newSearchHistory))
+    await storeDishesSearchHistory.mutateAsync({
+      searchId: String(id),
+      slug: String(slug),
+      image: String(image),
+      title: String(title),
+      description: String(description),
+      userId: String(userId)
+    })
   }
 
   const searchPeopleHistory = async () => {
-    const searchToSave = {
-      id: id,
-      slug: slug,
-      image: image,
-      title: title,
-      description: description,
-      updatedAt: new Date()
-    }
-
-    // checking if there is already a people search history in storage
-    const existingSearchHistory: any = await AsyncStorage.getItem('DISH_PEOPLE_HISTORY')
-
-    let newSearchHistory = JSON.parse(existingSearchHistory)
-
-    if (!newSearchHistory) {
-      newSearchHistory = []
-    }
-    
-    // check if the search people is already in the storage, hence it will appear to the top of history sorted by people history updatedAt
-    const checkDuplication = newSearchHistory?.find((history: { id: string }) => history.id === searchToSave.id)
-
-    if (checkDuplication) {
-      let peopleIndex = newSearchHistory.findIndex(((history: any) => history.id === searchToSave.id))
-      newSearchHistory[peopleIndex].updatedAt = new Date()  
-      await AsyncStorage.setItem('DISH_PEOPLE_HISTORY', JSON.stringify(newSearchHistory))
-      return
-    }
-
-    // for adding new people search history
-    newSearchHistory.push(searchToSave)
-    await AsyncStorage.setItem('DISH_PEOPLE_HISTORY', JSON.stringify(newSearchHistory))
+    await storePeopleSearchHistory.mutateAsync({
+      searchId: String(id),
+      slug: String(slug),
+      image: String(image),
+      title: String(title),
+      description: String(description),
+      userId: String(userId)
+    })
   }
 
   return (

@@ -1,40 +1,37 @@
 import React from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import SearchResultDisplay from '../SearchResultDisplay'
 import SearchResultsLoader from '../../SkeletonLoaders/SearchResultsLoader'
 import tw from 'twrnc'
 import { fonts } from '../../../styles/global'
 import { MaterialIcon } from '../../../utils/Icons'
 import { TouchableOpacity, View, ScrollView, TextInput, Text, Alert } from 'react-native'
-import { useGetUserSearch } from '../../../lib/ReactQuery'
+import { useRoute } from '@react-navigation/native'
+import { useGetUserSearch, useGetSearchHistory, useDeletePeopleSearchHistory } from '../../../lib/ReactQuery'
 
-const PeopleTab = () => {
+interface TypedProps {
+  userId: string
+}
+
+const PeopleTab: React.FC<TypedProps> = ({ userId }) => {
+
+  const route = useRoute()
+  
+  const deletePeopleSearchHistory = useDeletePeopleSearchHistory()
+
+  // getting the type of search history by useRoute
+  const searchHistoryType = route.name === 'DishesTab' ? 'DISHES' : 'PEOPLE'
 
   const [search, setSearch] = React.useState<string>('')
 
   const { data: userResults, isLoading, isError } = useGetUserSearch(search)
-
-  const [peopleRecentSearches, setPeopleRecentSearches] = React.useState<any>([])
-
-  const clearRecentPeopleHistory = async () => {
-    await AsyncStorage.removeItem('DISH_PEOPLE_HISTORY')
-    setPeopleRecentSearches([])
-  }
-
-  const getSearchHistory = async () => {
-    const getPeopleSearchHistory: any = await AsyncStorage.getItem('DISH_PEOPLE_HISTORY')
-    setPeopleRecentSearches(JSON.parse(getPeopleSearchHistory))
-  }
+  const { data: searchHistory, isLoading: searchHistoryLoading, isError: searchHistoryError } = useGetSearchHistory(userId, searchHistoryType)
   
-  peopleRecentSearches?.sort((a: any, b: any) => {
-    const date1 = new Date(a.updatedAt).getTime()
-    const date2 = new Date(b.updatedAt).getTime()
-    return date1 < date2 ? 1 : -1
-  })
 
-  React.useEffect(() => {
-    getSearchHistory()
-  }, [userResults, clearRecentPeopleHistory])
+  const clearAllPeopleSearchHistory = async () => {
+    await deletePeopleSearchHistory.mutateAsync({
+      userId: String(userId)
+    })
+  }
   
   return (
     <View style={tw`flex-1 bg-white`}>
@@ -68,7 +65,7 @@ const PeopleTab = () => {
             <React.Fragment>
               <View style={tw`flex-row items-center justify-between w-full pb-5`}>
                 <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsBold]}>Recent</Text>
-                {peopleRecentSearches && (
+                {(!searchHistoryLoading && searchHistory.length > 0) && (
                   <TouchableOpacity
                     onPress={() => {
                       Alert.alert(
@@ -82,7 +79,7 @@ const PeopleTab = () => {
                           {
                             text: 'Yes',
                             onPress: async () => {
-                              clearRecentPeopleHistory()
+                              clearAllPeopleSearchHistory()
                             },
                             style: "default"
                           }
@@ -97,12 +94,16 @@ const PeopleTab = () => {
                   </TouchableOpacity>
                 )}
               </View>
-              {peopleRecentSearches
+              {(searchHistoryLoading || searchHistoryError) && (
+                <SearchResultsLoader />
+              )}
+              {(!searchHistoryLoading && searchHistory.length > 0)
                 ? <React.Fragment>
-                    {peopleRecentSearches.slice(0, 5).map((history: any, i: number) => (
+                    {searchHistory.map((history: any, i: number) => (
                       <SearchResultDisplay
                         key={i}
-                        id={history.id}
+                        userId={userId}
+                        id={history.searchId}
                         image={history.image}
                         title={history.title}
                         description={history.description}
@@ -133,6 +134,7 @@ const PeopleTab = () => {
                   {userResults.map((user: { id: string, profile: string, name: string, username: string, location: string }) => (
                     <SearchResultDisplay
                       key={user.id}
+                      userId={userId}
                       id={user.id}
                       image={user.profile}
                       title={user.name}

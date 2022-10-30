@@ -1,41 +1,37 @@
 import React from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import SearchResultDisplay from '../SearchResultDisplay'
 import SearchResultsLoader from '../../SkeletonLoaders/SearchResultsLoader'
 import tw from 'twrnc'
 import { fonts } from '../../../styles/global'
 import { MaterialIcon } from '../../../utils/Icons'
 import { TouchableOpacity, View, ScrollView, TextInput, Text, Alert } from 'react-native'
-import { useGetDishSearch } from '../../../lib/ReactQuery'
+import { useRoute } from '@react-navigation/native'
+import { useGetDishSearch, useGetSearchHistory, useDeleteDishesSearchHistory } from '../../../lib/ReactQuery'
 
-const DishesTab = () => {
+interface TypedProps {
+  userId: string
+}
+
+const DishesTab: React.FC<TypedProps> = ({ userId }) => {
+
+  const route = useRoute()
+  
+  const deleteDishesSearchHistory = useDeleteDishesSearchHistory()
+
+  // getting the type of search history by useRoute
+  const searchHistoryType = route.name === 'DishesTab' ? 'DISHES' : 'PEOPLE'
 
   const [search, setSearch] = React.useState<string>('')
 
   const { data: dishResults, isLoading, isError } = useGetDishSearch(search)
+  const { data: searchHistory, isLoading: searchHistoryLoading, isError: searchHistoryError } = useGetSearchHistory(userId, searchHistoryType)
 
-  const [dishRecentSearches, setDishRecentSearches] = React.useState<any>([])
-
-  const clearRecentDishHistory = async () => {
-    await AsyncStorage.removeItem('DISH_SEARCH_HISTORY')
-    setDishRecentSearches([])
+  const clearAllDishesSearchHistory = async () => {
+    await deleteDishesSearchHistory.mutateAsync({
+      userId: String(userId)
+    })
   }
 
-  const getSearchHistory = async () => {
-    const getDishSearchHistory: any = await AsyncStorage.getItem('DISH_SEARCH_HISTORY')
-    setDishRecentSearches(JSON.parse(getDishSearchHistory))
-  }
-  
-  dishRecentSearches?.sort((a: any, b: any) => {
-    const date1 = new Date(a.updatedAt).getTime()
-    const date2 = new Date(b.updatedAt).getTime()
-    return date1 < date2 ? 1 : -1
-  })
-
-  React.useEffect(() => {
-    getSearchHistory()
-  }, [dishResults, clearRecentDishHistory])
-  
   return (
     <View style={tw`flex-1 bg-white`}>
       <ScrollView>
@@ -68,7 +64,7 @@ const DishesTab = () => {
             <React.Fragment>
               <View style={tw`flex-row items-center justify-between w-full pb-5`}>
                 <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsBold]}>Recent</Text>
-                {dishRecentSearches && (
+                {(!searchHistoryLoading && searchHistory.length > 0) && (
                   <TouchableOpacity
                     onPress={() => {
                       Alert.alert(
@@ -82,7 +78,7 @@ const DishesTab = () => {
                           {
                             text: 'Yes',
                             onPress: async () => {
-                              clearRecentDishHistory()
+                              clearAllDishesSearchHistory()
                             },
                             style: "default"
                           }
@@ -97,12 +93,16 @@ const DishesTab = () => {
                   </TouchableOpacity>
                 )}
               </View>
-              {dishRecentSearches
+              {(searchHistoryLoading || searchHistoryError) && (
+                <SearchResultsLoader />
+              )}
+              {(!searchHistoryLoading && searchHistory.length > 0)
                 ? <React.Fragment>
-                    {dishRecentSearches.slice(0, 5).map((history: any, i: number) => (
+                    {searchHistory.map((history: any, i: number) => (
                       <SearchResultDisplay
                         key={i}
-                        id={history.id}
+                        userId={userId}
+                        id={history.searchId}
                         slug={history.slug}
                         image={history.image}
                         title={history.title}
@@ -134,6 +134,7 @@ const DishesTab = () => {
                   {dishResults.map((dish: { id: string, slug: string, image: string, title: string, description: string }) => (
                     <SearchResultDisplay
                       key={dish.id}
+                      userId={userId}
                       id={dish.id}
                       slug={dish.slug}
                       image={dish.image}
