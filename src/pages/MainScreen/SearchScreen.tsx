@@ -14,7 +14,7 @@ const SearchScreen = () => {
 
   return (
     <MainLayout user={user} >
-      <SearchLayout />
+      <SearchLayout userId={user.id} />
     </MainLayout>
   )
 }

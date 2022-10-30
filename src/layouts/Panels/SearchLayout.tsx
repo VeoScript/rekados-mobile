@@ -7,21 +7,25 @@ import { fonts } from '../../styles/global'
 import { View, Dimensions } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
+interface TypedProps {
+  userId: string
+}
+
 const Tab = createMaterialTopTabNavigator()
 
-const SearchLayout = () => {
+const SearchLayout: React.FC<TypedProps> = ({ userId }) => {
 
   const screen = Dimensions.get("screen")
 
   const DishesTabComponent = () => {
     return (
-      <DishesTab />
+      <DishesTab userId={userId} />
     )
   }
 
   const PeopleTabComponent = () => {
     return (
-      <PeopleTab />
+      <PeopleTab userId={userId} />
     )
   }
 
