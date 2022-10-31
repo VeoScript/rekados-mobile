@@ -41,7 +41,7 @@ const UserProfileLayout: React.FC<TypedProps> = ({ user, profileId }) => {
 
   return (
     <View style={tw`flex-col w-full h-full`}>
-      <ScrollView contentContainerStyle={tw`flex-col items-center justify-start w-full py-3`}>
+      <ScrollView contentContainerStyle={tw`flex-col items-center justify-start w-full py-3`} keyboardShouldPersistTaps="handled">
         <View style={tw`relative my-3`}>
           {user.profile
             ? <Image

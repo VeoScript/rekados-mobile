@@ -162,7 +162,7 @@ const UserSettingsLayout: React.FC<TypedProps> = ({ user, profileId }) => {
 
   return (
     <View style={tw`flex-1 w-full h-full`}>
-      <ScrollView contentContainerStyle={tw`flex-col w-full`}>
+      <ScrollView contentContainerStyle={tw`flex-col w-full`} keyboardShouldPersistTaps="handled">
         <TopHeader
           title="Account Settings"
           subtitle="Update your account"

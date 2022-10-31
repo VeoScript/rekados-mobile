@@ -15,7 +15,7 @@ const AuthLayout: React.FC<TypedProps> = ({ children }) => {
 
   return (
     <SafeAreaView style={tw`flex-1 flex-row items-center justify-center w-full bg-white`}>
-      <ScrollView style={tw`flex-1 w-full`}>
+      <ScrollView style={tw`flex-1 w-full`} keyboardShouldPersistTaps="handled">
         <View style={tw`flex-col w-full p-5`}>
           <View style={tw`flex-col items-center w-full`}>
             <View style={tw`flex-row justify-center w-full overflow-hidden rounded-xl`}>

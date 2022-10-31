@@ -39,7 +39,7 @@ const DisplayDishScreen = () => {
 
   return (
     <MainLayout user={user} >
-      <ScrollView style={tw`w-full`}>
+      <ScrollView style={tw`w-full`} keyboardShouldPersistTaps="handled">
         {dishIsLoading && (
           <ViewDishSkeletonLoader />
         )}
