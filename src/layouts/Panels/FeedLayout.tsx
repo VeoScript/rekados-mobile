@@ -57,12 +57,14 @@ const FeedLayout: React.FC<TypedProps> = ({ user }) => {
   return (
     <View style={tw`flex flex-col w-full`}>
       {isLoading && (
-        <ScrollView contentContainerStyle={tw`px-3`}>
+        <ScrollView>
           <TopHeader
             title="Feed"
             subtitle="Browse dishes around the world."
           />
-          <NewsFeedSkeletonLoader />
+          <View style={tw`px-3`}>
+            <NewsFeedSkeletonLoader />
+          </View>
         </ScrollView>
       )}
       {!isLoading && (

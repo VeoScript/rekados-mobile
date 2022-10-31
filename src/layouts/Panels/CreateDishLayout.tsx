@@ -169,7 +169,7 @@ const CreateDishLayout: React.FC<TypedProps> = ({ user }) => {
 
   return (
     <React.Fragment>
-      <ScrollView style={tw`flex flex-col w-full`}>
+      <ScrollView style={tw`flex flex-col w-full`} keyboardShouldPersistTaps="handled">
         <View style={tw`flex flex-col p-3`}>
           <View style={tw`flex flex-col px-1`}>
             <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>Create Dish</Text>

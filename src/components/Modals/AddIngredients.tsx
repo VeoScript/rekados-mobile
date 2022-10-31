@@ -36,7 +36,7 @@ const AddIngredients: React.FC<TypedProps> = ({ ingredientsState, setIngredients
         setModalVisible(false)
       }}      
     >
-      <ScrollView style={tw`w-full h-full bg-white`}>
+      <ScrollView style={tw`w-full h-full bg-white`} keyboardShouldPersistTaps="handled">
         <View style={tw`flex flex-col w-full p-5`}>
           <View style={tw`flex flex-row items-center justify-between w-full px-2`}>
             <Text style={[tw`text-xl text-neutral-600`, fonts.fontPoppinsBold]}>Add Ingredients</Text>

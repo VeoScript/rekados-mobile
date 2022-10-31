@@ -96,24 +96,28 @@ const DishesTab: React.FC<TypedProps> = ({ userId }) => {
               {(searchHistoryLoading || searchHistoryError) && (
                 <SearchResultsLoader />
               )}
-              {(!searchHistoryLoading && searchHistory.length > 0)
-                ? <React.Fragment>
-                    {searchHistory.map((history: any, i: number) => (
-                      <SearchResultDisplay
-                        key={i}
-                        userId={userId}
-                        id={history.searchId}
-                        slug={history.slug}
-                        image={history.image}
-                        title={history.title}
-                        description={history.description}
-                      />
-                    ))}
-                  </React.Fragment> 
-                : <View style={tw`flex-row items-center justify-center w-full`}>
-                    <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppins]}>No Recent Searches</Text>
-                  </View>
-              }
+              {!(searchHistoryLoading || searchHistoryError) && (
+                <React.Fragment>
+                  {searchHistory.length > 0 
+                    ? <React.Fragment>
+                        {searchHistory.map((history: any, i: number) => (
+                          <SearchResultDisplay
+                            key={i}
+                            userId={userId}
+                            id={history.searchId}
+                            slug={history.slug}
+                            image={history.image}
+                            title={history.title}
+                            description={history.description}
+                          />
+                        ))}
+                      </React.Fragment> 
+                    : <View style={tw`flex-row items-center justify-center w-full`}>
+                        <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppins]}>No Recent Searches</Text>
+                      </View>
+                  }
+                </React.Fragment> 
+              )}
             </React.Fragment>
           )}
           {search && (
