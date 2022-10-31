@@ -21,7 +21,7 @@ const TopHeader: React.FC<TypedProps> = ({ title, subtitle }) => {
         <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>{ title }</Text>
         <Text style={[tw`text-sm text-neutral-400`, fonts.fontPoppinsLight]}>{ subtitle }</Text>
       </View>
-      {(route.name !== 'SearchScreen' && route.name !== 'UserSettingScreen') && (
+      {(route.name !== 'SearchScreen' && route.name !== 'UserSettingScreen' && route.name !== 'NotificationScreen') && (
         <TouchableOpacity
           style={tw`p-2 rounded-full`}
           onPress={() => {
@@ -30,7 +30,7 @@ const TopHeader: React.FC<TypedProps> = ({ title, subtitle }) => {
         >
           <FeatherIcon
             name="search"
-            size="medium"
+            size="large"
             color="#7c7c7c"
           />
         </TouchableOpacity>

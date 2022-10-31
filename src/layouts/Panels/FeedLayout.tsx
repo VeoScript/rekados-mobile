@@ -3,7 +3,8 @@ import TopHeader from '../../components/TopHeader'
 import DishCard from '../../components/Cards/DishCard'
 import NewsFeedSkeletonLoader from '../../components/SkeletonLoaders/NewsFeedSkeletonLoader'
 import tw from 'twrnc'
-import { View, FlatList, ActivityIndicator, ScrollView } from 'react-native'
+import { fonts } from '../../styles/global'
+import { View, FlatList, ActivityIndicator, ScrollView, Text } from 'react-native'
 import { useGetDishes } from '../../lib/ReactQuery'
 
 interface TypedProps {
@@ -43,6 +44,17 @@ const FeedLayout: React.FC<TypedProps> = ({ user }) => {
     )
   }
 
+  const listIsEmpty = () => {
+    return (
+      <View style={tw`flex-1 flex-col items-center justify-center w-full h-full my-3`}>
+        <View style={tw`flex-1 w-full max-w-xs h-full`}>
+          <Text style={[tw`text-3xl text-neutral-500`, fonts.fontPoppins]}>Newsfeed is empty.</Text>
+          <Text style={[tw`my-2 text-lg text-neutral-400`, fonts.fontPoppins]}>Create your first dish.</Text>
+        </View>
+      </View>
+    )
+  }
+
   const renderData = (item: any) => {
     return (
       <View style={tw`flex px-3`}>
@@ -70,6 +82,7 @@ const FeedLayout: React.FC<TypedProps> = ({ user }) => {
       {!isLoading && (
         <FlatList
           ListHeaderComponent={headerComponent}
+          ListEmptyComponent={listIsEmpty}
           data={dishes.pages.map((page: any) => page.dishes).flat()}
           renderItem={renderData}
           keyExtractor={itemKeyExtractor}

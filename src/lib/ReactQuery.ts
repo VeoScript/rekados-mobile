@@ -134,6 +134,20 @@ export const useGetSearchHistory = (userId: string, type: string) => {
     }
   )
 }
+
+export const useGetNotifications = (userId: string) => {
+  return useInfiniteQuery(['notifications', userId],
+    async ({ pageParam = ''}) => {
+      const notifications = await api.get(`/api/notifications?cursor=${ pageParam }`)
+      return notifications.data
+    },
+    {
+      enabled: !!userId,
+      refetchInterval: 1000,
+      getNextPageParam: (lastPage) => lastPage.nextId ?? false
+    }
+  )
+}
 // END FOR QUERIES
 
 
@@ -499,6 +513,57 @@ export const useDeletePeopleSearchHistory = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries(['userSearchHistory'])
+      }
+    }
+  )
+}
+
+export const useStoreNotification = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { type: string, message: string, dishSlug: string, notificationFromId: string, notificationToId: string }) =>
+    api.post('/api/send-notifications', {
+      type: _args.type,
+      message: _args.message,
+      dishSlug: _args.dishSlug,
+      notificationFromId: _args.notificationFromId,
+      notificationToId: _args.notificationToId
+    }),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['notifications'])
+      }
+    }
+  )
+}
+
+export const useReadNotification = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { notificationId: string }) =>
+    api.put(`/api/read-notification/${_args.notificationId}`),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['notifications'])
+      }
+    }
+  )
+}
+
+export const useMarkAllReadNotification = () => {
+  const queryClient = useQueryClient()
+  return useMutation(() =>
+    api.put('/api/read-all-notifications'),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['notifications'])
       }
     }
   )

@@ -30,7 +30,7 @@ const BottomBar = () => {
       {!keyboardIsVisible && (
         <View style={tw`flex-row items-center justify-between w-full h-full max-h-[3rem] bg-white px-10 border-t border-neutral-300`}>
           <TouchableOpacity
-            activeOpacity={0.8}
+            activeOpacity={0.5}
             onPress={() => {
               useNavigate('HomeScreen')
             }}
@@ -42,7 +42,7 @@ const BottomBar = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            activeOpacity={0.8}
+            activeOpacity={0.5}
             onPress={() => {
               useNavigate('CreateDishScreen')
             }}
@@ -54,7 +54,7 @@ const BottomBar = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            activeOpacity={0.8}
+            activeOpacity={0.5}
             onPress={() => {
               useNavigate('SaveDishScreen')
             }}
@@ -66,7 +66,7 @@ const BottomBar = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            activeOpacity={0.8}
+            activeOpacity={0.5}
             onPress={() => {
               useNavigate('NotificationScreen')
             }}
