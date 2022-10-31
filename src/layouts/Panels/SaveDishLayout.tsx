@@ -48,10 +48,10 @@ const SaveDishLayout: React.FC<TypedProps> = ({ user }) => {
 
   const listIsEmpty = () => {
     return (
-      <View style={tw`flex-1 flex-col items-center justify-center w-full h-full my-5`}>
+      <View style={tw`flex-1 flex-col items-center justify-center w-full h-full my-3`}>
         <View style={tw`flex-1 w-full max-w-xs h-full`}>
           <Text style={[tw`text-3xl text-neutral-500`, fonts.fontPoppins]}>You don't have saved dishes yet.</Text>
-          <Text style={[tw`text-lg text-neutral-400`, fonts.fontPoppins]}>When you do, your saved dishes will shown up here.</Text>
+          <Text style={[tw`my-2 text-lg text-neutral-400`, fonts.fontPoppins]}>When you do, your saved dishes will shown up here.</Text>
         </View>
       </View>
     )

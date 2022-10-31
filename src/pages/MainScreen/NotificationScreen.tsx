@@ -1,8 +1,9 @@
 import React from 'react'
 import MainLayout from '../../layouts/MainLayout'
+import NotificationsLayout from '../../layouts/Panels/NotificationsLayout'
 import MainSplashScreen from '../../components/SplashScreens/MainSplashScreen'
 import ErrorScreen from '../../components/SplashScreens/ErrorScreen'
-import { View, Text, BackHandler } from 'react-native'
+import { BackHandler } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { useNavigate } from '../../utils/RootNavigation'
 import { useGetUser } from '../../lib/ReactQuery'
@@ -36,9 +37,7 @@ const NotificationScreen = () => {
 
   return (
     <MainLayout user={user} >
-      <View>
-        <Text>This is Notification Screen</Text>
-      </View>
+      <NotificationsLayout user={user} />
     </MainLayout>
   )
 }

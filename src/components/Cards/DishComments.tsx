@@ -6,19 +6,23 @@ import moment from 'moment'
 import { View, Text, TouchableOpacity, TextInput, Image } from 'react-native'
 import { fonts } from '../../styles/global'
 import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
-import { useGetComments, useCreateCommentMutation, useDeleteCommentMutation } from '../../lib/ReactQuery'
+import { useGetComments, useCreateCommentMutation, useStoreNotification } from '../../lib/ReactQuery'
 import { useNavigate } from '../../utils/RootNavigation'
 
 interface TypedProps {
   user: {
     id: string
   }
+  author: {
+    id: string
+  }
   slug: string
 }
 
-const DishComments: React.FC<TypedProps> = ({ slug, user }) => {
+const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
 
   const createCommentMutation = useCreateCommentMutation()
+  const storeNotification = useStoreNotification()
 
   const { data: comments, isLoading, isError }: any = useGetComments(slug)
 
@@ -37,13 +41,29 @@ const DishComments: React.FC<TypedProps> = ({ slug, user }) => {
     },
     {
       onError: (error) => {
-        console.error(error.response.data)
+        console.error('ON COMMENT', error.response.data)
         setComment('')
         setLoading(false)
       },
-      onSuccess: () => {
+      onSuccess: async () => {
         setComment('')
         setLoading(false)
+        // send comment notification
+        if (user.id !== author.id) {
+          const message = `commented on your dish`
+          await storeNotification.mutateAsync({
+            type: 'COMMENT',
+            message: message,
+            dishSlug: slug,
+            notificationFromId: user.id,
+            notificationToId: author.id
+          },
+          {
+            onError: (error: any) => {
+              console.error('ON NOTIFICATION', error.response.data)
+            },
+          })
+        }
       }
     })
   }

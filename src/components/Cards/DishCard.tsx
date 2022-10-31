@@ -47,6 +47,7 @@ const DishCard: React.FC<TypedProps> = ({ user, dish }) => {
         </View>
         <LikeButton
           user={user}
+          author={dish.item.author}
           slug={dish.item.slug}
           likes={dish.item.likes}
         />

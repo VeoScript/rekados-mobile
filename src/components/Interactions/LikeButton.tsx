@@ -1,20 +1,23 @@
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
 import { MaterialIcon } from '../../utils/Icons'
-import { useLikeMutation, useUnlikeMutation } from '../../lib/ReactQuery'
+import { useLikeMutation, useUnlikeMutation, useStoreNotification } from '../../lib/ReactQuery'
 
 interface TypedProps {
   user: any
+  author: any
   slug: string
   likes: any
 }
 
-const LikeButton: React.FC<TypedProps> = ({ slug, user, likes }) => {
+const LikeButton: React.FC<TypedProps> = ({ user, author, slug, likes }) => {
 
   const likeMutation = useLikeMutation()
   const unlikeMutation = useUnlikeMutation()
+  const storeNotification = useStoreNotification()
 
   const userId = user.id
+  const authorId = author.id
 
   // useState check if the post is liked
   const [like, setLike] = React.useState(false)
@@ -27,7 +30,30 @@ const LikeButton: React.FC<TypedProps> = ({ slug, user, likes }) => {
 
   // function for liking the post
   async function onLike(slug: string) {
-    await likeMutation.mutateAsync({ slug })
+    await likeMutation.mutateAsync({ slug },
+    {
+      onError: (error: any) => {
+        console.error('ON LIKE', error.response.data)
+      },
+      onSuccess: async () => {
+        //send like notification
+        if (userId !== authorId) {
+          const message = `likes your dish`
+          await storeNotification.mutateAsync({
+            type: 'LIKE',
+            message: message,
+            dishSlug: slug,
+            notificationFromId: userId,
+            notificationToId: authorId
+          },
+          {
+            onError: (error: any) => {
+              console.error('ON NOTIFICATION', error.response.data)
+            },
+          })
+        }
+      }
+    })
   }
 
   // function for unliking the post
