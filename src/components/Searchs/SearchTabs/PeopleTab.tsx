@@ -64,7 +64,7 @@ const PeopleTab: React.FC<TypedProps> = ({ userId }) => {
         {!search && (
             <React.Fragment>
               <View style={tw`flex-row items-center justify-between w-full pb-5`}>
-                <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsBold]}>Recent</Text>
+                <Text style={[tw`text-base text-neutral-500`, fonts.fontPoppinsBold]}>Recent</Text>
                 {(!searchHistoryLoading && searchHistory.length > 0) && (
                   <TouchableOpacity
                     onPress={() => {
@@ -90,7 +90,7 @@ const PeopleTab: React.FC<TypedProps> = ({ userId }) => {
                       )
                     }}
                   >
-                    <Text style={[tw`text-sm text-yellow-500`, fonts.fontPoppinsLight]}>Clear all</Text>
+                    <Text style={[tw`text-base text-yellow-500`, fonts.fontPoppinsLight]}>Clear all</Text>
                   </TouchableOpacity>
                 )}
               </View>

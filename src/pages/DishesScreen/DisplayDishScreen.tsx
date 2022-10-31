@@ -17,7 +17,7 @@ import { Toast } from '../../utils/Toast'
 import { useGetUser, useGetDish } from '../../lib/ReactQuery'
 
 const DisplayDishScreen = () => {
-
+  
   const route: any = useRoute()
 
   const { slug } = route.params
@@ -39,7 +39,10 @@ const DisplayDishScreen = () => {
 
   return (
     <MainLayout user={user} >
-      <ScrollView style={tw`w-full`} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        style={tw`w-full`}
+        keyboardShouldPersistTaps="handled"
+      >
         {dishIsLoading && (
           <ViewDishSkeletonLoader />
         )}
@@ -68,6 +71,7 @@ const DisplayDishScreen = () => {
                   <View style={tw`flex-row items-center mx-1.5`}>
                     <LikeButton
                       user={user}
+                      author={dish.author}
                       slug={slug}
                       likes={dish.likes}
                     />
@@ -156,6 +160,7 @@ const DisplayDishScreen = () => {
             </View>
             <DishComments
               user={user}
+              author={dish.author}
               slug={slug}
             />
             <View style={tw`flex flex-row items-center justify-center w-full py-3`}>
