@@ -42,6 +42,7 @@ const DisplayDishScreen = () => {
       <ScrollView
         style={tw`w-full`}
         keyboardShouldPersistTaps="handled"
+        overScrollMode="never"
       >
         {dishIsLoading && (
           <ViewDishSkeletonLoader />
