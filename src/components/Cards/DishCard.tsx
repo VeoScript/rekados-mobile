@@ -54,7 +54,7 @@ const DishCard: React.FC<TypedProps> = ({ user, dish }) => {
       </View>
       <View style={tw`w-full overflow-hidden rounded-xl my-3`}>
         <Image
-          style={tw`flex w-full h-[10rem]`}
+          style={tw`flex w-full h-[10rem] bg-neutral-100`}
           resizeMode="cover"
           source={{
             uri: `${ dish.item.image }`

@@ -54,7 +54,7 @@ const DisplayDishScreen = () => {
                 <Text style={[tw`mt-1 px-2 py-0.5 rounded-full text-sm text-white bg-[#f2b900]`, fonts.fontPoppinsLight]}>{ dish.category }</Text>
                 <View style={tw`w-full overflow-hidden rounded-xl my-3`}>
                   <Image
-                    style={tw`flex w-full h-[12rem]`}
+                    style={tw`flex w-full h-[12rem] bg-neutral-100`}
                     resizeMode="cover"
                     source={{
                       uri: `${ dish.image }`

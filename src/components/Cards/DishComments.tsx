@@ -134,7 +134,7 @@ const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
                 >
                   {comment.user.profile
                     ? <Image
-                        style={tw`flex rounded-full w-[3rem] h-[3rem]`}
+                        style={tw`flex rounded-full w-[3rem] h-[3rem] bg-neutral-100`}
                         resizeMode="cover"
                         source={{
                           uri: `${ comment.user.profile }`
