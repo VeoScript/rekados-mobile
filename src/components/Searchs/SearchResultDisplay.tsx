@@ -61,7 +61,7 @@ const SearchResultDisplay: React.FC<TypedProps> = ({ userId, id, slug, image, ti
     >
       {image
         ? <Image
-            style={tw`flex ${route.name === 'DishesTab' ? 'rounded-xl' : 'rounded-full'} w-[3rem] h-[3rem]`}
+            style={tw`flex ${route.name === 'DishesTab' ? 'rounded-xl' : 'rounded-full'} w-[3rem] h-[3rem] bg-neutral-100`}
             resizeMode="cover"
             source={{
               uri: `${ image }`

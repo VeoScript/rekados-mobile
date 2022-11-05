@@ -246,7 +246,7 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
               <View style={tw`relative w-full overflow-hidden rounded-xl my-3`}>
                 {photo === null
                   ? <Image
-                      style={tw`flex w-full h-[10rem]`}
+                      style={tw`flex w-full h-[10rem] bg-neutral-100`}
                       resizeMode="cover"
                       source={{
                         uri: `${ dishImage }`
