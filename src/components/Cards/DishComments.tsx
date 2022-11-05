@@ -147,7 +147,7 @@ const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
                       />
                   }
                 </TouchableOpacity>
-                <View style={tw`flex-col mx-3 my-3`}>
+                <View style={tw`flex-1 flex-col mx-3 my-3`}>
                   <TouchableOpacity
                     onPress={() => {
                       useNavigate('UserScreen', { id: comment.user.id })
