@@ -1,11 +1,16 @@
 import React from 'react'
 import tw from 'twrnc'
 import { MaterialIcon } from '../utils/Icons'
-import { View, TouchableOpacity, Keyboard } from 'react-native'
+import { View, TouchableOpacity, Keyboard, Text } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { useNavigate } from '../utils/RootNavigation'
+import { fonts } from '../styles/global'
 
-const BottomBar = () => {
+interface TypedProps {
+  countUnreadNotifications: any
+}
+
+const BottomBar: React.FC<TypedProps> = ({ countUnreadNotifications }) => {
 
   const route = useRoute()
 
@@ -66,11 +71,17 @@ const BottomBar = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            style={tw`relative`}
             activeOpacity={0.5}
             onPress={() => {
               useNavigate('NotificationScreen')
             }}
           >
+            {countUnreadNotifications?._count !== 0 && (
+              <View style={tw`absolute -top-3 -right-2 z-10 flex-row items-center justify-center w-full p-1 rounded-full bg-yellow-400`}>
+                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsBold]}>{ countUnreadNotifications?._count }</Text>
+              </View>
+            )}
             <MaterialIcon
               name="bell"
               size="large"

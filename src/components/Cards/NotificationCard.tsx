@@ -31,7 +31,7 @@ const NotificationCard: React.FC<TypedProps> = ({ notification }) => {
 
   return (
     <TouchableOpacity
-      style={tw`flex-1 flex-row items-start w-full overflow-hidden rounded-2xl mb-1 px-2 py-3 ${ notification.item.read ? 'bg-transparent' : 'bg-yellow-50' }`}
+      style={tw`flex-row items-start w-full overflow-hidden rounded-2xl mb-1 px-2 py-3 ${ notification.item.read ? 'bg-transparent' : 'bg-yellow-50' }`}
       activeOpacity={0.5}
       onPress={onReadNotification}
     >

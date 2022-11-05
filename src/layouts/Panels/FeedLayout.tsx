@@ -57,7 +57,7 @@ const FeedLayout: React.FC<TypedProps> = ({ user }) => {
 
   const renderData = (item: any) => {
     return (
-      <View style={tw`flex px-3`}>
+      <View style={tw`px-3`}>
         <DishCard
           user={user}
           dish={item}
