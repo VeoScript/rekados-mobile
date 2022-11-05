@@ -8,6 +8,10 @@ Rekados Mobile (Android) Version.
 A social media app for people who want to share and explore new recipes and dishes.
 Good user experience and easy to understand. The instructions and procedures are detailed, there is also a youtube video and comment section.
 
+## Screenshots
+
+![rekados-app-screenshots](https://user-images.githubusercontent.com/26340308/200118745-e7d9e090-cd92-4d8f-8bd9-80c7738d84b2.png)
+
 ## Technologies Used
 - React Native
 - ExpressJS
