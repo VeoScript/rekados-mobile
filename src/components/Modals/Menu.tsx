@@ -60,7 +60,7 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
               style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
               activeOpacity={0.6}
               onPress={() => {
-                console.log('Settings')
+                useNavigate('UserSettingScreen', { id: user.id })
               }}
             >
               <MaterialIcon
@@ -70,7 +70,7 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
               />
               <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>Settings</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
               activeOpacity={0.6}
               onPress={() => {
@@ -82,13 +82,13 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
                 size="small"
                 color="#7c7c7c"
               />
-              <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>Terms of Service</Text>
-            </TouchableOpacity>
+              <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>Terms of Use</Text>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
               activeOpacity={0.6}
               onPress={() => {
-                console.log('Privacy Policy')
+                useNavigate('PrivacyPolicyScreen')
               }}
             >
               <MaterialIcon
@@ -102,7 +102,7 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
               style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
               activeOpacity={0.6}
               onPress={() => {
-                console.log('About')
+                useNavigate('AboutScreen')
               }}
             >
               <MaterialIcon

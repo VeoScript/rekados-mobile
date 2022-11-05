@@ -216,7 +216,7 @@ const UserSettingsLayout: React.FC<TypedProps> = ({ user, profileId }) => {
               </View>
               <TextInput
                 style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
-                editable={!isUpdateAccountLoading}
+                editable={false}
                 value={email}
                 onChangeText={(text: string) => {
                   validateEmail(text)
