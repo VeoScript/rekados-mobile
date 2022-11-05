@@ -7,12 +7,13 @@ import { useGetUser } from '../../lib/ReactQuery'
 
 const HomeScreen = () => {
 
-  const { data: user, isLoading: userLoading }: any = useGetUser()
+  const { data: user, isLoading: userLoading, isError, error }: any = useGetUser()
 
   if (userLoading) return <MainSplashScreen />
+  if (isError) return <ErrorScreen error={error.response?.data?.message} />
 
   return (
-    <MainLayout user={user} >
+    <MainLayout user={user}>
       <FeedLayout user={user} />
     </MainLayout>
   )

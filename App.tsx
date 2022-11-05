@@ -12,6 +12,8 @@ import DisplayDishScreen from './src/pages/DishesScreen/DisplayDishScreen'
 import UserScreen from './src/pages/ProfileScreen/UserScreen'
 import UserSettingScreen from './src/pages/ProfileScreen/UserSettingScreen'
 import MainSplashScreen from './src/components/SplashScreens/MainSplashScreen'
+import AboutScreen from './src/pages/MainScreen/Misc/AboutScreen'
+import PrivacyPolicyScreen from './src/pages/MainScreen/Misc/PrivacyPolicyScreen'
 import { AppStateStatus, Platform, StatusBar } from 'react-native'
 import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { NavigationContainer } from '@react-navigation/native'
@@ -153,6 +155,22 @@ const App = () => {
                   <Stack.Screen
                     name="UserSettingScreen"
                     component={UserSettingScreen}
+                    options={{
+                      headerShown: false,
+                      animation: 'none'
+                    }}
+                  />
+                  <Stack.Screen
+                    name="AboutScreen"
+                    component={AboutScreen}
+                    options={{
+                      headerShown: false,
+                      animation: 'none'
+                    }}
+                  />
+                  <Stack.Screen
+                    name="PrivacyPolicyScreen"
+                    component={PrivacyPolicyScreen}
                     options={{
                       headerShown: false,
                       animation: 'none'
