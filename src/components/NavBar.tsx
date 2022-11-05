@@ -1,10 +1,8 @@
 import React from 'react'
 import Menu from './Modals/Menu'
 import tw from 'twrnc'
-import { fonts } from '../styles/global'
 import { MaterialIcon } from '../utils/Icons'
-import { Toast } from '../utils/Toast'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, TouchableOpacity, Image } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { useNavigate } from '../utils/RootNavigation'
 
@@ -56,7 +54,20 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
         </View>
         <View style={tw`flex-1 flex-row items-center justify-end w-[5rem]`}>
           {(route.name !== 'UserScreen' && route.name !== 'UserSettingScreen') && (
-            <Text style={[tw`text-right text-base`, fonts.fontPoppinsBold]}>Asia</Text>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                useNavigate('UserScreen', { id: user.id })
+              }}
+            >
+              <Image
+                style={tw`flex rounded-full w-[2rem] h-[2rem] bg-neutral-100`}
+                resizeMode="cover"
+                source={{
+                  uri: `${ user.profile }`
+                }}
+              />
+            </TouchableOpacity>
           )}
           {(route.name === 'UserScreen' && user?.id === route.params?.id) && (
             <View>
