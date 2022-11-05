@@ -18,8 +18,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { navigationRef } from './src/utils/RootNavigation'
 import { useAppState } from './src/hooks/useAppState'
-import { useOnlineManager } from './src/lib/ReactQuery'
 import { useCheckOnline } from './src/hooks/useCheckOnline'
+import { useOnlineManager } from './src/lib/ReactQuery'
 
 const onAppStateChange = (status: AppStateStatus) => {
   if (Platform.OS !== 'web') {

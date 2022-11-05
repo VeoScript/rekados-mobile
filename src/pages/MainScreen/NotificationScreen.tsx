@@ -37,7 +37,7 @@ const NotificationScreen = () => {
 
   return (
     <MainLayout user={user} >
-      <NotificationsLayout user={user} />
+      <NotificationsLayout user={user}/>
     </MainLayout>
   )
 }

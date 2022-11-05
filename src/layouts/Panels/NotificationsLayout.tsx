@@ -5,7 +5,7 @@ import NotificationSkeletonLoader from '../../components/SkeletonLoaders/Notific
 import tw from 'twrnc'
 import { fonts } from '../../styles/global'
 import { ScrollView, View, Text, ActivityIndicator, FlatList, Alert, TouchableOpacity } from 'react-native'
-import { useGetNotifications, useMarkAllReadNotification } from '../../lib/ReactQuery'
+import { useGetNotifications, useGetCountNotifications, useMarkAllReadNotification } from '../../lib/ReactQuery'
 
 interface TypedProps {
   user: Object | any
@@ -25,12 +25,7 @@ const NotificationsLayout: React.FC<TypedProps> = ({ user }) => {
     isFetchingNextPage
   }: any = useGetNotifications(user.id)
 
-  let countUnreadNotifications: any
-
-  // count the unread notifications
-  for (let i = 0; i < notifications?.pages?.length; i++) {
-    countUnreadNotifications = notifications?.pages[i].notifications.filter((unread: { read: boolean }) => unread.read === false)
-  }
+  const { data: countUnreadNotifications, isLoading: countLoading, isError: countError } = useGetCountNotifications(user.id)
 
   const itemKeyExtractor = (item: any, index: { toString: () => any }) => {
     return index.toString()
@@ -48,49 +43,53 @@ const NotificationsLayout: React.FC<TypedProps> = ({ user }) => {
 
   const headerComponent = () => {
     return (
-      <View style={tw`flex-1 flex-col w-full`}>
+      <View style={tw`flex-col w-full`}>
         <TopHeader
           title="Notification"
           subtitle="We bring you everything that happens."
         />
-        <View style={tw`flex-1 flex-row items-center justify-between w-full px-5 pb-5`}>
-          <Text style={[tw`text-base text-neutral-500`, fonts.fontPoppins]}>Unread ({countUnreadNotifications?.length})</Text>
-          <TouchableOpacity
-            onPress={() => {
-              Alert.alert(
-                '',
-                'Are you sure you want to mark all as read all of your unread notifications?',
-                [
-                  {
-                    text: 'Cancel',
-                    style: "cancel"
-                  },
-                  {
-                    text: 'Yes',
-                    onPress: async () => {
-                      setMarkAllReadLoading(true)
-                      await markAllReadNotification.mutateAsync(undefined, {
-                        onError: (error: any) => {
-                          setMarkAllReadLoading(false)
-                          console.error('ON MARK ALL AS READ', error.response.data)
+        {(!(countLoading && countError)) && (
+          <View style={tw`flex-row items-center justify-between w-full px-5 pb-5`}>
+            <Text style={[tw`text-base text-neutral-500`, fonts.fontPoppins]}>Unread ({countUnreadNotifications?._count})</Text>
+            {countUnreadNotifications?._count !== 0 && (
+              <TouchableOpacity
+                onPress={() => {
+                  Alert.alert(
+                    '',
+                    'Are you sure you want to mark all as read all of your unread notifications?',
+                    [
+                      {
+                        text: 'Cancel',
+                        style: "cancel"
+                      },
+                      {
+                        text: 'Yes',
+                        onPress: async () => {
+                          setMarkAllReadLoading(true)
+                          await markAllReadNotification.mutateAsync(undefined, {
+                            onError: (error: any) => {
+                              setMarkAllReadLoading(false)
+                              console.error('ON MARK ALL AS READ', error.response.data)
+                            },
+                            onSuccess: () => {
+                              setMarkAllReadLoading(false)
+                            }
+                          })
                         },
-                        onSuccess: () => {
-                          setMarkAllReadLoading(false)
-                        }
-                      })
-                    },
-                    style: "default"
-                  }
-                ],
-                {
-                  cancelable: true
-                }
-              )
-            }}
-          >
-            <Text style={[tw`text-base text-yellow-500`, fonts.fontPoppinsLight]}>Mark all as read</Text>
-          </TouchableOpacity>
-        </View>
+                        style: "default"
+                      }
+                    ],
+                    {
+                      cancelable: true
+                    }
+                  )
+                }}
+              >
+                <Text style={[tw`text-base text-yellow-500`, fonts.fontPoppinsLight]}>Mark all as read</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
       </View>
     )
   }
@@ -108,7 +107,7 @@ const NotificationsLayout: React.FC<TypedProps> = ({ user }) => {
 
   const renderData = (item: any) => {
     return (
-      <View style={tw`flex px-3`}>
+      <View style={tw`px-3`}>
         <NotificationCard notification={item} />
       </View>
     )

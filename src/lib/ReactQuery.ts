@@ -135,6 +135,19 @@ export const useGetSearchHistory = (userId: string, type: string) => {
   )
 }
 
+export const useGetCountNotifications = (userId: string) => {
+  return useQuery(['countNotifications', userId],
+    async () => {
+      const countNotifications = await api.get(`/api/count-notifications`)
+      return countNotifications.data
+    },
+    {
+      enabled: !!userId,
+      refetchInterval: 1000
+    }
+  )
+}
+
 export const useGetNotifications = (userId: string) => {
   return useInfiniteQuery(['notifications', userId],
     async ({ pageParam = ''}) => {
@@ -533,7 +546,7 @@ export const useStoreNotification = () => {
         console.error(error.response.data)
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(['notifications'])
+        queryClient.invalidateQueries(['notifications', 'countNotifications'])
       }
     }
   )
@@ -548,7 +561,7 @@ export const useReadNotification = () => {
         console.error(error.response.data)
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(['notifications'])
+        queryClient.invalidateQueries(['notifications', 'countNotifications'])
       }
     }
   )
@@ -563,7 +576,7 @@ export const useMarkAllReadNotification = () => {
         console.error(error.response.data)
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(['notifications'])
+        queryClient.invalidateQueries(['notifications', 'countNotifications'])
       }
     }
   )
