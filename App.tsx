@@ -2,6 +2,7 @@ import React from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import SignInScreen from './src/pages/MainScreen/Auth/SignInScreen'
 import SignUpScreen from './src/pages/MainScreen/Auth/SignUpScreen'
+import ForgotPasswordScreen from './src/pages/MainScreen/ForgotPasswordScreen'
 import HomeScreen from './src/pages/MainScreen/HomeScreen'
 import CreateDishScreen from './src/pages/DishesScreen/CreateDishScreen'
 import EditDishScreen from './src/pages/DishesScreen/EditDishScreen'
@@ -81,6 +82,14 @@ const App = () => {
                   <Stack.Screen
                     name="SignUpScreen"
                     component={SignUpScreen}
+                    options={{
+                      headerShown: false,
+                      animation: 'none'
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ForgotPasswordScreen"
+                    component={ForgotPasswordScreen}
                     options={{
                       headerShown: false,
                       animation: 'none'

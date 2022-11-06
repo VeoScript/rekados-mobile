@@ -6,6 +6,7 @@ import { MaterialIcon } from '../../../utils/Icons'
 import { View, Text, TextInput, TouchableOpacity, BackHandler } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { useLoginMutation } from '../../../lib/ReactQuery'
+import { useNavigate } from '../../../utils/RootNavigation'
 
 const SignInScreen = () => {
 
@@ -154,7 +155,7 @@ const SignInScreen = () => {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
-            console.log('You clicked Forgot Password.')
+            useNavigate('ForgotPasswordScreen')
           }}
         >
           <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsLight]}>Forgot your password?</Text>

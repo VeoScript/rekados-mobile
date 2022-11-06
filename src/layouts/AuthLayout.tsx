@@ -30,26 +30,28 @@ const AuthLayout: React.FC<TypedProps> = ({ children }) => {
           <View style={tw`flex-col items-center w-full py-5`}>
             {children}
           </View>
-          <View style={tw`flex-col items-center w-full my-1`}>
-            {route.name === 'SignUpScreen' && (
-              <Text style={[tw`text-sm text-neutral-500 mb-2`, fonts.fontPoppins]}>Have already an account?</Text>
-            )}
-            <TouchableOpacity
-              style={tw`flex-col items-center w-full px-3 py-3 rounded-xl border border-neutral-200 bg-white`}
-              activeOpacity={0.7}
-              onPress={() => {
-                if (route.name === 'SignInScreen') {
-                  useNavigate('SignUpScreen')
-                } else {
-                  useNavigate('SignInScreen')
-                }
-              }}
-            >
-              <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsSemiBold]}>
-                {`${ route.name === 'SignInScreen' ? 'Create Account' : 'Sign In' }`}
-              </Text>
-            </TouchableOpacity>
-          </View>
+          {route.name !== 'ForgotPasswordScreen' && (
+            <View style={tw`flex-col items-center w-full my-1`}>
+              {route.name === 'SignUpScreen' && (
+                <Text style={[tw`text-sm text-neutral-500 mb-2`, fonts.fontPoppins]}>Have already an account?</Text>
+              )}
+              <TouchableOpacity
+                style={tw`flex-col items-center w-full px-3 py-3 rounded-xl border border-neutral-200 bg-white`}
+                activeOpacity={0.7}
+                onPress={() => {
+                  if (route.name === 'SignInScreen') {
+                    useNavigate('SignUpScreen')
+                  } else {
+                    useNavigate('SignInScreen')
+                  }
+                }}
+              >
+                <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsSemiBold]}>
+                  {`${ route.name === 'SignInScreen' ? 'Create Account' : 'Sign In' }`}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
