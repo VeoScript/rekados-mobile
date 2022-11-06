@@ -340,7 +340,7 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
                 statusBarIsTranslucent={true}
                 labelField="label"
                 valueField="value"
-                placeholder="Recipe Category"
+                placeholder="Recipe Location"
                 value={location}
                 onChange={item => {
                   setLocation(item.value)
