@@ -224,6 +224,38 @@ export const useLogoutMutation = () => {
   )
 }
 
+export const useForgotPasswordMutation = () => {
+  return useMutation((_args: { email: string }) =>
+    api.post('/api/forgot-password', {
+      email: _args.email
+    }),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      }
+    }
+  )
+}
+
+export const useResetPasswordMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation((_args: { userId: string, newpassword: string }) =>
+    api.post('/api/reset-password', {
+      userId: _args.userId,
+      newpassword: _args.newpassword
+    }),
+    {
+      onError: (error: any) => {
+        console.error(error.response.data)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['user'])
+        useNavigate('SignInScreen')
+      }
+    }
+  )
+}
+
 export const useChangeProfile = () => {
   const queryClient = useQueryClient()
   return useMutation((_args: { id: string, profileURL: string }) =>
