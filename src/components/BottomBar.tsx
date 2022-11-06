@@ -77,7 +77,7 @@ const BottomBar: React.FC<TypedProps> = ({ countUnreadNotifications }) => {
               useNavigate('NotificationScreen')
             }}
           >
-            {countUnreadNotifications?._count !== 0 && (
+            {(countUnreadNotifications && countUnreadNotifications?._count !== 0) && (
               <View style={tw`absolute -top-3 -right-2 z-10 flex-row items-center justify-center w-full p-1 rounded-full bg-yellow-400`}>
                 <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsBold]}>{ countUnreadNotifications?._count }</Text>
               </View>

@@ -2,7 +2,7 @@ import React from 'react'
 import tw from 'twrnc'
 import { fonts } from '../../styles/global'
 import { MaterialIcon } from '../../utils/Icons'
-import { View, Text, Modal, Pressable, TouchableOpacity } from 'react-native'
+import { View, Text, Modal, Pressable, TouchableOpacity, Linking } from 'react-native'
 import { useLogoutMutation } from '../../lib/ReactQuery'
 import { useNavigate } from '../../utils/RootNavigation'
 
@@ -115,9 +115,9 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
             <TouchableOpacity
               style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
               activeOpacity={0.6}
-              onPress={() => {
-                console.log('Website')
-              }}
+              onPress={() => Linking.canOpenURL('https://rekados-landing-page.vercel.app/').then(() => {
+                Linking.openURL('https://rekados-landing-page.vercel.app/')
+              })}
             >
               <MaterialIcon
                 name="globe"
