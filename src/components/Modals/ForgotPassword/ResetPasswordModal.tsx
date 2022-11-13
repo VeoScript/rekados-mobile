@@ -71,7 +71,7 @@ const ResetPasswordModal: React.FC<TypedProps> = ({
         setModalVisible(false)
       }}      
     >
-      <ScrollView contentContainerStyle={tw`flex-1 w-full bg-white`} keyboardShouldPersistTaps="handled">
+      <ScrollView contentContainerStyle={tw`flex-1 w-full bg-white dark:bg-[#262626]`} keyboardShouldPersistTaps="handled">
         <View style={tw`flex-col items-center w-full h-full p-5`}>
           <View style={tw`flex-col items-center justify-center w-full h-full`}>
             <View>
@@ -83,17 +83,17 @@ const ResetPasswordModal: React.FC<TypedProps> = ({
             </View>
             <View style={tw`flex-col items-center w-full my-5`}>
               <View style={tw`mb-5`}>
-                <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>Change Password</Text>
-                <Text style={[tw`my-1 text-center text-base text-neutral-500`, fonts.fontPoppins]}>
+                <Text style={[tw`text-2xl text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>Change Password</Text>
+                <Text style={[tw`my-1 text-center text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>
                   Secure your account
                 </Text>
               </View>
               <View style={tw`flex-col items-start w-full`}>
                 <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                  <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>New Password</Text>
+                  <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>New Password</Text>
                 </View>
                 <TextInput
-                  style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                  style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                   editable={!isLoading}
                   value={password}
                   secureTextEntry={true}
@@ -106,10 +106,10 @@ const ResetPasswordModal: React.FC<TypedProps> = ({
               </View>
               <View style={tw`flex-col items-start w-full my-3`}>
                 <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                  <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Re-enter Password</Text>
+                  <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Re-enter Password</Text>
                 </View>
                 <TextInput
-                  style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                  style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                   editable={!isLoading}
                   value={repassword}
                   secureTextEntry={true}

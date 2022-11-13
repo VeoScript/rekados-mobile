@@ -18,7 +18,7 @@ const MainLayout: React.FC<MainLayoutTypes> = ({ user, children }) => {
   const { data: countUnreadNotifications, isLoading, isError } = useGetCountNotifications(user.id)
 
   return (
-    <SafeAreaView style={tw`flex flex-col items-center justify-between w-full h-full bg-white`}>
+    <SafeAreaView style={tw`flex flex-col items-center justify-between w-full h-full bg-white dark:bg-[#262626]`}>
       <NavBar user={user} />
       <View style={tw`flex-1 w-full`}>
         { children }

@@ -51,7 +51,7 @@ const VerifyModal: React.FC<TypedProps> = ({
         setVerificationCode('')
       }}      
     >
-      <ScrollView contentContainerStyle={tw`flex-1 w-full bg-white`} keyboardShouldPersistTaps="handled">
+      <ScrollView contentContainerStyle={tw`flex-1 w-full bg-white dark:bg-[#262626]`} keyboardShouldPersistTaps="handled">
         <View style={tw`flex-col items-center w-full h-full p-5`}>
           <View style={tw`flex-col items-center justify-center w-full h-full`}>
             <View>
@@ -62,17 +62,17 @@ const VerifyModal: React.FC<TypedProps> = ({
               />
             </View>
             <View style={tw`flex-col items-center w-full my-5`}>
-              <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>Check your email</Text>
-              <Text style={[tw`my-1 text-center text-base text-neutral-500`, fonts.fontPoppins]}>
+              <Text style={[tw`text-2xl text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>Check your email</Text>
+              <Text style={[tw`my-1 text-center text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>
                 Verify your account first.
                 We have sent a verfication code to your email.
               </Text>
               <View style={tw`flex-col items-start w-full my-3`}>
                 <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                  <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Code</Text>
+                  <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Code</Text>
                 </View>
                 <TextInput
-                  style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                  style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                   value={toVerify}
                   onChangeText={(text: string) => {
                     setToVerify(text)

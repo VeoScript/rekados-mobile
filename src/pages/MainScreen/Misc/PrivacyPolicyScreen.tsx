@@ -28,21 +28,21 @@ const PrivacyPolicyScreen = () => {
               />
             </View>
             <View style={tw`flex-col items-center justify-center w-full`}>
-              <Text style={[tw`text-xl text-neutral-600 my-2`, fonts.fontPoppinsBold]}>Privacy Policy</Text>
-              <Text style={[tw`text-center text-base text-neutral-500`, fonts.fontPoppins]}>
+              <Text style={[tw`text-xl text-neutral-600 dark:text-neutral-200 my-2`, fonts.fontPoppinsBold]}>Privacy Policy</Text>
+              <Text style={[tw`text-center text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>
                 This Privacy Policy was last modified on November 5, 2022
               </Text>
-              <Text style={[tw`text-center text-base text-neutral-500 my-3`, fonts.fontPoppins]}>
+              <Text style={[tw`text-center text-base text-neutral-500 dark:text-neutral-400 my-3`, fonts.fontPoppins]}>
                 Rekados by Jerome Villaruel (VEOSCRIPT) operates Rekados Mobile App.
                 This page informs you of our policies regarding the collection, use and disclosure of Personal Information we receive from users of the App.
               </Text>
-              <Text style={[tw`text-center text-base text-neutral-500`, fonts.fontPoppins]}>
+              <Text style={[tw`text-center text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>
                 We use your Personal Information only for providing and improving the Site. By using this Site, you agree to the collection and use of information in accordance with this policy.
               </Text>
             </View>
             <View style={tw`flex-col items-center justify-center w-full my-3`}>
-              <Text style={[tw`text-xl text-neutral-600 my-2`, fonts.fontPoppinsBold]}>Information Collection and Use</Text>
-              <Text style={[tw`text-center text-base text-neutral-500`, fonts.fontPoppins]}>
+              <Text style={[tw`text-xl text-neutral-600 dark:text-neutral-200 my-2`, fonts.fontPoppinsBold]}>Information Collection and Use</Text>
+              <Text style={[tw`text-center text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>
                 While using our Site, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you.
                 Personally identifiable information may include, but is not limited to your name ("Personal Information").
               </Text>

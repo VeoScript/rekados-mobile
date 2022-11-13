@@ -33,12 +33,12 @@ const DishesTab: React.FC<TypedProps> = ({ userId }) => {
   }
 
   return (
-    <View style={tw`flex-1 bg-white`}>
+    <View style={tw`flex-1 bg-white dark:bg-[#262626]`}>
       <ScrollView>
         <View style={tw`flex-col items-start justify-center w-full px-3`}>
-          <View style={tw`flex-row items-center justify-between w-full overflow-hidden mt-3 px-3 rounded-xl border border-neutral-200 bg-white`}>
+          <View style={tw`flex-row items-center justify-between w-full overflow-hidden mt-3 px-3 rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`}>
             <TextInput
-              style={[tw`text-sm w-full`, fonts.fontPoppins]}
+              style={[tw`text-sm text-black dark:text-white w-full`, fonts.fontPoppins]}
               placeholder="Search dishes..."
               value={search}
               onChangeText={(value: string) => {
@@ -63,7 +63,7 @@ const DishesTab: React.FC<TypedProps> = ({ userId }) => {
           {!search && (
             <React.Fragment>
               <View style={tw`flex-row items-center justify-between w-full pb-5`}>
-                <Text style={[tw`text-base text-neutral-500`, fonts.fontPoppinsBold]}>Recent</Text>
+                <Text style={[tw`text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppinsBold]}>Recent</Text>
                 {(!searchHistoryLoading && searchHistory.length > 0) && (
                   <TouchableOpacity
                     onPress={() => {

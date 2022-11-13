@@ -3,7 +3,7 @@ import tw from 'twrnc'
 import moment from 'moment'
 import { fonts } from '../../styles/global'
 import { FeatherIcon } from '../../utils/Icons'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { Appearance, View, Text, TouchableOpacity } from 'react-native'
 import { useNavigate } from '../../utils/RootNavigation'
 import { useReadNotification } from '../../lib/ReactQuery'
 
@@ -12,6 +12,9 @@ interface TypedProps {
 }
 
 const NotificationCard: React.FC<TypedProps> = ({ notification }) => {
+
+  // detect the default color scheme of devices (light mode or dark mode) *REACT NATIVE
+  const colorScheme = Appearance.getColorScheme()
 
   const readNotification = useReadNotification()
 
@@ -31,7 +34,7 @@ const NotificationCard: React.FC<TypedProps> = ({ notification }) => {
 
   return (
     <TouchableOpacity
-      style={tw`flex-row items-start w-full overflow-hidden rounded-2xl mb-1 px-2 py-3 ${ notification.item.read ? 'bg-transparent' : 'bg-yellow-50' }`}
+      style={tw`flex-row items-start w-full overflow-hidden rounded-2xl mb-1 px-2 py-3 ${ notification.item.read ? 'bg-transparent' : colorScheme === 'dark' ? 'bg-neutral-900' : 'bg-yellow-50' }`}
       activeOpacity={0.5}
       onPress={onReadNotification}
     >
@@ -61,9 +64,9 @@ const NotificationCard: React.FC<TypedProps> = ({ notification }) => {
               useNavigate('UserScreen', { id: notification.item.notificationFrom.id })
             }}
           >
-            <Text style={[tw`-mb-1.5 text-base text-neutral-600`, fonts.fontPoppinsBold]}>{ notification.item.notificationFrom.name } </Text>
+            <Text style={[tw`-mb-1.5 text-base text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>{ notification.item.notificationFrom.name } </Text>
           </TouchableOpacity>
-          <Text style={[tw`text-base text-neutral-500`, fonts.fontPoppins]}>{ notification.item.message }</Text>
+          <Text style={[tw`text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>{ notification.item.message }</Text>
           <Text style={[tw`text-base text-yellow-500`, fonts.fontPoppinsBold]}> { notification.item.dish.title }.</Text>
         </Text>
         <Text style={[tw`text-xs text-neutral-400 mt-3`, fonts.fontPoppinsLight]}>{ moment(notification.item.createdAt).fromNow() }</Text>

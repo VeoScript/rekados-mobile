@@ -3,7 +3,7 @@ import CommentSkeletonLoader from '../SkeletonLoaders/CommentSkeletonLoader'
 import DeleteComment from '../Modals/DeleteComment'
 import tw from 'twrnc'
 import moment from 'moment'
-import { View, Text, TouchableOpacity, TextInput, Image } from 'react-native'
+import { Appearance, View, Text, TouchableOpacity, TextInput, Image } from 'react-native'
 import { fonts } from '../../styles/global'
 import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
 import { useGetComments, useCreateCommentMutation, useStoreNotification } from '../../lib/ReactQuery'
@@ -20,6 +20,9 @@ interface TypedProps {
 }
 
 const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
+
+  // detect the default color scheme of devices (light mode or dark mode) *REACT NATIVE
+  const colorScheme = Appearance.getColorScheme()
 
   const createCommentMutation = useCreateCommentMutation()
   const storeNotification = useStoreNotification()
@@ -71,7 +74,7 @@ const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
   return (
     <View style={tw`flex-col w-full px-5 py-3`}>
       <View style={tw`flex-row items-center justify-between w-full`}>
-        <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Comments</Text>
+        <Text style={[tw`text-xl text-center text-neutral-500 dark:text-neutral-200 uppercase`, fonts.fontPoppinsBold]}>Comments</Text>
         <View style={tw`flex-row items-center`}>
           <Text style={[tw`text-sm mx-1`, fonts.fontPoppins]}>{ comments && comments.length }</Text>
           <FeatherIcon
@@ -81,7 +84,7 @@ const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
           />
         </View>
       </View>
-      <View style={tw`flex-row-reverse items-center w-full my-3 overflow-hidden rounded-xl border border-neutral-200`}>
+      <View style={tw`flex-row-reverse items-center w-full my-3 overflow-hidden rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`}>
         {(comment !== '' && !(/^\s*$/.test(comment))) && (
           <React.Fragment>
             {!loading && (
@@ -99,13 +102,13 @@ const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
           </React.Fragment>
         )}
         {loading && (
-          <Text style={[tw`flex-1 w-full px-3 py-2 text-sm bg-white`, fonts.fontPoppins]}>
+          <Text style={[tw`flex-1 w-full px-3 py-2 text-sm  bg-white dark:bg-[#383838]`, fonts.fontPoppins]}>
             Commenting...
           </Text>
         )}
         {!loading && (
           <TextInput
-            style={[tw`flex-1 w-full px-3 py-2 text-sm bg-white`, { height: commentHeight }, fonts.fontPoppins]}
+            style={[tw`flex-1 w-full px-3 py-2 text-sm text-black dark:text-white bg-white dark:bg-[#383838]`, { height: commentHeight }, fonts.fontPoppins]}
             placeholder="Write your comment..."
             value={comment}
             multiline={true}
@@ -127,14 +130,14 @@ const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
             <View key={i} style={tw`flex-row items-start justify-between w-full`}>
               <View style={tw`flex-row items-start w-full`}>
                 <TouchableOpacity
-                  style={tw`overflow-hidden rounded-full my-3 bg-neutral-200 ${comment.user.profile ? 'p-0' : 'p-3'}`}
+                  style={tw`overflow-hidden rounded-full my-3 bg-neutral-200 dark:bg-[#383838] ${comment.user.profile ? 'p-0' : 'p-3'}`}
                   onPress={() => {
                     useNavigate('UserScreen', { id: comment.user.id })
                   }}
                 >
                   {comment.user.profile
                     ? <Image
-                        style={tw`flex rounded-full w-[3rem] h-[3rem] bg-neutral-100`}
+                        style={tw`flex rounded-full w-[3rem] h-[3rem] bg-neutral-100 dark:bg-[#383838]`}
                         resizeMode="cover"
                         source={{
                           uri: `${ comment.user.profile }`
@@ -143,7 +146,7 @@ const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
                     : <FeatherIcon
                         name="user"
                         size="medium"
-                        color="#676767"
+                        color={colorScheme === 'dark' ? '#CDCDCD' : '#676767'}
                       />
                   }
                 </TouchableOpacity>
@@ -153,9 +156,9 @@ const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
                       useNavigate('UserScreen', { id: comment.user.id })
                     }}
                   >
-                    <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppinsBold]}>{ comment.user.name }</Text>
+                    <Text style={[tw`text-base text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>{ comment.user.name }</Text>
                   </TouchableOpacity>
-                  <Text style={[tw`text-sm text-neutral-600 mt-1`, fonts.fontPoppins]}>{ comment.content }</Text>
+                  <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400 mt-1`, fonts.fontPoppins]}>{ comment.content }</Text>
                   <Text style={[tw`text-xs text-neutral-400 mt-3`, fonts.fontPoppinsLight]}>{ moment(comment.createdAt).fromNow() }</Text>
                 </View>
               </View>
@@ -171,7 +174,7 @@ const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
                     <MaterialIcon
                       name="trash"
                       size="small"
-                      color="#CDCDCD"
+                      color={colorScheme === 'dark' ? '#676767' : '#CDCDCD'}
                     />
                   </TouchableOpacity>
                 </View>

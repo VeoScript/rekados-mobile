@@ -36,10 +36,10 @@ const AddIngredients: React.FC<TypedProps> = ({ ingredientsState, setIngredients
         setModalVisible(false)
       }}      
     >
-      <ScrollView style={tw`w-full h-full bg-white`} keyboardShouldPersistTaps="handled">
+      <ScrollView style={tw`w-full h-full bg-white dark:bg-[#262626]`} keyboardShouldPersistTaps="handled">
         <View style={tw`flex flex-col w-full p-5`}>
           <View style={tw`flex flex-row items-center justify-between w-full px-2`}>
-            <Text style={[tw`text-xl text-neutral-600`, fonts.fontPoppinsBold]}>Add Ingredients</Text>
+            <Text style={[tw`text-xl text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>Add Ingredients</Text>
             <TouchableOpacity
               onPress={() => {
                 setAddIngredient('')
@@ -56,12 +56,12 @@ const AddIngredients: React.FC<TypedProps> = ({ ingredientsState, setIngredients
           <View style={tw`flex flex-col w-full my-3`}>
             <View style={tw`flex flex-col my-1`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Ingredient</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Ingredient</Text>
                 <Text style={[tw`text-sm text-red-600`, fonts.fontPoppinsLight]}>*</Text>
               </View>
-              <View style={tw`flex flex-row items-center justify-between w-full px-3 text-sm rounded-xl border border-neutral-200 bg-white`}>
+              <View style={tw`flex flex-row items-center justify-between w-full px-3 text-sm rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`}>
                 <TextInput
-                  style={[tw`flex flex-row w-[17rem]`, fonts.fontPoppins]}
+                  style={[tw`flex flex-row w-[17rem] text-black dark:text-white`, fonts.fontPoppins]}
                   value={addIngredient}
                   onChangeText={(value: string) => {
                     setAddIngredient(value)
@@ -84,7 +84,7 @@ const AddIngredients: React.FC<TypedProps> = ({ ingredientsState, setIngredients
           {ingredientsState.length > 0 && (
             <React.Fragment>
               <View style={tw`flex flex-row items-center justify-between w-full px-2`}>
-                <Text style={[tw`text-xl text-neutral-600`, fonts.fontPoppinsBold]}>Ingredients List</Text>
+                <Text style={[tw`text-xl text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>Ingredients List</Text>
                 <TouchableOpacity
                   style={tw`flex flex-row items-center justify-center px-3 py-0.5 rounded-md bg-neutral-600`}
                   activeOpacity={0.7}
@@ -118,9 +118,9 @@ const AddIngredients: React.FC<TypedProps> = ({ ingredientsState, setIngredients
                 {ingredientsState.map((ingredient: { name: string }, i: number) => (
                   <View
                     key={i}
-                    style={tw`flex flex-row items-center justify-between w-full p-3 my-0.5 text-sm rounded-xl border border-neutral-200 bg-white`}
+                    style={tw`flex flex-row items-center justify-between w-full p-3 my-0.5 text-sm rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`}
                   >
-                    <Text style={[tw`text-neutral-600 pr-5`, fonts.fontPoppins]}>{ ingredient.name }</Text>
+                    <Text style={[tw`text-neutral-600 dark:text-white pr-5`, fonts.fontPoppins]}>{ ingredient.name }</Text>
                     <TouchableOpacity
                       onPress={() => {
                         ingredientsState.splice(i, 1)

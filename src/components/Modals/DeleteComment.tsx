@@ -38,6 +38,7 @@ const DeleteComment: React.FC<TypedProps> = ({ id, modalVisible, setModalVisible
     <Modal
       animationType="fade"
       transparent={true}
+      statusBarTranslucent={true}
       visible={modalVisible}
       onRequestClose={() => {
         if (!isLoading) {
@@ -54,9 +55,9 @@ const DeleteComment: React.FC<TypedProps> = ({ id, modalVisible, setModalVisible
         }}
       />
       <View style={tw`absolute top-1/2 -mt-16 w-full px-5`}>
-        <View style={tw`flex-col items-center justify-center w-full p-5 rounded-xl overflow-hidden bg-white`}>
+        <View style={tw`flex-col items-center justify-center w-full p-5 rounded-xl overflow-hidden bg-white dark:bg-[#383838]`}>
           <Text style={[tw`text-xl text-center text-red-500`, fonts.fontPoppinsBold]}>Delete</Text>
-          <Text style={[tw`my-3 text-base text-center text-neutral-600`, fonts.fontPoppins]}>Are you sure you want to delete this comment?</Text>
+          <Text style={[tw`my-3 text-base text-center text-neutral-600 dark:text-neutral-400`, fonts.fontPoppins]}>Are you sure you want to delete this comment?</Text>
           <View style={tw`flex-row items-center justify-center w-full`}>
             {isLoading && (
               <View style={tw`w-full`}>
@@ -65,10 +66,16 @@ const DeleteComment: React.FC<TypedProps> = ({ id, modalVisible, setModalVisible
             )}
             {!isLoading && (
               <React.Fragment>
-                <TouchableOpacity onPress={() => onDeleteComment(id)}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => onDeleteComment(id)}
+                >
                   <Text style={[tw`w-[7rem] mx-0.5 text-sm text-center text-white bg-red-500 px-3 py-2 rounded-xl`, fonts.fontPoppins]}>Delete</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => setModalVisible(false)}
+                >
                   <Text style={[tw`w-[7rem] mx-0.5 text-sm text-center text-neutral-600 bg-neutral-200 px-3 py-2 rounded-xl`, fonts.fontPoppins]}>Cancel</Text>
                 </TouchableOpacity>
               </React.Fragment>

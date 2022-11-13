@@ -4,7 +4,7 @@ import DishesTab from '../../components/Searchs/SearchTabs/DishesTab'
 import PeopleTab from '../../components/Searchs/SearchTabs/PeopleTab'
 import tw from 'twrnc'
 import { fonts } from '../../styles/global'
-import { View, Dimensions } from 'react-native'
+import { Appearance, View, Dimensions } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 interface TypedProps {
@@ -14,6 +14,9 @@ interface TypedProps {
 const Tab = createMaterialTopTabNavigator()
 
 const SearchLayout: React.FC<TypedProps> = ({ userId }) => {
+
+  // detect the default color scheme of devices (light mode or dark mode) *REACT NATIVE
+  const colorScheme = Appearance.getColorScheme()
 
   const screen = Dimensions.get("screen")
 
@@ -39,10 +42,10 @@ const SearchLayout: React.FC<TypedProps> = ({ userId }) => {
         <Tab.Navigator
           initialRouteName="SearchTab"
           screenOptions={{
-            tabBarActiveTintColor: '#414143',
+            tabBarActiveTintColor: `${colorScheme === 'dark' ? '#FFFFFF' : '#414143'}`,
             tabBarLabelStyle: [tw`text-[12px]`, fonts.fontPoppins],
             tabBarIndicatorStyle: [tw`bg-[#F3B900]`],
-            tabBarStyle: [tw`bg-white`],
+            tabBarStyle: [tw`bg-white dark:bg-[#262626]`],
             tabBarPressColor: '#F3B900'
           }}
         >

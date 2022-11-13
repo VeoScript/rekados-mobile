@@ -48,8 +48,8 @@ const FeedLayout: React.FC<TypedProps> = ({ user }) => {
     return (
       <View style={tw`flex-1 flex-col items-center justify-center w-full h-full my-3`}>
         <View style={tw`flex-1 w-full max-w-xs h-full`}>
-          <Text style={[tw`text-3xl text-neutral-500`, fonts.fontPoppins]}>Newsfeed is empty.</Text>
-          <Text style={[tw`my-2 text-lg text-neutral-400`, fonts.fontPoppins]}>Create your first dish.</Text>
+          <Text style={[tw`text-xl text-neutral-500 dark:text-neutral-200`, fonts.fontPoppins]}>Newsfeed is empty.</Text>
+          <Text style={[tw`my-2 text-base text-neutral-400`, fonts.fontPoppins]}>Create your first dish.</Text>
         </View>
       </View>
     )
