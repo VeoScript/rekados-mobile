@@ -11,7 +11,11 @@ You can also use Rekados to save your favorite recipes.
 
 ## Screenshots
 
+### Light Mode
 ![rekados-app-screenshots](https://user-images.githubusercontent.com/26340308/200118745-e7d9e090-cd92-4d8f-8bd9-80c7738d84b2.png)
+
+### Dark Mode
+![rekados-app-screenshots (darkmode)](https://user-images.githubusercontent.com/26340308/201511028-7c5cea84-247c-4b1e-8d75-c130dcdb807f.png)
 
 ## Technologies Used
 - React Native
