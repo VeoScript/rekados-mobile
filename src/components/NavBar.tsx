@@ -2,7 +2,7 @@ import React from 'react'
 import Menu from './Modals/Menu'
 import tw from 'twrnc'
 import { FeatherIcon, MaterialIcon } from '../utils/Icons'
-import { View, TouchableOpacity, Image } from 'react-native'
+import { Appearance, View, TouchableOpacity, Image } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { useNavigate } from '../utils/RootNavigation'
 
@@ -12,13 +12,16 @@ interface NavBarTypes {
 
 const NavBar: React.FC<NavBarTypes> = ({ user }) => {
 
+  // detect the default color scheme of devices (light mode or dark mode) *REACT NATIVE
+  const colorScheme = Appearance.getColorScheme()
+
   const route: any = useRoute()
 
   const [modalVisible, setModalVisible] = React.useState(false)
 
   return (
     <React.Fragment>
-      <View style={tw`flex-row items-center justify-center w-full bg-white p-5 border-b border-neutral-300`}>
+      <View style={tw`flex-row items-center justify-center w-full p-5 border-b border-neutral-300 dark:border-neutral-700 bg-white dark:bg-[#262626]`}>
         <View style={tw`flex-1 flex-row items-center justify-start w-[5rem]`}>
           {(route.name === 'DisplayDishScreen' || route.name === 'CreateDishScreen' || route.name === 'EditDishScreen')
             ? <TouchableOpacity
@@ -29,7 +32,7 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
                 <MaterialIcon
                   name="chevron-left"
                   size="medium"
-                  color="#7c7c7c"
+                  color={colorScheme === 'dark' ? '#CDCDCD' : '#7c7c7c'}
                 />
               </TouchableOpacity>  
             : <TouchableOpacity
@@ -40,7 +43,7 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
                 <MaterialIcon
                   name="three-bars"
                   size="medium"
-                  color="#7c7c7c"
+                  color={colorScheme === 'dark' ? '#CDCDCD' : '#7c7c7c'}
                 />
               </TouchableOpacity>      
           }
@@ -55,7 +58,7 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
         <View style={tw`flex-1 flex-row items-center justify-end w-[5rem]`}>
           {(route.name !== 'UserScreen' && route.name !== 'UserSettingScreen') && (
             <TouchableOpacity
-              style={tw`overflow-hidden rounded-full bg-neutral-200 ${user.profile ? 'p-0' : 'p-1'}`}
+              style={tw`overflow-hidden rounded-full bg-neutral-200 dark:bg-[#383838] ${user.profile ? 'p-0' : 'p-1'}`}
               activeOpacity={0.5}
               onPress={() => {
                 useNavigate('UserScreen', { id: user.id })
@@ -63,7 +66,7 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
             >
               {user.profile
                 ? <Image
-                    style={tw`flex rounded-full w-[2rem] h-[2rem] bg-neutral-100`}
+                    style={tw`flex rounded-full w-[2rem] h-[2rem] bg-neutral-100 dark:bg-[#383838]`}
                     resizeMode="cover"
                     source={{
                       uri: `${ user.profile }`
@@ -72,7 +75,7 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
                 : <FeatherIcon
                     name="user"
                     size="medium"
-                    color="#676767"
+                    color={colorScheme === 'dark' ? '#CDCDCD' : '#676767'}
                   />
               }
             </TouchableOpacity>
@@ -87,7 +90,7 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
                 <MaterialIcon
                   name="gear"
                   size="medium"
-                  color="#7c7c7c"
+                  color={colorScheme === 'dark' ? '#CDCDCD' : '#7c7c7c'}
                 />
               </TouchableOpacity>
             </View>
@@ -102,7 +105,7 @@ const NavBar: React.FC<NavBarTypes> = ({ user }) => {
                 <MaterialIcon
                   name="person"
                   size="medium"
-                  color="#7c7c7c"
+                  color={colorScheme === 'dark' ? '#CDCDCD' : '#7c7c7c'}
                 />
               </TouchableOpacity>
             </View>

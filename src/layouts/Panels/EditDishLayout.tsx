@@ -9,7 +9,7 @@ import { fonts, customStyle } from '../../styles/global'
 import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
 import { Dropdown } from 'react-native-element-dropdown'
 import { launchImageLibrary } from 'react-native-image-picker'
-import { ScrollView, View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
+import { Appearance, ScrollView, View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
 import { useUpdateDishMutation, useCreateIngredientsMutation, useCreateProceduresMutation } from '../../lib/ReactQuery'
 import { useRoute } from '@react-navigation/native'
 import { useGoBack, useNavigate } from '../../utils/RootNavigation'
@@ -20,6 +20,9 @@ interface TypedProps {
 }
 
 const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
+
+  // detect the default color scheme of devices (light mode or dark mode) *REACT NATIVE
+  const colorScheme = Appearance.getColorScheme()
 
   const route: any = useRoute()
 
@@ -238,7 +241,7 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
       <ScrollView style={tw`flex flex-col w-full`} keyboardShouldPersistTaps="handled">
         <View style={tw`flex flex-col p-3`}>
           <View style={tw`flex flex-col px-1`}>
-            <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>Edit Dish</Text>
+            <Text style={[tw`text-2xl text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>Edit Dish</Text>
             <Text style={[tw`text-sm text-neutral-400`, fonts.fontPoppinsLight]}>Stay updated with your dishes.</Text>
           </View>
           <View style={tw`flex flex-col w-full mt-3`}>
@@ -246,7 +249,7 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
               <View style={tw`relative w-full overflow-hidden rounded-xl my-3`}>
                 {photo === null
                   ? <Image
-                      style={tw`flex w-full h-[10rem] bg-neutral-100`}
+                      style={tw`flex w-full h-[10rem] bg-neutral-100 dark:bg-[#383838]`}
                       resizeMode="cover"
                       source={{
                         uri: `${ dishImage }`
@@ -263,26 +266,26 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
                 <React.Fragment>
                   {photo !== null && (
                     <TouchableOpacity
-                      style={tw`absolute top-3 right-3 rounded-full p-1 bg-white bg-opacity-80`}
+                      style={tw`absolute top-3 right-3 rounded-full p-1 bg-white dark:bg-black bg-opacity-80`}
                       disabled={isLoading}
                       onPress={() => setPhoto(null)}
                     >
                       <FeatherIcon
                         name="x"
                         size="small"
-                        color='#222222'
+                        color={colorScheme === 'dark' ? '#CDCDCD' : '#222222'}
                       />
                     </TouchableOpacity>
                   )}
                   <TouchableOpacity
-                    style={tw`absolute bottom-3 right-3 rounded-full p-2 bg-white bg-opacity-80`}
+                    style={tw`absolute bottom-3 right-3 rounded-full p-2 bg-white dark:bg-black bg-opacity-80`}
                     disabled={isLoading}
                     onPress={handleChoosePhoto}
                   >
                     <FeatherIcon
                       name="camera"
                       size="small"
-                      color='#222222'
+                      color={colorScheme === 'dark' ? '#CDCDCD' : '#222222'}
                     />
                   </TouchableOpacity>
                 </React.Fragment>
@@ -290,11 +293,11 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
             </View>
             <View style={tw`flex flex-col my-1`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Title</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Title</Text>
                 <Text style={[tw`text-sm text-red-600`, fonts.fontPoppinsLight]}>*</Text>
               </View>
               <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 placeholder="Recipe Title"
                 editable={!isLoading}
                 value={title}
@@ -305,13 +308,15 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
             </View>
             <View style={tw`flex flex-col my-1`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Category</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Category</Text>
                 <Text style={[tw`text-sm text-red-600`, fonts.fontPoppinsLight]}>*</Text>
               </View>
               <Dropdown
-                style={[tw`flex w-full px-3 py-1 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-1 rounded-xl text-sm border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 placeholderStyle={[tw`text-sm text-neutral-400`, fonts.fontPoppins]}
-                selectedTextStyle={[tw`text-sm ${isLoading ? 'text-neutral-300' : 'text-black'}`, fonts.fontPoppins]}
+                selectedTextStyle={[tw`text-sm ${isLoading ? 'text-neutral-300' : 'text-black dark:text-white'}`, fonts.fontPoppins]}
+                containerStyle={tw`rounded-xl border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-[#383838]`}
+                activeColor={colorScheme === 'dark' ? '#262626' : '#CDCDCD'}
                 disable={isLoading}
                 data={categoryData}
                 maxHeight={250}
@@ -327,13 +332,15 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
             </View>
             <View style={tw`flex flex-col my-1`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Location</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Location</Text>
                 <Text style={[tw`text-sm text-red-600`, fonts.fontPoppinsLight]}>*</Text>
               </View>
               <Dropdown
-                style={[tw`flex w-full px-3 py-1 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-1 rounded-xl text-sm border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 placeholderStyle={[tw`text-sm text-neutral-400`, fonts.fontPoppins]}
-                selectedTextStyle={[tw`text-sm ${isLoading ? 'text-neutral-300' : 'text-black'}`, fonts.fontPoppins]}
+                selectedTextStyle={[tw`text-sm ${isLoading ? 'text-neutral-300' : 'text-black dark:text-white'}`, fonts.fontPoppins]}
+                containerStyle={tw`rounded-xl border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-[#383838]`}
+                activeColor={colorScheme === 'dark' ? '#262626' : '#CDCDCD'}
                 disable={isLoading}
                 data={locationData}
                 maxHeight={250}
@@ -349,11 +356,11 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
             </View>
             <View style={tw`flex flex-col my-1`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Description</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Description</Text>
                 <Text style={[tw`text-sm text-red-600`, fonts.fontPoppinsLight]}>*</Text>
               </View>
               <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins, customStyle.alignTop]}
+                style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins, customStyle.alignTop]}
                 placeholder="Recipe Description"
                 editable={!isLoading}
                 multiline={true}
@@ -365,9 +372,9 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
               />
             </View>
             <View style={tw`flex flex-col my-1`}>
-              <Text style={[tw`mx-2 mb-1 text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Youtube URL</Text>
+              <Text style={[tw`mx-2 mb-1 text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Youtube URL</Text>
               <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 placeholder="Recipe Youtube URL"
                 editable={!isLoading}
                 value={youtubeUrl}
@@ -379,7 +386,7 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
           </View>
           <View>
             <View style={tw`flex flex-row items-center justify-between w-full px-1 py-2`}>
-              <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Ingredients</Text>
+              <Text style={[tw`text-xl text-center text-neutral-500 dark:text-neutral-200 uppercase`, fonts.fontPoppinsBold]}>Ingredients</Text>
               {!isLoading && (
                 <View style={tw`flex-row items-center`}>
                   <TouchableOpacity
@@ -414,9 +421,9 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
             <View style={tw`flex flex-col w-full`}>
               {ingredientsState.map((ingredient: { name: string }, i: number) => (
                 <View key={i} style={tw`flex flex-col my-1`}>
-                  <Text style={[tw`mx-2 mb-1 text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Ingredient { i + 1 }</Text>
-                  <View style={tw`flex flex-row items-center justify-between w-full p-3 text-sm rounded-xl border border-neutral-200 bg-white`}>
-                    <Text style={[tw`${isLoading ? 'text-neutral-300' : 'text-black'}`, fonts.fontPoppins]}>{ ingredient.name }</Text>
+                  <Text style={[tw`mx-2 mb-1 text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Ingredient { i + 1 }</Text>
+                  <View style={tw`flex flex-row items-center justify-between w-full p-3 text-sm rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`}>
+                    <Text style={[tw`${isLoading ? 'text-neutral-300' : 'text-black dark:text-white'} pr-5`, fonts.fontPoppins]}>{ ingredient.name }</Text>
                     {!isLoading && (
                       <TouchableOpacity
                         onPress={() => {
@@ -438,7 +445,7 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
           </View>
           <View>
             <View style={tw`flex flex-row items-center justify-between w-full px-1 py-2`}>
-              <Text style={[tw`text-xl text-center text-neutral-500 uppercase`, fonts.fontPoppinsBold]}>Procedures</Text>
+              <Text style={[tw`text-xl text-center text-neutral-500 dark:text-neutral-200 uppercase`, fonts.fontPoppinsBold]}>Procedures</Text>
               {!isLoading && (
                 <View style={tw`flex-row items-center`}>
                   <TouchableOpacity
@@ -473,9 +480,9 @@ const EditDishLayout: React.FC<TypedProps> = ({ user }) => {
             <View style={tw`flex flex-col w-full`}>
               {proceduresState.map((procedure: { details: string }, i: number) => (
                 <View key={i} style={tw`flex flex-col my-1`}>
-                  <Text style={[tw`mx-2 mb-1 text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Procedure { i + 1 }</Text>
-                  <View style={tw`flex flex-row items-center justify-between w-full p-3 text-sm rounded-xl border border-neutral-200 bg-white`}>
-                    <Text style={[tw`${isLoading ? 'text-neutral-300' : 'text-black'}`, fonts.fontPoppins]}>{ procedure.details }</Text>
+                  <Text style={[tw`mx-2 mb-1 text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Procedure { i + 1 }</Text>
+                  <View style={tw`flex flex-row items-center justify-between w-full p-3 text-sm rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`}>
+                    <Text style={[tw`${isLoading ? 'text-neutral-300' : 'text-black dark:text-white'} pr-5`, fonts.fontPoppins]}>{ procedure.details }</Text>
                     {!isLoading && (
                       <TouchableOpacity
                         onPress={() => {

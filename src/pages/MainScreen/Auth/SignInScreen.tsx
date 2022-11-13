@@ -95,7 +95,7 @@ const SignInScreen = () => {
   return (
     <AuthLayout>
       <View style={tw`flex flex-row justify-center w-full my-3 overflow-hidden rounded-xl`}>
-        <Text style={[tw`text-xl text-neutral-600`, fonts.fontPoppinsBold]}>Welcome Back</Text>
+        <Text style={[tw`text-xl text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>Welcome Back</Text>
       </View>
       {loginError && (
         <View style={tw`flex flex-row items-center w-full my-3 px-5 py-3 overflow-hidden rounded-xl bg-red-300`}>
@@ -109,10 +109,10 @@ const SignInScreen = () => {
       )}
       <View style={tw`flex flex-col my-1 w-full`}>
         <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-          <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Email</Text>
+          <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Email</Text>
         </View>
         <TextInput
-          style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+          style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
           editable={!isLoading}
           value={email}
           onChangeText={(text: string) => {
@@ -123,10 +123,10 @@ const SignInScreen = () => {
       </View>
       <View style={tw`flex flex-col my-1 w-full`}>
         <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-          <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Password</Text>
+          <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Password</Text>
         </View>
         <TextInput
-          style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+          style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
           editable={!isLoading}
           secureTextEntry={true}
           value={password}
@@ -158,7 +158,7 @@ const SignInScreen = () => {
             useNavigate('ForgotPasswordScreen')
           }}
         >
-          <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsLight]}>Forgot your password?</Text>
+          <Text style={[tw`text-sm text-neutral-500 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
     </AuthLayout>

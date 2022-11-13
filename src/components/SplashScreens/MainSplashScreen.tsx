@@ -9,7 +9,7 @@ const MainSplashScreen = () => {
   const checkOnline = useCheckOnline()
 
   return (
-    <SafeAreaView style={tw`flex-1 flex-col items-center justify-center w-full bg-white`}>
+    <SafeAreaView style={tw`flex-1 flex-col items-center justify-center w-full bg-white dark:bg-[#262626]`}>
       <View style={tw`flex-col items-center w-full`}>
         <View style={tw`flex-row justify-center w-full overflow-hidden rounded-xl`}>
           <Image
@@ -18,7 +18,7 @@ const MainSplashScreen = () => {
             source={require('../../assets/images/favicon2.png')}
           />
         </View>
-        <Text style={[tw`text-base text-[#676767] -mt-1 mr-1`, fonts.fontPoppinsLight]}>Your daily recipe at a glance</Text>
+        <Text style={[tw`text-base text-[#676767] dark:text-neutral-400 -mt-1 mr-1`, fonts.fontPoppinsLight]}>Your daily recipe at a glance</Text>
       </View>
       <View style={tw`my-3`}>
         <ActivityIndicator
@@ -28,10 +28,10 @@ const MainSplashScreen = () => {
       </View>
       {(checkOnline !== null && !checkOnline) && (
         <View style={tw`flex-col items-center w-full`}>
-          <Text style={[tw`w-full text-center text-sm text-neutral-500`, fonts.fontPoppinsSemiBold]}>
+          <Text style={[tw`w-full text-center text-sm text-neutral-500 dark:text-neutral-400`, fonts.fontPoppinsSemiBold]}>
             You are offline.
           </Text>
-          <Text style={[tw`w-full text-center text-sm text-neutral-500`, fonts.fontPoppinsSemiBold]}>
+          <Text style={[tw`w-full text-center text-sm text-neutral-500 dark:text-neutral-400`, fonts.fontPoppinsSemiBold]}>
             Check your internet connection.
           </Text>
         </View>

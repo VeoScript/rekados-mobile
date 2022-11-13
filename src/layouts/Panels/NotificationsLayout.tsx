@@ -50,7 +50,7 @@ const NotificationsLayout: React.FC<TypedProps> = ({ user }) => {
         />
         {(!(countLoading && countError)) && (
           <View style={tw`flex-row items-center justify-between w-full px-5 pb-5`}>
-            <Text style={[tw`text-base text-neutral-500`, fonts.fontPoppins]}>Unread ({countUnreadNotifications?._count})</Text>
+            <Text style={[tw`text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>Unread ({countUnreadNotifications?._count})</Text>
             {countUnreadNotifications?._count !== 0 && (
               <TouchableOpacity
                 onPress={() => {
@@ -98,8 +98,8 @@ const NotificationsLayout: React.FC<TypedProps> = ({ user }) => {
     return (
       <View style={tw`flex-1 flex-col items-center justify-center w-full h-full my-3`}>
         <View style={tw`flex-1 w-full max-w-xs h-full`}>
-          <Text style={[tw`text-3xl text-neutral-500`, fonts.fontPoppins]}>You don't have notifications yet.</Text>
-          <Text style={[tw`my-2 text-lg text-neutral-400`, fonts.fontPoppins]}>When you do, your notifications will shown up here.</Text>
+          <Text style={[tw`text-xl text-neutral-500 dark:text-neutral-200`, fonts.fontPoppins]}>You don't have notifications yet.</Text>
+          <Text style={[tw`my-2 text-base text-neutral-400`, fonts.fontPoppins]}>When you do, your notifications will shown up here.</Text>
         </View>
       </View>
     )

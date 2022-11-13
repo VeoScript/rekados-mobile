@@ -14,7 +14,7 @@ const AuthLayout: React.FC<TypedProps> = ({ children }) => {
   const route = useRoute()
 
   return (
-    <SafeAreaView style={tw`flex-1 flex-row items-center justify-center w-full bg-white`}>
+    <SafeAreaView style={tw`flex-1 flex-row items-center justify-center w-full bg-white dark:bg-[#262626]`}>
       <ScrollView style={tw`flex-1 w-full`} keyboardShouldPersistTaps="handled">
         <View style={tw`flex-col w-full p-5`}>
           <View style={tw`flex-col items-center w-full`}>
@@ -25,7 +25,7 @@ const AuthLayout: React.FC<TypedProps> = ({ children }) => {
                 source={require('../assets/images/rekados-official.png')}
               />
             </View>
-            <Text style={[tw`text-base text-[#33333] mt-1 mr-1`, fonts.fontPoppinsLight]}>Your daily recipe at a glance</Text>
+            <Text style={[tw`text-base text-[#33333] dark:text-neutral-400 mt-1 mr-1`, fonts.fontPoppinsLight]}>Your daily recipe at a glance</Text>
           </View>
           <View style={tw`flex-col items-center w-full py-5`}>
             {children}
@@ -33,10 +33,10 @@ const AuthLayout: React.FC<TypedProps> = ({ children }) => {
           {route.name !== 'ForgotPasswordScreen' && (
             <View style={tw`flex-col items-center w-full my-1`}>
               {route.name === 'SignUpScreen' && (
-                <Text style={[tw`text-sm text-neutral-500 mb-2`, fonts.fontPoppins]}>Have already an account?</Text>
+                <Text style={[tw`text-sm text-neutral-500 dark:text-neutral-400 mb-2`, fonts.fontPoppins]}>Have already an account?</Text>
               )}
               <TouchableOpacity
-                style={tw`flex-col items-center w-full px-3 py-3 rounded-xl border border-neutral-200 bg-white`}
+                style={tw`flex-col items-center w-full px-3 py-3 rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`}
                 activeOpacity={0.7}
                 onPress={() => {
                   if (route.name === 'SignInScreen') {
@@ -46,7 +46,7 @@ const AuthLayout: React.FC<TypedProps> = ({ children }) => {
                   }
                 }}
               >
-                <Text style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsSemiBold]}>
+                <Text style={[tw`text-sm text-neutral-500 dark:text-neutral-400`, fonts.fontPoppinsSemiBold]}>
                   {`${ route.name === 'SignInScreen' ? 'Create Account' : 'Sign In' }`}
                 </Text>
               </TouchableOpacity>

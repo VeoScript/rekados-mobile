@@ -61,13 +61,13 @@ const SearchResultDisplay: React.FC<TypedProps> = ({ userId, id, slug, image, ti
     >
       {image
         ? <Image
-            style={tw`flex ${route.name === 'DishesTab' ? 'rounded-xl' : 'rounded-full'} w-[3rem] h-[3rem] bg-neutral-100`}
+            style={tw`flex ${route.name === 'DishesTab' ? 'rounded-xl' : 'rounded-full'} w-[3rem] h-[3rem] bg-neutral-100 dark:bg-[#383838]`}
             resizeMode="cover"
             source={{
               uri: `${ image }`
             }}
           />
-        : <View style={tw`flex-row items-center justify-center w-[3rem] h-[3rem] p-2 overflow-hidden rounded-full bg-neutral-200`}>
+        : <View style={tw`flex-row items-center justify-center w-[3rem] h-[3rem] p-2 overflow-hidden rounded-full bg-neutral-200 dark:bg-[#383838]`}>
             <FeatherIcon
               name="user"
               size="medium"
@@ -76,11 +76,11 @@ const SearchResultDisplay: React.FC<TypedProps> = ({ userId, id, slug, image, ti
           </View>
       }
       <View style={tw`flex-1 flex-col w-full mx-3`}>
-        <Text style={[tw`text-lg text-neutral-600`, fonts.fontPoppinsBold]}>{ title }</Text>
+        <Text style={[tw`text-lg text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>{ title }</Text>
         <Text
           ellipsizeMode='tail'
           numberOfLines={3}
-          style={[tw`text-sm text-neutral-500`, fonts.fontPoppinsLight]}
+          style={[tw`text-sm text-neutral-500 dark:text-neutral-400`, fonts.fontPoppinsLight]}
         >
           { route.name === 'DishesTab' ? description : `@${description}` }
         </Text>

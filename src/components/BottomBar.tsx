@@ -1,7 +1,7 @@
 import React from 'react'
 import tw from 'twrnc'
 import { MaterialIcon } from '../utils/Icons'
-import { View, TouchableOpacity, Keyboard, Text } from 'react-native'
+import { Appearance, View, TouchableOpacity, Keyboard, Text } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { useNavigate } from '../utils/RootNavigation'
 import { fonts } from '../styles/global'
@@ -11,6 +11,9 @@ interface TypedProps {
 }
 
 const BottomBar: React.FC<TypedProps> = ({ countUnreadNotifications }) => {
+
+  // Set default theme of the app (set both React Native and TailwindCSS)
+ const colorScheme = Appearance.getColorScheme()
 
   const route = useRoute()
 
@@ -33,7 +36,7 @@ const BottomBar: React.FC<TypedProps> = ({ countUnreadNotifications }) => {
   return (
     <React.Fragment>
       {!keyboardIsVisible && (
-        <View style={tw`flex-row items-center justify-between w-full h-full max-h-[3rem] bg-white px-10 border-t border-neutral-300`}>
+        <View style={tw`flex-row items-center justify-between w-full h-full max-h-[3rem] px-10 border-t border-neutral-300 dark:border-neutral-700 bg-white dark:bg-[#262626]`}>
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
@@ -43,7 +46,7 @@ const BottomBar: React.FC<TypedProps> = ({ countUnreadNotifications }) => {
             <MaterialIcon
               name="home"
               size="large"
-              color={route.name === 'HomeScreen' ? '#f2b900' : '#7c7c7c'}
+              color={route.name === 'HomeScreen' ? '#f2b900' : colorScheme === 'dark' ? 'CDCDCD' : '#7c7c7c'}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -55,7 +58,7 @@ const BottomBar: React.FC<TypedProps> = ({ countUnreadNotifications }) => {
             <MaterialIcon
               name="plus-circle"
               size="large"
-              color={route.name === 'CreateDishScreen' ? '#f2b900' : '#7c7c7c'}
+              color={route.name === 'CreateDishScreen' ? '#f2b900' : colorScheme === 'dark' ? 'CDCDCD' : '#7c7c7c'}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -67,7 +70,7 @@ const BottomBar: React.FC<TypedProps> = ({ countUnreadNotifications }) => {
             <MaterialIcon
               name="heart"
               size="large"
-              color={route.name === 'SaveDishScreen' ? '#f2b900' : '#7c7c7c'}
+              color={route.name === 'SaveDishScreen' ? '#f2b900' : colorScheme === 'dark' ? 'CDCDCD' : '#7c7c7c'}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -85,7 +88,7 @@ const BottomBar: React.FC<TypedProps> = ({ countUnreadNotifications }) => {
             <MaterialIcon
               name="bell"
               size="large"
-              color={route.name === 'NotificationScreen' ? '#f2b900' : '#7c7c7c'}
+              color={route.name === 'NotificationScreen' ? '#f2b900' : colorScheme === 'dark' ? 'CDCDCD' : '#7c7c7c'}
             />
           </TouchableOpacity>
         </View>

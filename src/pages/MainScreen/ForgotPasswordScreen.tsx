@@ -102,7 +102,7 @@ const ForgotPasswordScreen = () => {
   }
 
   return (
-    <SafeAreaView style={tw`flex-1 flex-col items-center justify-center w-full bg-white`}>
+    <SafeAreaView style={tw`flex-1 flex-col items-center justify-center w-full bg-white dark:bg-[#262626]`}>
       <ScrollView contentContainerStyle={tw`flex-1`} keyboardShouldPersistTaps="handled">
         <View style={tw`flex-1 flex-col items-center justify-center w-full h-full p-5`}>
           <View style={tw`my-5`}>
@@ -113,8 +113,8 @@ const ForgotPasswordScreen = () => {
             />
           </View>
           <View style={tw`flex-col items-center w-full`}>
-            <Text style={[tw`text-2xl text-neutral-600`, fonts.fontPoppinsBold]}>Forgot Password</Text>
-            <Text style={[tw`text-center text-base text-neutral-500 mt-2`, fonts.fontPoppins]}>Enter the email associated with your account and we'll send an email with instructions to reset your password.</Text>
+            <Text style={[tw`text-2xl text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>Forgot Password</Text>
+            <Text style={[tw`text-center text-base text-neutral-500 dark:text-neutral-400 mt-2`, fonts.fontPoppins]}>Enter the email associated with your account and we'll send an email with instructions to reset your password.</Text>
           </View>
           {forgotPasswordError && (
             <View style={tw`flex flex-row items-center w-full my-3 px-5 py-3 overflow-hidden rounded-xl bg-red-300`}>
@@ -128,10 +128,10 @@ const ForgotPasswordScreen = () => {
           )}
           <View style={tw`flex-col items-start w-full my-3`}>
             <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-              <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Email address</Text>
+              <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Email address</Text>
             </View>
             <TextInput
-              style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+              style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
               editable={!isLoading}
               value={email}
               onChangeText={(text: string) => {

@@ -30,7 +30,7 @@ interface TypedProps {
 const DishCard: React.FC<TypedProps> = ({ user, dish }) => {
   return (
     <TouchableOpacity
-      style={tw`flex flex-col items-start w-full p-3 mb-2 bg-neutral-50 rounded-xl`}
+      style={tw`flex flex-col items-start w-full p-3 mb-2 rounded-xl bg-neutral-50 dark:bg-[#383838]`}
       activeOpacity={0.6}
       onPress={() => {
         useNavigate('DisplayDishScreen', { slug: dish.item.slug })
@@ -43,7 +43,7 @@ const DishCard: React.FC<TypedProps> = ({ user, dish }) => {
             size="small"
             color="#c3c3c3"
           />
-          <Text style={[tw`text-lg text-neutral-600 mx-2 capitalize`, fonts.fontPoppinsBold]}>{ dish.item.title }</Text>
+          <Text style={[tw`text-lg text-neutral-600 dark:text-neutral-200 mx-2 capitalize`, fonts.fontPoppinsBold]}>{ dish.item.title }</Text>
         </View>
         <LikeButton
           user={user}
@@ -54,7 +54,7 @@ const DishCard: React.FC<TypedProps> = ({ user, dish }) => {
       </View>
       <View style={tw`w-full overflow-hidden rounded-xl my-3`}>
         <Image
-          style={tw`flex w-full h-[10rem] bg-neutral-100`}
+          style={tw`flex w-full h-[10rem] bg-neutral-100 dark:bg-[#676767]`}
           resizeMode="cover"
           source={{
             uri: `${ dish.item.image }`
@@ -70,7 +70,7 @@ const DishCard: React.FC<TypedProps> = ({ user, dish }) => {
               size="small"
               color="#676767"
             />
-            <Text style={[tw`text-sm mx-1`, fonts.fontPoppins]}>{ dish.item.likes && dish.item.likes.length }</Text>
+            <Text style={[tw`text-sm text-black dark:text-neutral-200 mx-1`, fonts.fontPoppins]}>{ dish.item.likes && dish.item.likes.length }</Text>
           </View>
           <View style={tw`flex-row items-center`}>
             <FeatherIcon
@@ -78,16 +78,16 @@ const DishCard: React.FC<TypedProps> = ({ user, dish }) => {
               size="small"
               color="#676767"
             />
-            <Text style={[tw`text-sm mx-1`, fonts.fontPoppins]}>{ dish.item.comments && dish.item.comments.length }</Text>
+            <Text style={[tw`text-sm text-black dark:text-neutral-200 mx-1`, fonts.fontPoppins]}>{ dish.item.comments && dish.item.comments.length }</Text>
           </View>
         </View>
       </View>
       <View style={tw`py-1`}>
-        <Text style={[tw`rounded-full text-sm`, fonts.fontPoppinsLight]}>{ dish.item.description }</Text>
+        <Text style={[tw`rounded-full text-sm text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsLight]}>{ dish.item.description }</Text>
       </View>
       <View style={tw`flex flex-row items-center justify-between w-full pt-3`}>
         <View style={tw`flex flex-row items-center`}>
-          <Text style={[tw`rounded-full text-sm text-neutral-400`, fonts.fontPoppinsItalic]}>- { dish.item.author.name }</Text>
+          <Text style={[tw`rounded-full text-sm text-neutral-400 dark:text-neutral-200`, fonts.fontPoppinsItalic]}>- { dish.item.author.name }</Text>
         </View>
         <View style={tw`flex flex-row items-center`}>
           <MaterialIcon
@@ -95,7 +95,7 @@ const DishCard: React.FC<TypedProps> = ({ user, dish }) => {
             size="small"
             color="#c3c3c3"
           />
-          <Text style={[tw`ml-1 rounded-full text-sm text-neutral-600`, fonts.fontPoppinsSemiBold]}>{ dish.item.location }</Text>
+          <Text style={[tw`ml-1 rounded-full text-sm text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsSemiBold]}>{ dish.item.location }</Text>
         </View>
       </View>
     </TouchableOpacity>

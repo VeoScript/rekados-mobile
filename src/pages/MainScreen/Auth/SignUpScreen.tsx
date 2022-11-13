@@ -97,7 +97,7 @@ const SignUpScreen = () => {
   return (
     <AuthLayout>
       <View style={tw`flex flex-row justify-center w-full my-3 overflow-hidden rounded-xl`}>
-        <Text style={[tw`text-xl text-neutral-600`, fonts.fontPoppinsBold]}>Create Account</Text>
+        <Text style={[tw`text-xl text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>Create Account</Text>
       </View>
       {signUpError && (
         <View style={tw`flex flex-row items-center w-full my-3 px-5 py-3 overflow-hidden rounded-xl bg-red-300`}>
@@ -111,10 +111,10 @@ const SignUpScreen = () => {
       )}
       <View style={tw`flex flex-col my-1 w-full`}>
         <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-          <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Name</Text>
+          <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Name</Text>
         </View>
         <TextInput
-          style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+          style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
           editable={!isLoading}
           value={name}
           onChangeText={(text: string) => {
@@ -126,10 +126,10 @@ const SignUpScreen = () => {
       </View>
       <View style={tw`flex flex-col my-1 w-full`}>
         <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-          <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Email</Text>
+          <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Email</Text>
         </View>
         <TextInput
-          style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+          style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
           editable={!isLoading}
           value={email}
           onChangeText={(text: string) => {
@@ -140,10 +140,10 @@ const SignUpScreen = () => {
       </View>
       <View style={tw`flex flex-col my-1 w-full`}>
         <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-          <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Username</Text>
+          <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Username</Text>
         </View>
         <TextInput
-          style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+          style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
           editable={!isLoading}
           value={username}
           onChangeText={(text: string) => {
@@ -155,10 +155,10 @@ const SignUpScreen = () => {
       </View>
       <View style={tw`flex flex-col my-1 w-full`}>
         <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-          <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Password</Text>
+          <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Password</Text>
         </View>
         <TextInput
-          style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+          style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
           editable={!isLoading}
           secureTextEntry={true}
           value={password}
@@ -171,10 +171,10 @@ const SignUpScreen = () => {
       </View>
       <View style={tw`flex flex-col my-1 w-full`}>
         <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-          <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Re-enter Password</Text>
+          <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Re-enter Password</Text>
         </View>
         <TextInput
-          style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+          style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
           editable={!isLoading}
           secureTextEntry={true}
           value={repassword}

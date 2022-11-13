@@ -15,7 +15,9 @@ import UserSettingScreen from './src/pages/ProfileScreen/UserSettingScreen'
 import MainSplashScreen from './src/components/SplashScreens/MainSplashScreen'
 import AboutScreen from './src/pages/MainScreen/Misc/AboutScreen'
 import PrivacyPolicyScreen from './src/pages/MainScreen/Misc/PrivacyPolicyScreen'
-import { AppStateStatus, Platform, StatusBar } from 'react-native'
+import tw from 'twrnc'
+import { useDeviceContext, useAppColorScheme } from 'twrnc'
+import { AppStateStatus, Appearance, Platform, StatusBar } from 'react-native'
 import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -37,6 +39,12 @@ const queryClient = new QueryClient({
 const Stack = createNativeStackNavigator()
 
 const App = () => {
+
+  // Set default theme of the app (set both React Native and TailwindCSS)
+ const colorScheme = Appearance.getColorScheme()
+  
+  // Set default theme of the app (set both React Native and TailwindCSS)
+  useDeviceContext(tw, { withDeviceColorScheme: true })
 
   // checking the session
   const [session, setSession] = React.useState<string>()
@@ -65,8 +73,8 @@ const App = () => {
         <NavigationContainer ref={navigationRef}>
           <StatusBar
             animated={false}
-            backgroundColor="#FFFFFF"
-            barStyle="dark-content"
+            backgroundColor={colorScheme === 'dark' ? '#262626' : '#FFFFFF'}
+            barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
           />
           <Stack.Navigator>
             {session === null

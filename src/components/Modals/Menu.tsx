@@ -36,13 +36,13 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
         }}
       />
       <View style={tw`absolute bottom-0 rounded-t-3xl overflow-hidden w-full bg-[#F3B900]`}>
-        <View style={tw`flex flex-col w-full mt-1 rounded-t-3xl bg-white`}>
+        <View style={tw`flex flex-col w-full mt-1 rounded-t-3xl bg-white dark:bg-[#262626]`}>
           <View style={tw`flex flex-row items-center px-5 py-3`}>
-            <Text style={[tw`text-xl text-neutral-600`, fonts.fontPoppinsBold]}>Menu</Text>
+            <Text style={[tw`text-xl text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>Menu</Text>
           </View>
           <View>
             <TouchableOpacity
-              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
+              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300 dark:border-neutral-700`}
               activeOpacity={0.6}
               onPress={() => {
                 useNavigate('UserScreen', { id: user.id })
@@ -54,10 +54,10 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
                 size="small"
                 color="#7c7c7c"
               />
-              <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>{ user.name }</Text>
+              <Text style={[tw`ml-3 text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>{ user.name }</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
+              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300 dark:border-neutral-700`}
               activeOpacity={0.6}
               onPress={() => {
                 useNavigate('UserSettingScreen', { id: user.id })
@@ -68,10 +68,10 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
                 size="small"
                 color="#7c7c7c"
               />
-              <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>Settings</Text>
+              <Text style={[tw`ml-3 text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>Settings</Text>
             </TouchableOpacity>
             {/* <TouchableOpacity
-              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
+              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300 dark:border-neutral-700`}
               activeOpacity={0.6}
               onPress={() => {
                 console.log('Terms of Service')
@@ -82,10 +82,10 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
                 size="small"
                 color="#7c7c7c"
               />
-              <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>Terms of Use</Text>
+              <Text style={[tw`ml-3 text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>Terms of Use</Text>
             </TouchableOpacity> */}
             <TouchableOpacity
-              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
+              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300 dark:border-neutral-700`}
               activeOpacity={0.6}
               onPress={() => {
                 useNavigate('PrivacyPolicyScreen')
@@ -96,10 +96,10 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
                 size="small"
                 color="#7c7c7c"
               />
-              <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>Privacy Policy</Text>
+              <Text style={[tw`ml-3 text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>Privacy Policy</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
+              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300 dark:border-neutral-700`}
               activeOpacity={0.6}
               onPress={() => {
                 useNavigate('AboutScreen')
@@ -110,10 +110,10 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
                 size="small"
                 color="#7c7c7c"
               />
-              <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>About</Text>
+              <Text style={[tw`ml-3 text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>About</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
+              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300 dark:border-neutral-700`}
               activeOpacity={0.6}
               onPress={() => Linking.canOpenURL('https://rekados-landing-page.vercel.app/').then(() => {
                 Linking.openURL('https://rekados-landing-page.vercel.app/')
@@ -124,10 +124,10 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
                 size="small"
                 color="#7c7c7c"
               />
-              <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>Website</Text>
+              <Text style={[tw`ml-3 text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>Website</Text>
             </TouchableOpacity>
             {/* <TouchableOpacity
-              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
+              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300 dark:border-neutral-700`}
               activeOpacity={0.6}
               onPress={() => {
                 console.log('Rate this App')
@@ -138,10 +138,10 @@ const Menu: React.FC<MenuTypes> = ({ user, modalVisible, setModalVisible }) => {
                 size="small"
                 color="#7c7c7c"
               />
-              <Text style={[tw`ml-3 text-base text-neutral-500`, fonts.fontPoppins]}>Rate this app</Text>
+              <Text style={[tw`ml-3 text-base text-neutral-500 dark:text-neutral-400`, fonts.fontPoppins]}>Rate this app</Text>
             </TouchableOpacity> */}
             <TouchableOpacity
-              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300`}
+              style={tw`flex flex-row items-center w-full px-5 py-3 border-t border-neutral-300 dark:border-neutral-700`}
               activeOpacity={0.6}
               onPress={onLogout}
             >

@@ -71,6 +71,7 @@ const ProfileImageUpload: React.FC<TypedProps> = ({ userId, photo, setPhoto, mod
     <Modal
       animationType="fade"
       transparent={true}
+      statusBarTranslucent={true}
       visible={modalVisible}
       onRequestClose={closeModal}      
     >
@@ -84,8 +85,8 @@ const ProfileImageUpload: React.FC<TypedProps> = ({ userId, photo, setPhoto, mod
         }}
       />
       <View style={tw`absolute top-1/2 -mt-[10rem] w-full px-5`}>
-        <View style={tw`flex-col items-center justify-center w-full p-5 rounded-xl overflow-hidden bg-white`}>
-          <Text style={[tw`text-xl text-center text-neutral-600`, fonts.fontPoppinsBold]}>Change Profile</Text>
+        <View style={tw`flex-col items-center justify-center w-full p-5 rounded-xl overflow-hidden bg-white dark:bg-[#383838]`}>
+          <Text style={[tw`text-xl text-center text-neutral-600 dark:text-neutral-200`, fonts.fontPoppinsBold]}>Change Profile</Text>
           {photo && (
             <Image
               style={tw`flex rounded-full my-3 w-[10rem] h-[10rem]`}
@@ -95,7 +96,7 @@ const ProfileImageUpload: React.FC<TypedProps> = ({ userId, photo, setPhoto, mod
               }}
             />
           )}
-          <Text style={[tw`text-xs text-center text-neutral-600 mb-3`, fonts.fontPoppinsLight]}>This will be the actual size of your profile.</Text>
+          <Text style={[tw`text-xs text-center text-neutral-600 dark:text-neutral-400 mb-3`, fonts.fontPoppinsLight]}>This will be the actual size of your profile.</Text>
           <View style={tw`flex-row items-center justify-center w-full`}>
             {isLoading && (
               <View style={tw`w-full`}>
@@ -104,10 +105,16 @@ const ProfileImageUpload: React.FC<TypedProps> = ({ userId, photo, setPhoto, mod
             )}
             {!isLoading && (
               <React.Fragment>
-                <TouchableOpacity onPress={onUploadProfilePhoto}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={onUploadProfilePhoto}
+                >
                   <Text style={[tw`w-[7rem] mx-0.5 text-sm text-center text-white bg-[#F3B900] px-3 py-2 rounded-xl`, fonts.fontPoppins]}>Upload</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={closeModal}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={closeModal}
+                >
                   <Text style={[tw`w-[7rem] mx-0.5 text-sm text-center text-neutral-600 bg-neutral-200 px-3 py-2 rounded-xl`, fonts.fontPoppins]}>Cancel</Text>
                 </TouchableOpacity>
               </React.Fragment>

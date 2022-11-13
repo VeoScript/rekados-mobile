@@ -182,10 +182,10 @@ const UserSettingsLayout: React.FC<TypedProps> = ({ user, profileId }) => {
             <Text style={[tw`mx-2 mb-2 text-xl text-neutral-400`, fonts.fontPoppinsBold]}>Your Information</Text>
             <View style={tw`flex flex-col my-1 w-full`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Name</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Name</Text>
               </View>
               <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 editable={!isUpdateAccountLoading}
                 value={name}
                 onChangeText={(text: string) => {
@@ -197,10 +197,10 @@ const UserSettingsLayout: React.FC<TypedProps> = ({ user, profileId }) => {
             </View>
             <View style={tw`flex flex-col my-1 w-full`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Username</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Username</Text>
               </View>
               <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 editable={!isUpdateAccountLoading}
                 value={username}
                 onChangeText={(text: string) => {
@@ -212,10 +212,10 @@ const UserSettingsLayout: React.FC<TypedProps> = ({ user, profileId }) => {
             </View>
             <View style={tw`flex flex-col my-1 w-full`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Email</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Email</Text>
               </View>
               <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 editable={false}
                 value={email}
                 onChangeText={(text: string) => {
@@ -226,10 +226,10 @@ const UserSettingsLayout: React.FC<TypedProps> = ({ user, profileId }) => {
             </View>
             <View style={tw`flex flex-col my-1 w-full`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Location</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Location</Text>
               </View>
               <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 editable={!isUpdateAccountLoading}
                 value={location}
                 onChangeText={(text: string) => {
@@ -241,11 +241,11 @@ const UserSettingsLayout: React.FC<TypedProps> = ({ user, profileId }) => {
             </View>
             <View style={tw`flex flex-col my-1 w-full`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Bio</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Bio</Text>
               </View>
-              <View style={tw`flex-row items-start w-full px-3 py-1 rounded-xl border border-neutral-200 bg-white`}>
+              <View style={tw`flex-row items-start w-full px-3 py-1 rounded-xl border border-neutral-200 dark:border-[#383838] bg-white bg-white dark:bg-[#383838]`}>
                 <TextInput
-                  style={[tw`w-full text-sm`, { height: commentHeight }, fonts.fontPoppins]}
+                  style={[tw`w-full text-sm text-black dark:text-white bg-white dark:bg-[#383838]`, { height: commentHeight }, fonts.fontPoppins]}
                   editable={!isUpdateAccountLoading}
                   multiline={true}
                   numberOfLines={commentHeight}
@@ -288,10 +288,10 @@ const UserSettingsLayout: React.FC<TypedProps> = ({ user, profileId }) => {
             <Text style={[tw`mx-2 mb-2 text-xl text-neutral-400`, fonts.fontPoppinsBold]}>Change Password</Text>
             <View style={tw`flex flex-col my-1 w-full`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Old Password</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Old Password</Text>
               </View>
               <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 editable={!isChangePasswordLoading}
                 secureTextEntry={true}
                 value={oldPassword}
@@ -304,10 +304,10 @@ const UserSettingsLayout: React.FC<TypedProps> = ({ user, profileId }) => {
             </View>
             <View style={tw`flex flex-col my-1 w-full`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>New Password</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>New Password</Text>
               </View>
               <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 editable={!isChangePasswordLoading}
                 secureTextEntry={true}
                 value={newPassword}
@@ -320,10 +320,10 @@ const UserSettingsLayout: React.FC<TypedProps> = ({ user, profileId }) => {
             </View>
             <View style={tw`flex flex-col my-1 w-full`}>
               <View style={tw`flex flex-row items-center mx-2 mb-1`}>
-                <Text style={[tw`text-sm text-neutral-600`, fonts.fontPoppinsLight]}>Re-enter Password</Text>
+                <Text style={[tw`text-sm text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Re-enter Password</Text>
               </View>
               <TextInput
-                style={[tw`flex w-full px-3 py-2 text-sm rounded-xl border border-neutral-200 bg-white`, fonts.fontPoppins]}
+                style={[tw`flex w-full px-3 py-2 text-sm text-black dark:text-white rounded-xl border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#383838]`, fonts.fontPoppins]}
                 editable={!isChangePasswordLoading}
                 secureTextEntry={true}
                 value={rePassword}

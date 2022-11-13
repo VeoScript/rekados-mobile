@@ -15,7 +15,7 @@ const CreateEditSplashScreen: React.FC<TypedProps> = ({ message, isVisible}) => 
       transparent={true}
       visible={isVisible}
     >
-      <SafeAreaView style={tw`flex-1 flex-col items-center justify-center w-full h-full bg-white`}>
+      <SafeAreaView style={tw`flex-1 flex-col items-center justify-center w-full h-full bg-white dark:bg-[#262626]`}>
         <View style={tw`flex-col items-center w-full`}>
           <View style={tw`flex-row justify-center w-full overflow-hidden rounded-xl`}>
             <Image
@@ -24,7 +24,7 @@ const CreateEditSplashScreen: React.FC<TypedProps> = ({ message, isVisible}) => 
               source={require('../../assets/images/favicon2.png')}
             />
           </View>
-          <Text style={[tw`text-base text-[#676767] -mt-1 mr-1`, fonts.fontPoppinsLight]}>Your daily recipe at a glance</Text>
+          <Text style={[tw`text-base text-[#676767] dark:text-neutral-400 -mt-1 mr-1`, fonts.fontPoppinsLight]}>Your daily recipe at a glance</Text>
         </View>
         <View style={tw`my-3`}>
           <ActivityIndicator
@@ -33,8 +33,8 @@ const CreateEditSplashScreen: React.FC<TypedProps> = ({ message, isVisible}) => 
           />
         </View>
         <View style={tw`my-3`}>
-          <Text style={[tw`text-base text-neutral-600 uppercase`, fonts.fontPoppinsBold]}>{ message }</Text>
-          <Text style={[tw`text-base text-neutral-600`, fonts.fontPoppinsLight]}>Just wait for a while...</Text>
+          <Text style={[tw`text-base text-neutral-600 dark:text-neutral-400 uppercase`, fonts.fontPoppinsBold]}>{ message }</Text>
+          <Text style={[tw`text-base text-neutral-600 dark:text-neutral-400`, fonts.fontPoppinsLight]}>Just wait for a while...</Text>
         </View>
       </SafeAreaView>
     </Modal>
