@@ -26,6 +26,8 @@ You can also use Rekados to save your favorite recipes.
 - PlanetScale
 - MySQL
 - Render
+- Socket.io
+- Notifee
 
 Designed and developed with 5% of 🧠 by Jerome Villaruel **VEOSCRIPT**.
 

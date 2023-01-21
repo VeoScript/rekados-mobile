@@ -73,6 +73,7 @@ const DisplayDishScreen = () => {
                     <LikeButton
                       user={user}
                       author={dish.author}
+                      title={dish.title}
                       slug={slug}
                       likes={dish.likes}
                     />
@@ -162,6 +163,7 @@ const DisplayDishScreen = () => {
             <DishComments
               user={user}
               author={dish.author}
+              title={dish.title}
               slug={slug}
             />
             <View style={tw`flex flex-row items-center justify-center w-full py-3`}>

@@ -1,4 +1,5 @@
 import React from 'react'
+import io from 'socket.io-client';
 import CommentSkeletonLoader from '../SkeletonLoaders/CommentSkeletonLoader'
 import DeleteComment from '../Modals/DeleteComment'
 import tw from 'twrnc'
@@ -8,18 +9,23 @@ import { fonts } from '../../styles/global'
 import { FeatherIcon, MaterialIcon } from '../../utils/Icons'
 import { useGetComments, useCreateCommentMutation, useStoreNotification } from '../../lib/ReactQuery'
 import { useNavigate } from '../../utils/RootNavigation'
+import { API_URL } from '@env';
 
 interface TypedProps {
   user: {
     id: string
+    name: string
   }
   author: {
     id: string
   }
+  title: string
   slug: string
 }
 
-const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
+const socket = io(API_URL);
+
+const DishComments: React.FC<TypedProps> = ({ user, author, title, slug }) => {
 
   // detect the default color scheme of devices (light mode or dark mode) *REACT NATIVE
   const colorScheme = Appearance.getColorScheme()
@@ -51,6 +57,13 @@ const DishComments: React.FC<TypedProps> = ({ user, author, slug }) => {
       onSuccess: async () => {
         setComment('')
         setLoading(false)
+        // send comment notification to socket.io (for push-notification)
+        socket.emit('send_notification', {
+          title: 'Rekados',
+          message: `${user.name} commented on your dish ${title}.`,
+          userId: user.id,
+          userLoggedIn: user.id
+        }, true)
         // send comment notification
         if (user.id !== author.id) {
           const message = `commented on your dish`
