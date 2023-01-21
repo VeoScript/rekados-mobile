@@ -1,5 +1,4 @@
 import React from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import SignInScreen from './src/pages/MainScreen/Auth/SignInScreen'
 import SignUpScreen from './src/pages/MainScreen/Auth/SignUpScreen'
 import ForgotPasswordScreen from './src/pages/MainScreen/ForgotPasswordScreen'
@@ -16,12 +15,13 @@ import MainSplashScreen from './src/components/SplashScreens/MainSplashScreen'
 import AboutScreen from './src/pages/MainScreen/Misc/AboutScreen'
 import PrivacyPolicyScreen from './src/pages/MainScreen/Misc/PrivacyPolicyScreen'
 import tw from 'twrnc'
-import { useDeviceContext, useAppColorScheme } from 'twrnc'
+import { useDeviceContext } from 'twrnc'
 import { AppStateStatus, Appearance, Platform, StatusBar } from 'react-native'
 import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { navigationRef } from './src/utils/RootNavigation'
+import { useGuard } from './src/hooks/useGuard'
 import { useAppState } from './src/hooks/useAppState'
 import { useCheckOnline } from './src/hooks/useCheckOnline'
 import { useOnlineManager } from './src/lib/ReactQuery'
@@ -46,15 +46,8 @@ const App = () => {
   // Set default theme of the app (set both React Native and TailwindCSS)
   useDeviceContext(tw, { withDeviceColorScheme: true })
 
-  // checking the session
-  const [session, setSession] = React.useState<string>()
-
-  React.useEffect(() => {
-    setInterval(async () => {
-      const cookies: any = await AsyncStorage.getItem('COOKIES')
-      setSession(cookies)
-    }, 500)
-  }, [])
+  // checking if the user is logged in...
+  const isAuth = useGuard()
 
   // check online and offline state for react-query
   useOnlineManager()
@@ -76,123 +69,25 @@ const App = () => {
             backgroundColor={colorScheme === 'dark' ? '#262626' : '#FFFFFF'}
             barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
           />
-          <Stack.Navigator>
-            {session === null
+          <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}>
+            {!isAuth
               ? <>
-                  <Stack.Screen
-                    name="SignInScreen"
-                    component={SignInScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="SignUpScreen"
-                    component={SignUpScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="ForgotPasswordScreen"
-                    component={ForgotPasswordScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
+                  <Stack.Screen name="SignInScreen" component={SignInScreen} />
+                  <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+                  <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
                 </>
               : <>
-                  <Stack.Screen
-                    name="HomeScreen"
-                    component={HomeScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="SearchScreen"
-                    component={SearchScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="CreateDishScreen"
-                    component={CreateDishScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="EditDishScreen"
-                    component={EditDishScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="SaveDishScreen"
-                    component={SaveDishScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="NotificationScreen"
-                    component={NotificationScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="DisplayDishScreen"
-                    component={DisplayDishScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="UserScreen"
-                    component={UserScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="UserSettingScreen"
-                    component={UserSettingScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="AboutScreen"
-                    component={AboutScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
-                  <Stack.Screen
-                    name="PrivacyPolicyScreen"
-                    component={PrivacyPolicyScreen}
-                    options={{
-                      headerShown: false,
-                      animation: 'none'
-                    }}
-                  />
+                  <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                  <Stack.Screen name="SearchScreen" component={SearchScreen} />
+                  <Stack.Screen name="CreateDishScreen" component={CreateDishScreen} />
+                  <Stack.Screen name="EditDishScreen" component={EditDishScreen} />
+                  <Stack.Screen name="SaveDishScreen" component={SaveDishScreen} />
+                  <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
+                  <Stack.Screen name="DisplayDishScreen" component={DisplayDishScreen} />
+                  <Stack.Screen name="UserScreen" component={UserScreen} />
+                  <Stack.Screen name="UserSettingScreen" component={UserSettingScreen} />
+                  <Stack.Screen name="AboutScreen" component={AboutScreen} />
+                  <Stack.Screen name="PrivacyPolicyScreen" component={PrivacyPolicyScreen} />
                 </>
             }
           </Stack.Navigator>
