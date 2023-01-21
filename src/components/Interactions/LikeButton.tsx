@@ -1,16 +1,21 @@
 import React from 'react'
+import io from 'socket.io-client';
 import { TouchableOpacity } from 'react-native'
 import { MaterialIcon } from '../../utils/Icons'
 import { useLikeMutation, useUnlikeMutation, useStoreNotification } from '../../lib/ReactQuery'
+import { API_URL } from '@env';
 
 interface TypedProps {
   user: any
   author: any
+  title: string
   slug: string
   likes: any
 }
 
-const LikeButton: React.FC<TypedProps> = ({ user, author, slug, likes }) => {
+const socket = io(API_URL);
+
+const LikeButton: React.FC<TypedProps> = ({ user, author, title, slug, likes }) => {
 
   const likeMutation = useLikeMutation()
   const unlikeMutation = useUnlikeMutation()
@@ -36,6 +41,13 @@ const LikeButton: React.FC<TypedProps> = ({ user, author, slug, likes }) => {
         console.error('ON LIKE', error.response.data)
       },
       onSuccess: async () => {
+        // send like notification to socket.io (for push-notification)
+        socket.emit('send_notification', {
+          title: 'Rekados',
+          message: `${user.name} likes your dish ${title}.`,
+          userId: userId,
+          userLoggedIn: userId
+        }, true)
         //send like notification
         if (userId !== authorId) {
           const message = `likes your dish`
@@ -49,7 +61,7 @@ const LikeButton: React.FC<TypedProps> = ({ user, author, slug, likes }) => {
           {
             onError: (error: any) => {
               console.error('ON NOTIFICATION', error.response.data)
-            },
+            }
           })
         }
       }
