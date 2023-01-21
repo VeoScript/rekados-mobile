@@ -40,7 +40,8 @@ const SearchLayout: React.FC<TypedProps> = ({ userId }) => {
       />
       <View style={{ flex: 1, marginTop: -10, height: screen.height }}>
         <Tab.Navigator
-          initialRouteName="SearchTab"
+          initialRouteName="DishesTab"
+          backBehavior='none'
           screenOptions={{
             tabBarActiveTintColor: `${colorScheme === 'dark' ? '#FFFFFF' : '#414143'}`,
             tabBarLabelStyle: [tw`text-[12px]`, fonts.fontPoppins],
