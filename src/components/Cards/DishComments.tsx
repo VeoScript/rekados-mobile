@@ -60,9 +60,9 @@ const DishComments: React.FC<TypedProps> = ({ user, author, title, slug }) => {
         // send comment notification to socket.io (for push-notification)
         socket.emit('send_notification', {
           title: 'Rekados',
-          message: `${user.name} commented on your dish ${title}.`,
+          message: `${user.name} commented on ${user.id === author.id ? 'their' : 'your'} dish ${title}.`,
           userId: user.id,
-          userLoggedIn: user.id
+          authorId: author.id
         }, true)
         // send comment notification
         if (user.id !== author.id) {
