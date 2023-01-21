@@ -24,23 +24,25 @@ socket.on('new_notification', async (data) => {
 
   // Create a channel (required for Android)
   const channelId = await notifee.createChannel({
-    id: data.userId === data.userLoggedIn ? 'default' : data.userId,
+    id: data.userId,
     name: 'Rekados Push Notification',
-    importance: data.userId === data.userLoggedIn ? AndroidImportance.NONE : AndroidImportance.HIGH,
+    importance: AndroidImportance.HIGH,
   });
 
-  // Display a notification
-  await notifee.displayNotification({
-    title: data.title,
-    body: data.message,
-    android: {
-      channelId,
-      // pressAction is needed if you want the notification to open the app when pressed
-      pressAction: {
-        id: 'default',
+  if (data.userId !== data.authorId) {
+    // Display a notification
+    await notifee.displayNotification({
+      title: data.title,
+      body: data.message,
+      android: {
+        channelId,
+        // pressAction is needed if you want the notification to open the app when pressed
+        pressAction: {
+          id: 'default',
+        },
       },
-    },
-  });
+    });
+  };
 });
 
 AppRegistry.registerComponent(appName, () => App);

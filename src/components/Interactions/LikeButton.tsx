@@ -44,9 +44,9 @@ const LikeButton: React.FC<TypedProps> = ({ user, author, title, slug, likes }) 
         // send like notification to socket.io (for push-notification)
         socket.emit('send_notification', {
           title: 'Rekados',
-          message: `${user.name} likes your dish ${title}.`,
+          message: `${user.name} likes ${userId === authorId ? 'their' : 'your'} dish ${title}.`,
           userId: userId,
-          userLoggedIn: userId
+          authorId: authorId
         }, true)
         //send like notification
         if (userId !== authorId) {
