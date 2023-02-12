@@ -29,6 +29,9 @@ You can also use Rekados to save your favorite recipes.
 - Socket.io
 - Notifee
 
+## References
+- Backend/API Repostiory - https://github.com/VeoScript/rekados-api
+
 Designed and developed with 5% of 🧠 by Jerome Villaruel **VEOSCRIPT**.
 
 > Production-Ready
